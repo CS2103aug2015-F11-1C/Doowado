@@ -53,10 +53,6 @@ void Storage::addFloatingTask(FloatingTask * newFTask){
 	_floatingTaskList.push_back(newFTask);
 }
 
-void Storage::addToUndoStack(Command* nextCommand) {
-	_undoStack.push(nextCommand);
-}
-
 // Saves to txt file in the following format:
 // Entry Type
 // Attribute 1 of that Entry type
@@ -224,19 +220,6 @@ void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *task
 			}
 		}
 	}
-}
-
-Command* Storage::undoAction() {
-	Command *cmd;
-	cmd = _undoStack.top();
-	
-	_undoStack.pop();
-
-	return cmd;
-}
-
-void Storage::changeSaveDir(string newSaveDir){
-	_saveDir = newSaveDir;
 }
 
 void Storage::sortByDate(){

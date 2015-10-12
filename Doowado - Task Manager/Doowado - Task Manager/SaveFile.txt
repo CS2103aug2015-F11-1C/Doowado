@@ -10,3 +10,12 @@ Event
 cs2103 lecture
 20151009T140000
 20151009T160000
+FTask
+meeting
+Not Completed
+FTask
+meeting
+Not Completed
+FTask
+team demo
+Not Completed

@@ -17,12 +17,13 @@ int main(int argc, char* argv[]) {
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
-	UI.updateDefaultDisplay(&LocalStorage);
+	//UI.updateDefaultDisplay(&LocalStorage);
 	UI.printWelcome();
 	UI.printList();
 
-	do {
-		getline(cin, input);
+	getline(cin, input);
+	
+	while (input != "exit") {
 
 		vector<string> parsedInput;
 
@@ -33,9 +34,10 @@ int main(int argc, char* argv[]) {
 
 		cmd->execute(&LocalStorage);
 
-		UI.updateDefaultDisplay(&LocalStorage);
+		//UI.updateDefaultDisplay(&LocalStorage);
 		UI.printList();
-	} while (input != "exit");
+		getline(cin, input);
+	} 
 
 	LocalStorage.saveToFile();
 

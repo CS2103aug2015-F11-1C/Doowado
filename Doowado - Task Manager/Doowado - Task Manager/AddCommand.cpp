@@ -19,7 +19,7 @@ AddCommand::~AddCommand()
 {
 }
 
-void AddCommand::execute(Storage* data) {
+void AddCommand::execute(Storage* data, Display* display) {
 	if (!_entryStartTime.is_not_a_date_time()) {
 		cout << "Event" << endl;
 		Event* newEvent = new Event(_entryName, _entryStartTime, _entryEndTime);

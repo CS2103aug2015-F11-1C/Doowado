@@ -4,10 +4,12 @@
 #include "Storage.h"
 #include "Parser.h"
 #include "UserInterface.h"
+#include "Display.h"
 
 int main(int argc, char* argv[]) {
 
 	UserInterface UI;
+	Display display;
 	Storage LocalStorage(argv[1]);
 	CommandBuilder *builder;
 	Command *cmd = nullptr;
@@ -32,7 +34,7 @@ int main(int argc, char* argv[]) {
 		builder = new CommandBuilder(parsedInput);
 		cmd = builder->buildCommand();
 
-		cmd->execute(&LocalStorage);
+		cmd->execute(&LocalStorage, &display);
 
 		//UI.updateDefaultDisplay(&LocalStorage);
 		UI.printList();

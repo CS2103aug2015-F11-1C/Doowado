@@ -10,6 +10,6 @@ private:
 public:
 	EditTitleCommand(int, string);
 	~EditTitleCommand();
-	void execute();
+	void execute(Storage* data, Display* display);
 };
 

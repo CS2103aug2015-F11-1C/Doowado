@@ -12,6 +12,6 @@ EditTimeCommand::~EditTimeCommand()
 {
 }
 
-void EditTimeCommand::execute() {
+void EditTimeCommand::execute(Storage* data, Display *display) {
 	//edit time
 }

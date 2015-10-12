@@ -11,6 +11,6 @@ DeleteCommand::~DeleteCommand()
 {
 }
 
-void DeleteCommand::execute() {
+void DeleteCommand::execute(Storage* data, Display* display) {
 	//delete command
 }

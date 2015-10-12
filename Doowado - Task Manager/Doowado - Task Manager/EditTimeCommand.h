@@ -10,5 +10,5 @@ class EditTimeCommand: public Command {
 	public:
 		EditTimeCommand(int, ptime, ptime);
 		~EditTimeCommand();
-		void execute();
+		void execute(Storage* data, Display* display);
 };

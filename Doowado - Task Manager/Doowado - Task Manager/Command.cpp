@@ -9,6 +9,6 @@ Command::~Command()
 {
 }
 
-void Command::execute(Storage* data) {
+void Command::execute(Storage* data, Display* display) {
 
 }

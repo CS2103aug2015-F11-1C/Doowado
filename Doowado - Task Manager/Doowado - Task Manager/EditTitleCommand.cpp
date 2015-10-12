@@ -12,7 +12,7 @@ EditTitleCommand::~EditTitleCommand()
 {
 }
 
-void EditTitleCommand::execute()
+void EditTitleCommand::execute(Storage* data, Display *display)
 {
 	//edit displayedText
 }

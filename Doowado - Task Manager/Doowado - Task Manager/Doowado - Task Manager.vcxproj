@@ -125,6 +125,7 @@
     <ClCompile Include="CommandBuilder.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="DeleteCommand.cpp" />
+    <ClCompile Include="Display.cpp" />
     <ClCompile Include="EditTimeCommand.cpp" />
     <ClCompile Include="EditTitleCommand.cpp" />
     <ClCompile Include="Entry.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandBuilder.h" />
     <ClInclude Include="DeleteCommand.h" />
+    <ClInclude Include="Display.h" />
     <ClInclude Include="EditTimeCommand.h" />
     <ClInclude Include="EditTitleCommand.h" />
     <ClInclude Include="Entry.h" />

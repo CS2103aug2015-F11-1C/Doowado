@@ -31,7 +31,7 @@ void Storage::addEvent(Event * newEvent){
 }
 
 void Storage::addTask(Task * newTask){
-	if (_taskList.empty()) {
+	if (_taskList.empty() || newTask->isFloatingTask()) {
 		_taskList.push_back(newTask);
 	} else {
 		vector <Task*>::iterator it = _taskList.begin();
@@ -47,10 +47,6 @@ void Storage::addTask(Task * newTask){
 			_taskList.insert(it, newTask);
 		}
 	}
-}
-
-void Storage::addFloatingTask(FloatingTask * newFTask){
-	_floatingTaskList.push_back(newFTask);
 }
 
 // Saves to txt file in the following format:
@@ -71,9 +67,17 @@ void Storage::saveToFile(){
 	}
 
 	for (int i = 0; i < _taskList.size(); i++) {
-		output << TASK_ENTRY << endl;
+		if (_taskList[i]->isFloatingTask()) {
+			output << FTASK_ENTRY << endl;
+		}
+		else {
+			output << TASK_ENTRY << endl;
+		}
 		output << _taskList[i]->getName() << endl;
-		output << to_iso_string(_taskList[i]->getDueTime()) << endl;
+
+		if (!_taskList[i]->isFloatingTask()) {
+			output << to_iso_string(_taskList[i]->getDueTime()) << endl;
+		}
 		
 		if (_taskList[i]->getCompleted()) {
 			output << TASK_COMPLETED << endl;
@@ -87,18 +91,6 @@ void Storage::saveToFile(){
 			output << TASK_NOT_OVERDUE << endl;
 		}
 	}
-
-	for (int i = 0; i < _floatingTaskList.size(); i++) {
-		output << FTASK_ENTRY << endl;
-		output << _floatingTaskList[i]->getName() << endl;
-
-		if (_floatingTaskList[i]->getCompleted()) {
-			output << TASK_COMPLETED << endl;
-		} else {
-			output << TASK_NOT_COMPLETED << endl;
-		}
-	}
-
 	output.close();
 }
 
@@ -155,6 +147,8 @@ void Storage::loadFromFile(){
 			string name;
 			getline(input, name);
 
+			ptime dueTime;
+
 			bool isCompleted;
 			string completed;
 			getline(input, completed);
@@ -165,16 +159,18 @@ void Storage::loadFromFile(){
 				isCompleted = false;
 			}
 
-			FloatingTask *newFTask;
-			newFTask = new FloatingTask(name, isCompleted);
-			_floatingTaskList.push_back(newFTask);
+			bool isOverdue = false;
+
+			Task *newFTask;
+			newFTask = new Task(name, dueTime, isCompleted, isOverdue);
+			_taskList.push_back(newFTask);
 		}
 	}
 
 	input.close();
 }
 
-void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *taskDisplay, vector <FloatingTask*> *FTaskDisplay) {
+void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *taskDisplay) {
 	ptime currentTime(second_clock::local_time());
 
 	vector <Event*>::iterator itE = eventDisplay->begin();
@@ -196,8 +192,8 @@ void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *task
 	vector <Task*>::iterator itT = taskDisplay->begin();
 
 	for (int i = 0; i < _taskList.size(); i++) {
-		if (!_taskList[i]->getCompleted()) {
-			if (*itT != nullptr) {
+		if (!_taskList[i]->getCompleted() && !_taskList[i]->isFloatingTask()) {
+			if (itT != taskDisplay->end()) {
 				*itT = _taskList[i];
 				itT++;
 			} else {
@@ -207,16 +203,15 @@ void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *task
 		}
 	}
 
-	vector <FloatingTask*>::iterator itFT = FTaskDisplay->begin();
-
-	for (int i = 0; i < _floatingTaskList.size(); i++) {
-		if (!_floatingTaskList[i]->getCompleted()) {
-			if (*itFT != nullptr) {
-				*itFT = _floatingTaskList[i];
-				itFT++;
-			} else {
-				FTaskDisplay->push_back(_floatingTaskList[i]);
-				itFT = FTaskDisplay->end();
+	for (int i = 0; i < _taskList.size(); i++) {
+		if (_taskList[i]->isFloatingTask() && !_taskList[i]->getCompleted()) {
+			if (itT != taskDisplay->end()) {
+				*itT = _taskList[i];
+				itT++;
+			}
+			else {
+				taskDisplay->push_back(_taskList[i]);
+				itT = taskDisplay->end();
 			}
 		}
 	}

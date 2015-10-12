@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
-	//UI.updateDefaultDisplay(&LocalStorage);
+	UI.updateDefaultDisplay(&LocalStorage);
 	UI.printWelcome();
 	UI.printList();
 
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 
 		cmd->execute(&LocalStorage, &display);
 
-		//UI.updateDefaultDisplay(&LocalStorage);
+		UI.updateDefaultDisplay(&LocalStorage);
 		UI.printList();
 		getline(cin, input);
 	} 

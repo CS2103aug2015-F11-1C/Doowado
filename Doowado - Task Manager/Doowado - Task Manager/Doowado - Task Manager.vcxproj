@@ -130,7 +130,6 @@
     <ClCompile Include="EditTitleCommand.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Event.cpp" />
-    <ClCompile Include="FloatingTask.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -146,7 +145,6 @@
     <ClInclude Include="EditTitleCommand.h" />
     <ClInclude Include="Entry.h" />
     <ClInclude Include="Event.h" />
-    <ClInclude Include="FloatingTask.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Storage.h" />
     <ClInclude Include="Task.h" />

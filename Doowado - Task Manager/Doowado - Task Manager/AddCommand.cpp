@@ -32,8 +32,8 @@ void AddCommand::execute(Storage* data, Display* display) {
 	}
 	else {
 		cout << "Floating Task" << endl;
-		FloatingTask* newFloatingTask = new FloatingTask(_entryName);
-		data->addFloatingTask(newFloatingTask);
+		Task* newFloatingTask = new Task(_entryName);
+		data->addTask(newFloatingTask);
 	}
 
 	data->saveToFile();

@@ -11,6 +11,13 @@ Task::Task(string name, ptime dueTime) {
 	_name = name;
 	_dueTime = dueTime;
 	_isCompleted = false;
+	_isOverdue = false;
+}
+
+Task::Task(string name) {
+	_name = name;
+	_isCompleted = false;
+	_isOverdue = false;
 }
 
 ptime Task::getDueTime(){
@@ -23,6 +30,18 @@ bool Task::getCompleted(){
 
 bool Task::getOverdue(){
 	return _isOverdue;
+}
+
+bool Task::isFloatingTask() {
+	if (_dueTime.is_not_a_date_time()) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void Task::setDueTime(ptime newDueTime) {
+	_dueTime = newDueTime;
 }
 
 void Task::setCompleted(){
@@ -39,5 +58,5 @@ void Task::setOverdue(){
 
 void Task::printTask(){
 	cout << setw(20) << left << _name;
-	cout << " Due: " << to_simple_string(_dueTime) << endl;
+	cout << " Due: " << setw(20) << to_simple_string(_dueTime) << endl;
 }

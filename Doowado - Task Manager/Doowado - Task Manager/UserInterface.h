@@ -7,7 +7,6 @@
 #include <sstream>
 #include "Event.h"
 #include "Task.h"
-#include "FloatingTask.h"
 #include "Storage.h"
 
 using namespace std;
@@ -31,7 +30,6 @@ private:
 	vector<string> feedback;
 	vector<Event*> EventList;
 	vector<Task*> TaskList;
-	vector<FloatingTask*> FTaskList;
 
 private:
 	int convertCharToInt(char input);

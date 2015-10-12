@@ -66,16 +66,8 @@ void UserInterface::printList() {
 			cout << endl;
 		}
 	}
-	if (!FTaskList.empty()) {
-		cout << endl;
-		cout << TASK_LIST << endl;
-		for (int i = 0; i < FTaskList.size(); i++) {
-			cout << "T" << TaskList.size() + i + 1 << ": "; 
-			FTaskList[i]->printFTask();
-			cout << endl;
-		}
-	}
-	if (EventList.empty() && TaskList.empty() && FTaskList.empty()) {
+	
+	if (EventList.empty() && TaskList.empty()) {
 		cout << MESSAGE_FOUNDNOTHING << endl;
 	}
 }
@@ -113,5 +105,5 @@ int UserInterface::convertCharToInt(char input) {
 }
 
 void UserInterface::updateDefaultDisplay(Storage *LocalData) {
-	LocalData->displayDefault(&EventList, &TaskList, &FTaskList);
+	LocalData->displayDefault(&EventList, &TaskList);
 }

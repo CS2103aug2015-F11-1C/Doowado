@@ -1,7 +1,8 @@
 #include "EditTimeCommand.h"
 
 
-EditTimeCommand::EditTimeCommand(int displayIndex, ptime newStartTime, ptime newEndTime) {
+EditTimeCommand::EditTimeCommand(string entryType, int displayIndex, ptime newStartTime, ptime newEndTime) {
+	_entryType = entryType;
 	_taskID = displayIndex;
 	_newStartTime = newStartTime;
 	_newEndTime = newEndTime;

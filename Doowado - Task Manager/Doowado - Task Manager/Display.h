@@ -10,5 +10,7 @@ public:
 	~Display();
 	void updateDisplayEventList(vector<Event*>&);
 	void updateDisplayTaskList(vector<Task*>&);
+	Event* retrieveEvent(int);
+	Task* retrieveTask(int);
 };
 

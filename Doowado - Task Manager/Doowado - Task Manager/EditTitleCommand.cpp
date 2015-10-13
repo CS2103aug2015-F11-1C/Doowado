@@ -1,8 +1,9 @@
 #include "EditTitleCommand.h"
 
 
-EditTitleCommand::EditTitleCommand(int displayIndex, string newTitle)
+EditTitleCommand::EditTitleCommand(string entryType, int displayIndex, string newTitle)
 {
+	string _entryType = entryType;
 	int _taskId = displayIndex;
 	string _newTitle = newTitle;
 }

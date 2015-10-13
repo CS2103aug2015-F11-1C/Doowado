@@ -17,6 +17,6 @@ public:
 	virtual ~Command();
 
 	virtual void execute(Storage* data, Display* display);
-	
+
 };
 

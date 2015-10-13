@@ -3,12 +3,12 @@
 class Display
 {
 private:
-	vector<string> _feedback;
-	vector<Event*> _EventList;
-	vector<Task*> _TaskList;
+	vector<Event*> _eventList;
+	vector<Task*> _taskList;
 public:
-	void writeFeedback(vector<string> feedback);
 	Display();
 	~Display();
+	void updateDisplayEventList(vector<Event*>&);
+	void updateDisplayTaskList(vector<Task*>&);
 };
 

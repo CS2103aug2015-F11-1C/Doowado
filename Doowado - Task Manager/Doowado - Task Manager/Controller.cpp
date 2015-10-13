@@ -9,13 +9,13 @@
 int main(int argc, char* argv[]) {
 
 	UserInterface UI;
-	Display display;
 	Storage LocalStorage(argv[1]);
 	CommandBuilder *builder;
 	Command *cmd = nullptr;
 	Parser parser;
 	string input;
 	static ptime currentTime(second_clock::local_time());
+	static Display displayList;
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 		builder = new CommandBuilder(parsedInput);
 		cmd = builder->buildCommand();
 
-		cmd->execute(&LocalStorage, &display);
+		cmd->execute(&LocalStorage, &displayList);
 
 		UI.updateDefaultDisplay(&LocalStorage);
 		UI.printList();

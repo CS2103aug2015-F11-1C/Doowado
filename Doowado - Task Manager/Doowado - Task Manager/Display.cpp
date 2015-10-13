@@ -1,12 +1,6 @@
 #include "Display.h"
 
 
-
-void Display::writeFeedback(vector<string> feedback)
-{
-
-}
-
 Display::Display()
 {
 }
@@ -14,4 +8,14 @@ Display::Display()
 
 Display::~Display()
 {
+}
+
+void Display::updateDisplayEventList(vector<Event*>& updatedEventList)
+{
+	_eventList = updatedEventList;
+}
+
+void Display::updateDisplayTaskList(vector<Task*>& updatedTaskList)
+{
+	_taskList = updatedTaskList;
 }

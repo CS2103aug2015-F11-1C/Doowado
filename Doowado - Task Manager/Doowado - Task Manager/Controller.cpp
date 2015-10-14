@@ -15,7 +15,8 @@ int main(int argc, char* argv[]) {
 	Parser parser;
 	string input;
 	static ptime currentTime(second_clock::local_time());
-	static Display displayList;
+	Display displayList;
+	vector<string>* commandResult;
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();

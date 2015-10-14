@@ -16,7 +16,7 @@ public:
 	Command();
 	virtual ~Command();
 
-	virtual void execute(Storage* data, Display* display);
+	virtual vector<string> execute(Storage* data, Display* display);
 
 };
 

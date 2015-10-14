@@ -12,7 +12,9 @@ EditTitleCommand::~EditTitleCommand()
 {
 }
 
-void EditTitleCommand::execute(Storage* data, Display *display)
+vector<string> EditTitleCommand::execute(Storage* data, Display *display)
 {
+	vector<string> feedback;
+	return feedback;
 	//edit displayedText
 }

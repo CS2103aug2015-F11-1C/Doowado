@@ -11,6 +11,8 @@ DeleteCommand::~DeleteCommand()
 {
 }
 
-void DeleteCommand::execute(Storage* data, Display* display) {
+vector<string> DeleteCommand::execute(Storage* data, Display* display) {
+	vector<string> feedback;
+	return feedback;
 	//delete command
 }

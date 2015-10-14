@@ -12,6 +12,8 @@ EditTimeCommand::~EditTimeCommand()
 {
 }
 
-void EditTimeCommand::execute(Storage* data, Display *display) {
+vector<string> EditTimeCommand::execute(Storage* data, Display *display) {
+	vector<string> feedback;
+	return feedback;
 	//edit time
 }

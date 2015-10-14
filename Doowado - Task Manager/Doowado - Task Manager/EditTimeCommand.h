@@ -10,5 +10,5 @@ class EditTimeCommand: public Command {
 	public:
 		EditTimeCommand(int, ptime, ptime);
 		~EditTimeCommand();
-		void execute(Storage* data, Display* display);
+		vector<string> execute(Storage* data, Display* display);
 };

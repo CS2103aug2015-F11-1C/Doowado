@@ -1,6 +1,9 @@
 #pragma once
 #include "Command.h"
 
+const string eventType = "e";
+const string taskType = "t";
+
 class EditTitleCommand : public Command
 {
 private:

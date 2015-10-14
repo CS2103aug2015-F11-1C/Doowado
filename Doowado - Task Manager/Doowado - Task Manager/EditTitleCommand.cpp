@@ -15,5 +15,15 @@ EditTitleCommand::~EditTitleCommand()
 
 void EditTitleCommand::execute(Storage* data, Display *display)
 {
-	//edit displayedText
+	if (_entryType == eventType) {
+		Event* eventEntry = display->retrieveEvent(_taskID);
+		eventEntry->setName(_newTitle);
+	}
+
+	else if (_entryType == taskType) {
+		Task* taskEntry = display->retrieveTask(_taskID);
+		taskEntry->setName(_newTitle);
+	}
+
+	return;
 }

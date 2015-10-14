@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.h"
 
+
 class EditTimeCommand: public Command {
 	private:
 		string _entryType;

@@ -6,10 +6,10 @@
 #include "UserInterface.h"
 #include "Display.h"
 
-int main(int argc, char* argv[]) {
+int main() {
 
 	UserInterface UI;
-	Storage LocalStorage(argv[1]);
+	Storage LocalStorage("SaveFile.txt");
 	CommandBuilder *builder;
 	Command *cmd = nullptr;
 	Parser parser;

@@ -288,3 +288,23 @@ vector<Task*> Storage::displayCompletedTasks(){
 
 	return taskResult;
 }
+
+void Storage::deleteFromEventList(Event * eventPointer){
+	vector<Event*>::iterator it = _eventList.begin();
+
+	while (*it != eventPointer) {
+		it++;
+	}
+
+	_eventList.erase(it);
+}
+
+void Storage::deleteFromTaskLIst(Task * taskPointer){
+	vector<Task*>::iterator it = _taskList.begin();
+
+	while (*it != taskPointer) {
+		it++;
+	}
+
+	_taskList.erase(it);
+}

@@ -17,10 +17,13 @@ public:
 	void addEvent(Event* newEvent);
 	void addTask(Task* newTask);
 	vector <Entry*> searchName(string keyword);
-	void saveToFile();
-	void loadFromFile();
 	void displayDefault(vector <Event*> *eventList, vector <Task*> *taskList);				// Display today's event and all uncompleted tasks
 	vector <Event*> displayByDate(string timeIndicator);
 	vector <Task*> displayIncompleteTasks();
 	vector <Task*> displayCompletedTasks();
+	void deleteFromEventList(Event* eventPointer);
+	void deleteFromTaskLIst(Task* taskPointer);
+
+	void saveToFile();
+	void loadFromFile();
 };

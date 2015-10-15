@@ -25,5 +25,6 @@ public:
 	void execute(Storage* data, Display *display);
 
 	void generateFeedback();
+	void checkValidName(string);
 };
 

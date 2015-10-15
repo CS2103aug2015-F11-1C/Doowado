@@ -5,6 +5,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include "Storage.h"
 #include "Display.h"
+#include <assert.h>
 
 using namespace std;
 using namespace boost::gregorian;

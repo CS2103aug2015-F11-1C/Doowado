@@ -1,4 +1,5 @@
 #include "Display.h"
+#include "Assert.h"
 
 
 Display::Display()
@@ -12,6 +13,7 @@ Display::~Display()
 
 void Display::updateCommandFeedback(vector<string>& feedback)
 {
+	checkValidFeedback(feedback);
 	_commandFeedback = feedback;
 }
 
@@ -48,4 +50,9 @@ Task * Display::retrieveTask(int taskID)
 		task = nullptr;
 	}
 	return task;
+}
+
+void Display::checkValidFeedback(vector<string>& feedback)
+{
+	assert(feedback.size() != 0);
 }

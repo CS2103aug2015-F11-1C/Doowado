@@ -16,5 +16,7 @@ public:
 	void updateDisplayTaskList(vector<Task*>&);
 	Event* retrieveEvent(int);
 	Task* retrieveTask(int);
+
+	void checkValidFeedback(vector<string>&);
 };
 

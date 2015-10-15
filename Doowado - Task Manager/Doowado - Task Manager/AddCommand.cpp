@@ -22,6 +22,8 @@ AddCommand::~AddCommand()
 }
 
 void AddCommand::execute(Storage* data, Display *display) {
+	checkValidName(_entryName);
+
 	if (!_entryStartTime.is_not_a_date_time()) {
 		cout << "Event" << endl;
 		entryType = type_event;
@@ -60,3 +62,9 @@ void AddCommand::generateFeedback() {
 	}
 
 }
+
+void AddCommand::checkValidName(string name)
+{
+	assert(name != "");
+}
+

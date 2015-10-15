@@ -15,6 +15,6 @@ public:
 	AddCommand(string name, ptime time1, ptime time2);
 	~AddCommand();
 
-	vector<string> execute(Storage* data, Display* display);
+	void execute(Storage* data);
 };
 

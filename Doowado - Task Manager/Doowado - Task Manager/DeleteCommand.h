@@ -8,6 +8,6 @@ class DeleteCommand: public Command {
 	public:
 		DeleteCommand(int);
 		~DeleteCommand();
-		vector<string> execute(Storage* data, Display* display);
+		void execute(Storage* data, Display* display);
 };
 

@@ -15,8 +15,7 @@ int main(int argc, char* argv[]) {
 	Parser parser;
 	string input;
 	static ptime currentTime(second_clock::local_time());
-	vector<string> cmdFeedback;
-	Display displayList;
+	static Display displayList;
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
@@ -35,8 +34,7 @@ int main(int argc, char* argv[]) {
 		builder = new CommandBuilder(parsedInput);
 		cmd = builder->buildCommand();
 
-		cmdFeedback = cmd->execute(&LocalStorage, &displayList);
-
+		cmd->execute(&LocalStorage, &displayList);
 
 		UI.updateDefaultDisplay(&LocalStorage);
 		UI.printList();

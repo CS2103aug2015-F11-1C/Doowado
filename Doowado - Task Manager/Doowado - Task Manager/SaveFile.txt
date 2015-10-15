@@ -11,32 +11,14 @@ cs2103 lecture
 20151009T140000
 20151009T160000
 Event
-project meeting
-20151012T120000
-20151012T140000
-Event
 fyp meeting
 20151013T120000
 20151013T140000
-Event
-competition meeting
-20151114T140000
-20151114T160000
-Task
-assignment 4
-20151009T170000
-Not Completed
-Not Overdue
 Task
 project deadline
 20151012T170000
 Not Completed
 Overdue
-Task
-do tutorial 5
-20151215T120000
-Not Completed
-Not Overdue
 FTask
 meeting
 Not Completed
@@ -63,17 +45,5 @@ Not Completed
 Not Overdue
 FTask
 read a book
-Not Completed
-Not Overdue
-FTask
-do tutorial
-Not Completed
-Not Overdue
-FTask
-competition meeting, 2015/11/14 1400-1600
-Not Completed
-Not Overdue
-FTask
-project meeting,1023/14/10 1200-1400
 Not Completed
 Not Overdue

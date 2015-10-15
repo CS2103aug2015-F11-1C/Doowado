@@ -9,7 +9,6 @@ Command::~Command()
 {
 }
 
-vector<string> Command::execute(Storage* data, Display* display) {
-	vector<string> feedback;
-	return feedback;
+void Command::execute(Storage* data, Display* display) {
+
 }

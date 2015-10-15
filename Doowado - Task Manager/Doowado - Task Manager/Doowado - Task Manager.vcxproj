@@ -121,10 +121,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddCommand.cpp" />
-    <ClCompile Include="AddCommandResult.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandBuilder.cpp" />
-    <ClCompile Include="CommandResult.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="DeleteCommand.cpp" />
     <ClCompile Include="Display.cpp" />
@@ -139,10 +137,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddCommand.h" />
-    <ClInclude Include="AddCommandResult.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandBuilder.h" />
-    <ClInclude Include="CommandResult.h" />
     <ClInclude Include="DeleteCommand.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="EditTimeCommand.h" />

@@ -10,13 +10,17 @@ private:
 	vector <Event*> _eventList;
 	vector <Task*> _taskList;
 	string _saveDir;
+	string _helpDir;
 
 public:
 	Storage(string saveDir);
 	void addEvent(Event* newEvent);
 	void addTask(Task* newTask);
+	vector <Entry*> searchName(string keyword);
 	void saveToFile();
 	void loadFromFile();
 	void displayDefault(vector <Event*> *eventList, vector <Task*> *taskList);				// Display today's event and all uncompleted tasks
-	void sortByDate();
+	vector <Event*> displayByDate(string timeIndicator);
+	vector <Task*> displayIncompleteTasks();
+	vector <Task*> displayCompletedTasks();
 };

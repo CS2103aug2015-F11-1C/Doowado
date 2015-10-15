@@ -7,9 +7,13 @@ const string TASK_COMPLETED = "Completed";
 const string TASK_NOT_COMPLETED = "Not Completed";
 const string TASK_OVERDUE = "Overdue";
 const string TASK_NOT_OVERDUE = "Not Overdue";
+const string TODAY_INDICATOR = "today";
+const string TOMORROW_INDICATOR = "tomorrow";
+const string HELP_DIRECTORY = "Help.txt";
 
 Storage::Storage(string saveDir){
 	_saveDir = saveDir;
+	_helpDir = HELP_DIRECTORY;
 }
 
 void Storage::addEvent(Event * newEvent){
@@ -47,6 +51,26 @@ void Storage::addTask(Task * newTask){
 			_taskList.insert(it, newTask);
 		}
 	}
+}
+
+vector <Entry*> Storage::searchName(string keyword) {
+	vector <Entry*> result;
+
+	for (int i = 0; i < _eventList.size(); i++) {
+		size_t found = _eventList[i]->getName().find(keyword);
+		if (found != string::npos) {
+			result.push_back(_eventList[i]);
+		}
+	}
+
+	for (int i = 0; i < _taskList.size(); i++) {
+		size_t found = _taskList[i]->getName().find(keyword);
+		if (found != string::npos) {
+			result.push_back(_taskList[i]);
+		}
+	}
+
+	return result;
 }
 
 // Saves to txt file in the following format:
@@ -217,6 +241,50 @@ void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *task
 	}
 }
 
-void Storage::sortByDate(){
+vector <Event*> Storage::displayByDate(string timeIndicator) {
+	vector <Event*> eventResult;
 
+	date dateRequired;
+
+	if (timeIndicator == TODAY_INDICATOR) {
+		dateRequired = day_clock::local_day();
+	} else if (timeIndicator == TOMORROW_INDICATOR) {
+		date currentDate(day_clock::local_day());
+		date_duration dayDiff(1);
+		dateRequired = currentDate + dayDiff;
+	} else {
+		dateRequired = from_undelimited_string(timeIndicator);
+	}
+
+	for (int i = 0; i < _eventList.size(); i++) {
+		if (_eventList[i]->getStartTime().date() == dateRequired) {
+			eventResult.push_back(_eventList[i]);
+		}
+	}
+
+	return eventResult;
+}
+
+vector<Task*> Storage::displayIncompleteTasks(){
+	vector<Task*> taskResult;
+
+	for (int i = 0; i < _taskList.size(); i++) {
+		if (!_taskList[i]->getCompleted()) {
+			taskResult.push_back(_taskList[i]);
+		}
+	}
+
+	return taskResult;
+}
+
+vector<Task*> Storage::displayCompletedTasks(){
+	vector <Task*> taskResult;
+	
+	for (int i = 0; i < _taskList.size(); i++) {
+		if (_taskList[i]->getCompleted()) {
+			taskResult.push_back(_taskList[i]);
+		}
+	}
+
+	return taskResult;
 }

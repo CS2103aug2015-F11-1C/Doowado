@@ -10,6 +10,11 @@ Display::~Display()
 {
 }
 
+void Display::updateCommandFeedback(vector<string>& feedback)
+{
+	_commandFeedback = feedback;
+}
+
 void Display::updateDisplayEventList(vector<Event*>& updatedEventList)
 {
 	_eventList = updatedEventList;

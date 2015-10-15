@@ -1,5 +1,7 @@
 #include "AddCommand.h"
 
+const string AddCommand::MESSAGE_ADDED = "Added";
+
 AddCommand::AddCommand(string name) {
 	_entryName = name;
 }
@@ -19,22 +21,42 @@ AddCommand::~AddCommand()
 {
 }
 
-void AddCommand::execute(Storage* data) {
+void AddCommand::execute(Storage* data, Display *display) {
 	if (!_entryStartTime.is_not_a_date_time()) {
 		cout << "Event" << endl;
+		entryType = type_event;
 		Event* newEvent = new Event(_entryName, _entryStartTime, _entryEndTime);
 		data->addEvent(newEvent);
 	}
 	else if (!_entryDueTime.is_not_a_date_time()) {
 		cout << "Task" << endl;
+		entryType = type_timed_task;
 		Task* newTask = new Task(_entryName, _entryDueTime);
 		data->addTask(newTask);
 	}
 	else {
 		cout << "Floating Task" << endl;
+		entryType = type_floating_task;
 		Task* newFloatingTask = new Task(_entryName);
 		data->addTask(newFloatingTask);
 	}
 
+	generateFeedback();
+	display->updateCommandFeedback(_feedback);
 	data->saveToFile();
+}
+
+void AddCommand::generateFeedback() {
+	_feedback.push_back(MESSAGE_ADDED);
+	_feedback.push_back(_entryName);
+
+	if (type_event == entryType) {
+		_feedback.push_back(to_simple_string(_entryStartTime));
+		_feedback.push_back(to_simple_string(_entryEndTime));
+	} else if (type_timed_task == entryType) {
+		_feedback.push_back(to_simple_string(_entryDueTime));
+	} else if (type_floating_task == entryType) {
+
+	}
+
 }

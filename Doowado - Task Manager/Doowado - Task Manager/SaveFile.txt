@@ -11,9 +11,31 @@ cs2103 lecture
 20151009T140000
 20151009T160000
 Event
+attend seminar.
+20151010T120000
+20151010T140000
+Event
 fyp meeting
 20151013T120000
 20151013T140000
+Event
+attend seminar2
+20151016T140000
+20151016T160000
+Event
+discussion
+20151016T170000
+20151016T190000
+Task
+finish simulation
+20151010T140000
+Not Completed
+Not Overdue
+Task
+draft drwg
+20151010T170000
+Not Completed
+Not Overdue
 Task
 project deadline
 20151012T170000
@@ -45,5 +67,21 @@ Not Completed
 Not Overdue
 FTask
 read a book
+Not Completed
+Not Overdue
+FTask
+build cad model
+Not Completed
+Not Overdue
+FTask
+attend seminar
+Not Completed
+Not Overdue
+FTask
+buy stationery
+Not Completed
+Not Overdue
+FTask
+calibrate timer
 Not Completed
 Not Overdue

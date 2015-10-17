@@ -10,7 +10,7 @@ private:
 	vector<Task*> _requestedTaskList;
 
 public:
-	ShowCommand();
+	ShowCommand(date);
 	~ShowCommand();
 
 	void execute(Storage* data, Display* display);

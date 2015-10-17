@@ -26,4 +26,6 @@ public:
 
 	void saveToFile();
 	void loadFromFile();
+
+	void displayByDate(vector<Event*>*, vector<Task*>*, date);
 };

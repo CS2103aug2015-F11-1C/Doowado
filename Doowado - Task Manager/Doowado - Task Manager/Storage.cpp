@@ -194,6 +194,10 @@ void Storage::loadFromFile(){
 	input.close();
 }
 
+void Storage::displayByDate(vector<Event*> *eventList, vector<Task*> *taskList, date requestedDate)
+{
+}
+
 void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *taskDisplay) {
 	ptime currentTime(second_clock::local_time());
 

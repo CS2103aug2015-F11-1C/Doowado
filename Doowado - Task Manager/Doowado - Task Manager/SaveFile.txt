@@ -34,6 +34,22 @@ Event
 discussion
 20151016T170000
 20151016T190000
+Event
+feameeting
+20151018T120000
+20151018T140000
+Event
+anothermeeting
+20151018T180000
+20151018T190000
+Event
+feameeting
+20151019T120000
+20151019T140000
+Event
+meeting
+20151019T180000
+20151019T190000
 Task
 finish simulation
 20151010T140000
@@ -99,5 +115,21 @@ Not Completed
 Not Overdue
 FTask
                      
+Not Completed
+Not Overdue
+FTask
+newtask
+Not Completed
+Not Overdue
+FTask
+anothertask
+Not Completed
+Not Overdue
+FTask
+fetch students
+Not Completed
+Not Overdue
+FTask
+yetanothertask
 Not Completed
 Not Overdue

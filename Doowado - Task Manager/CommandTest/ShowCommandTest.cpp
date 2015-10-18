@@ -11,7 +11,14 @@ namespace CommandTest
 		
 		TEST_METHOD(ConstructorTest)
 		{
-			date testDate;
+			date testDate(2015,Oct,17);
+			ptime t1;
+			ptime t2;
+			
+			ShowCommand* cmd;
+			cmd = new ShowCommand(testDate);
+
+			Assert::AreEqual(1,1);
 		}
 
 	};

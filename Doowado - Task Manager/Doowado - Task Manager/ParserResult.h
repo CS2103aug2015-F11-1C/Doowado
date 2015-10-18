@@ -5,7 +5,7 @@
 #include<string>
 #include<vector>
 #include<algorithm>
-#include <sstream>
+#include<sstream>
 
 using namespace std;
 
@@ -14,7 +14,7 @@ private:
 	//command & description
 	string _userCommand;
 	vector<string> _description;
-	vector<string> _index;
+	vector<int> _index;
 	vector<string> _entryType;
 
 	//date
@@ -26,22 +26,22 @@ private:
 	vector<string> _endTime;
 
 public:
-	void setUserCommand();
-	void setDescription();
-	void setIndex();
-	void setEntryType();
-	void setStartDate();
-	void setEndDate();
-	void setStartTime();
-	void setEndTime();
+	void setUserCommand(string userCommand);
+	void setDescription(vector<string> description);
+	void setIndex(vector<int> index);
+	void setEntryType(vector<string> entryType);
+	void setStartDate(vector<int> startYear, vector<int> startMonth, vector<int> startDay);
+	void setEndDate(vector<int> endYear, vector<int> endMonth, vector<int> endDay);
+	void setStartTime(vector<int> startTime);
+	void setEndTime(vector<int> endTime);
 
-	void getUserCommand();
-	void getDescription();
-	void getIndex();
-	void getEntryType();
-	void getStartDate();
-	void getEndDate();
-	void getStartTime();
-	void getEndTime();
+	string getUserCommand();
+	vector<string> getDescription();
+	vector<int> getIndex();
+	vector<string> getEntryType();
+	vector<string> getStartDate();
+	vector<string> getEndDate();
+	vector<string> getStartTime();
+	vector<string> getEndTime();
 };
 #endif

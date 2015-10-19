@@ -6,7 +6,7 @@
 #include <fstream>
 
 class Storage {
-private:
+protected:
 	vector <Event*> _eventList;
 	vector <Task*> _taskList;
 	string _saveDir;

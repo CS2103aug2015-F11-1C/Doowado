@@ -9,10 +9,13 @@ private:
 	vector<Event*> _requestedEventList;
 	vector<Task*> _requestedTaskList;
 
+	vector<string> _feedback;
+
 public:
 	ShowCommand(date);
 	~ShowCommand();
 
 	void execute(Storage* data, Display* display);
+	void generateFeedback();
 };
 

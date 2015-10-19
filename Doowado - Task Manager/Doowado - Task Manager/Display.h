@@ -2,7 +2,7 @@
 #include "Storage.h"
 class Display
 {
-private:
+protected:
 	vector<string> _commandFeedback;
 	vector<Event*> _eventList;
 	vector<Task*> _taskList;

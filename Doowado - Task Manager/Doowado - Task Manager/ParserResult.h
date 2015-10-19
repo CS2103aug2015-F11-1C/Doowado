@@ -1,11 +1,11 @@
 #ifndef PARSER_RESULT_H
 #define PARSER_RESULT_H
 
-#include<iostream>
-#include<string>
-#include<vector>
-#include<algorithm>
-#include<sstream>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <sstream>
 
 using namespace std;
 

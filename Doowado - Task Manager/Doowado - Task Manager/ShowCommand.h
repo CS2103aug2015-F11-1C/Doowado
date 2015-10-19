@@ -3,10 +3,14 @@
 
 class ShowCommand
 {
+#ifndef TESTMODE
 private:
+#else 
+public: 
+#endif
+	vector<Event*> _requestedEventList;
 	date _requestedDate;
 
-	vector<Event*> _requestedEventList;
 	vector<Task*> _requestedTaskList;
 
 	vector<string> _feedback;

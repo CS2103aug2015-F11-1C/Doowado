@@ -16,3 +16,8 @@ void StorageStub::displayByDate(vector<Event*>* eventList, vector<Task*>* taskLi
 	*eventList = _eventList;
 	*taskList = _taskList;
 }
+
+vector<Event*> StorageStub::getEventsList()
+{
+	return _eventList;
+}

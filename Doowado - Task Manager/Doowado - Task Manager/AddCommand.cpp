@@ -17,6 +17,14 @@ AddCommand::AddCommand(string name, ptime time1, ptime time2) {
 	_entryEndTime = time2;
 }
 
+AddCommand::AddCommand(string entryName, ptime entryStartTime, ptime entryEndTime, ptime entryDueTime)
+{
+	_entryName = entryName;
+	_entryStartTime = entryStartTime;
+	_entryEndTime = entryEndTime;
+	_entryDueTime = entryDueTime;
+}
+
 AddCommand::~AddCommand()
 {
 }

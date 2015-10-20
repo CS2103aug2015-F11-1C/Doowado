@@ -20,6 +20,7 @@ public:
 	AddCommand(string name);
 	AddCommand(string name, ptime time1);
 	AddCommand(string name, ptime time1, ptime time2);
+	AddCommand(string, ptime, ptime, ptime);
 	~AddCommand();
 
 	void execute(Storage* data, Display *display);

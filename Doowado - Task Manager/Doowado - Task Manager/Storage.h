@@ -13,7 +13,7 @@ private:
 	string _helpDir;
 
 public:
-	Storage(string saveDir);
+	Storage();
 
 	void addEvent(Event* newEvent);
 	void addTask(Task* newTask);

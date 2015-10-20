@@ -9,7 +9,7 @@
 int main() {
 
 	UserInterface UI;
-	Storage LocalStorage("SaveFile.txt");
+	Storage LocalStorage;
 	CommandBuilder *builder;
 	Command *cmd = nullptr;
 	Parser parser;

@@ -10,6 +10,7 @@ const string TASK_NOT_OVERDUE = "Not Overdue";
 const string TODAY_INDICATOR = "today";
 const string TOMORROW_INDICATOR = "tomorrow";
 const string HELP_DIRECTORY = "Help.txt";
+const string SAVE_PATH_FILE_DIRECTORY = "SaveDir.txt";
 const string SEARCH_QUERY_NOT_FOUND = "Phrase not found in database";
 
 void checkEmptyVector(vector<Entry*> Result) {
@@ -47,8 +48,11 @@ void removeDuplicateTasks(vector<Task*> Result) {
 	}
 }
 
-Storage::Storage(string saveDir) {
-	_saveDir = saveDir;
+Storage::Storage() {
+	ifstream savePathInput(SAVE_PATH_FILE_DIRECTORY);
+	getline(savePathInput, _saveDir);
+	savePathInput.close();
+
 	_helpDir = HELP_DIRECTORY;
 }
 
@@ -170,6 +174,11 @@ void Storage::saveToFile() {
 		}
 	}
 	output.close();
+
+	//saves the directory of the txt file used to save
+	ofstream savedir(SAVE_PATH_FILE_DIRECTORY);
+	savedir << _saveDir << endl;
+	savedir.close();
 }
 
 void Storage::loadFromFile() {

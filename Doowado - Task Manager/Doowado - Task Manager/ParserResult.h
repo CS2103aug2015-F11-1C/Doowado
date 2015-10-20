@@ -35,13 +35,13 @@ public:
 	void setStartTime(vector<int> startTime);
 	void setEndTime(vector<int> endTime);
 
-	string getUserCommand();
-	vector<string> getDescription();
-	vector<int> getIndex();
-	vector<string> getEntryType();
-	vector<string> getStartDate();
-	vector<string> getEndDate();
-	vector<string> getStartTime();
-	vector<string> getEndTime();
+	string& getUserCommand();
+	vector<string>& getDescription();
+	vector<int>& getIndex();
+	vector<string>& getEntryType();
+	vector<string>& getStartDate();
+	vector<string>& getEndDate();
+	vector<string>& getStartTime();
+	vector<string>& getEndTime();
 };
 #endif

@@ -11,11 +11,11 @@ int main() {
 	UserInterface UI;
 	Storage LocalStorage;
 	Command *cmd = nullptr;
-	Parser parser;
+	Parser* parser = new Parser(); 
 	string input;
 	static ptime currentTime(second_clock::local_time());
 	Display displayList;
-	CommandBuilder builder;
+	CommandBuilder* builder = new CommandBuilder();
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
@@ -26,12 +26,11 @@ int main() {
 	getline(cin, input);
 	
 	while (input != "exit") {
-		ParserResult parserResult;
-		parserResult = parser.parse(input);
+		ParserResult* parserResult = new ParserResult(); 
+		*parserResult = parser->parse(input);
 
-		
-		cmd = builder.buildCommand(parserResult);
 
+		cmd = builder->buildCommand(*parserResult);
 		cmd->execute(&LocalStorage, &displayList);
 
 		UI.updateDefaultDisplay(&LocalStorage);

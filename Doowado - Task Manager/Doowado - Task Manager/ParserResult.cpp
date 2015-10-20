@@ -1,5 +1,22 @@
 #include "ParserResult.h"
 
+ParserResult::ParserResult()
+{
+	//command & description
+	_userCommand = "";
+	_description.clear();
+	_index.clear();
+	_entryType.clear();
+
+	//date
+	_startDate.clear();
+	_endDate.clear();
+
+	//time
+	_startTime.clear();
+	_endTime.clear();
+}
+
 void ParserResult::setUserCommand(string userCommand){
 	_userCommand = userCommand;
 }

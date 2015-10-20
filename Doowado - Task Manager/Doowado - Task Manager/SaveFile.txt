@@ -47,10 +47,6 @@ feameeting
 20151019T120000
 20151019T140000
 Event
-completelecturequix
-20151019T130000
-20151019T140000
-Event
 meeting
 20151019T180000
 20151019T190000
@@ -138,6 +134,6 @@ yetanothertask
 Not Completed
 Not Overdue
 FTask
-newtask2
+go home
 Not Completed
 Not Overdue

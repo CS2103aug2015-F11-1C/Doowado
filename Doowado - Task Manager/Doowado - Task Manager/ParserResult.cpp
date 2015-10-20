@@ -94,34 +94,34 @@ void ParserResult::setEndTime(vector<int> endTime){
 	}
 }
 
-string ParserResult::getUserCommand(){
+string& ParserResult::getUserCommand(){
 	return _userCommand;
 }
 
-vector<string> ParserResult::getDescription(){
+vector<string>& ParserResult::getDescription(){
 	return _description;
 }
 
-vector<int> ParserResult::getIndex(){
+vector<int>& ParserResult::getIndex(){
 	return _index;
 }
 
-vector<string> ParserResult::getEntryType(){
+vector<string>& ParserResult::getEntryType(){
 	return _entryType;
 }
 
-vector<string> ParserResult::getStartDate(){
+vector<string>& ParserResult::getStartDate(){
 	return _startDate;
 }
 
-vector<string> ParserResult::getEndDate(){
+vector<string>& ParserResult::getEndDate(){
 	return _endDate;
 }
 
-vector<string> ParserResult::getStartTime(){
+vector<string>& ParserResult::getStartTime(){
 	return _startTime;
 }
 
-vector<string> ParserResult::getEndTime(){
+vector<string>& ParserResult::getEndTime(){
 	return _endTime;
 }

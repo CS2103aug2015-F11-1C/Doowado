@@ -132,6 +132,7 @@
     <ClCompile Include="EditTitleCommand.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="History.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParserResult.cpp" />
     <ClCompile Include="ShowCommand.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="EditTitleCommand.h" />
     <ClInclude Include="Entry.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="History.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParserResult.h" />
     <ClInclude Include="ShowCommand.h" />

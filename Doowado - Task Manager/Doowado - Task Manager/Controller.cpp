@@ -5,6 +5,7 @@
 #include "Parser.h"
 #include "UserInterface.h"
 #include "Display.h"
+#include "History.h"
 
 int main() {
 
@@ -17,6 +18,7 @@ int main() {
 	static ptime currentTime(second_clock::local_time());
 	Display displayList;
 	vector<string>* commandResult;
+	History history;
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();

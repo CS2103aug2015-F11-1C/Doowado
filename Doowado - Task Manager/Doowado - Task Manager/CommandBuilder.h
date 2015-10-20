@@ -1,6 +1,8 @@
 #pragma once
 #include<vector>
+#include<assert.h>
 #include"Command.h"
+#include"ParserResult.h"
 
 using namespace std;
 
@@ -13,47 +15,39 @@ const string COMMANDTYPE_SHOW = "show";
 const string COMMANDTYPE_HELP = "help";
 const string COMMANDTYPE_SAVE = "save";
 
-const int INDEX_COMMANDTYPE = 0;
-const int INDEX_ADD_TITLE = 1;
-const int INDEX_ADD_TIME_1 = 2;
-const int INDEX_ADD_TIME_2 = 3;
-
-const int INDEX_EDIT_ENTRY_TYPE = 1;
-const int INDEX_EDIT_DISPLAY_INDEX = 2;
-const int INDEX_EDIT_NEW_TITLE =  3;
-const int INDEX_EDIT_NEW_START_TIME = 3;
-const int INDEX_EDIT_NEW_END_TIME = 4;
-
-const int INDEX_DELETE_DISPLAY_INDEX = 1;
-
-const int VECTOR_SIZE_EVENT = 4;
-const int VECTOR_SIZE_TASK = 3;
-const int VECTOR_SIZE_FLOATING_TASK = 2;
+enum EntryType {event, task, floatingTask};
+enum TypeOfEdit {	editTitle,
+					editStartDate,
+					editStartTime,
+					editStartDateAndTime,
+					editEndDate,
+					editEndTime,
+					editEndDateAndTime,
+					editStartAndEndDate,
+					editStartAndEndTime,
+					editDueTime};
 
 class CommandBuilder {
+	
 	private:
-		vector<string> _vInputs;
-
-		bool isEvent();
-		bool isTask();
-		bool isFloatingTask();
-
-		Command* createAddCommand();
-		Command* createEventAddCommand();
-		Command* createTaskAddCommand();
-		Command* createFTaskAddCommand();
-		Command* createEditTitleCommand();
-		Command* createEditTimeCommand();
-		Command* createDeleteCommand();
-		Command* createSearchCommand();
-		Command* createShowCommand();
-		Command* createHelpCommand();
-		Command* createSaveCommand();
+//		EntryType checkEntryType(ParserResult&);
+		ptime createPTimeObject(string, string);
+		TypeOfEdit checkEditType(vector<string>, vector<string> , vector<string>, vector<string>, vector<string>);
+	
+		Command* createAddCommand(ParserResult&);
+		Command* createEditCommand(ParserResult&);
+//		Command* createEditTitleCommand(ParserResult&);
+//		Command* createEditTimeCommand(ParserResult&);
+//		Command* createDeleteCommand(ParserResult&);
+//		Command* createSearchCommand(ParserResult&);
+		Command* createShowCommand(ParserResult&);
+//		Command* createHelpCommand(ParserResult&);
+//		Command* createSaveCommand(ParserResult&);
 
 	public:
-		CommandBuilder(vector<string>&);
-		Command* buildCommand();
+		CommandBuilder();
+		Command* buildCommand(ParserResult &);
 
 		~CommandBuilder();
-};
+};            
 

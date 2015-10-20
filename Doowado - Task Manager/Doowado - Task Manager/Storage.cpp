@@ -110,6 +110,7 @@ vector <Event*> Storage::searchEventsByName(vector <string> keywords) {
 	}
 	
 	removeDuplicateEvents(result);
+	return result;
 }
 
 vector <Task*> Storage::searchTasksByName(vector <string> keywords) {
@@ -126,6 +127,7 @@ vector <Task*> Storage::searchTasksByName(vector <string> keywords) {
 	}
 
 	removeDuplicateTasks(result);
+	return result;
 }
 
 
@@ -310,7 +312,7 @@ void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *task
 	}
 }
 
-vector <Event*> Storage::displayByDate(ptime timeIndicator) {
+vector<Event*> Storage::displayByDate(ptime timeIndicator) {
 	vector <Event*> eventResult;
 
 	for (int i = 0; i < _eventList.size(); i++) {

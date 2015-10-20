@@ -30,7 +30,7 @@ int main() {
 
 		vector<string> parsedInput;
 
-		parser.parse(input, parsedInput);
+//		parser.parse(input);
 
 		builder = new CommandBuilder(parsedInput);
 		cmd = builder->buildCommand();

@@ -10,16 +10,53 @@ const string TASK_NOT_OVERDUE = "Not Overdue";
 const string TODAY_INDICATOR = "today";
 const string TOMORROW_INDICATOR = "tomorrow";
 const string HELP_DIRECTORY = "Help.txt";
+const string SEARCH_QUERY_NOT_FOUND = "Phrase not found in database";
 
-Storage::Storage(string saveDir){
+void checkEmptyVector(vector<Entry*> Result) {
+	if (Result.empty()) {
+		throw string(SEARCH_QUERY_NOT_FOUND);
+	}
+	else {
+		return;
+	}
+}
+
+void removeDuplicateEvents(vector<Event*> Result) {
+	vector <Event*>::iterator it1;
+	vector <Event*>::iterator it2;
+	
+	for (it1 = Result.begin(); it1 != Result.end(); it1++) {
+		for (it2 = it1 + 1; it2 != Result.end(); it2++) {
+			if ((*it1) == (*it2)) {
+				Result.erase(it2);
+			}
+		}
+	}
+}
+
+void removeDuplicateTasks(vector<Task*> Result) {
+	vector <Task*>::iterator it1;
+	vector <Task*>::iterator it2;
+
+	for (it1 = Result.begin(); it1 != Result.end(); it1++) {
+		for (it2 = it1 + 1; it2 != Result.end(); it2++) {
+			if ((*it1) == (*it2)) {
+				Result.erase(it2);
+			}
+		}
+	}
+}
+
+Storage::Storage(string saveDir) {
 	_saveDir = saveDir;
 	_helpDir = HELP_DIRECTORY;
 }
 
-void Storage::addEvent(Event * newEvent){
+void Storage::addEvent(Event * newEvent) {
 	if (_eventList.empty()) {
 		_eventList.push_back(newEvent);
-	} else {
+	}
+	else {
 		vector <Event*>::iterator it = _eventList.begin();
 
 		while (it != _eventList.end() && newEvent->getStartTime() > (*it)->getStartTime()) {
@@ -28,16 +65,18 @@ void Storage::addEvent(Event * newEvent){
 
 		if (it == _eventList.end()) {
 			_eventList.push_back(newEvent);
-		} else {
+		}
+		else {
 			_eventList.insert(it, newEvent);
 		}
 	}
 }
 
-void Storage::addTask(Task * newTask){
+void Storage::addTask(Task * newTask) {
 	if (_taskList.empty() || newTask->isFloatingTask()) {
 		_taskList.push_back(newTask);
-	} else {
+	}
+	else {
 		vector <Task*>::iterator it = _taskList.begin();
 
 		while (it != _taskList.end() && newTask->getDueTime() > (*it)->getDueTime()) {
@@ -53,25 +92,38 @@ void Storage::addTask(Task * newTask){
 	}
 }
 
-vector <Entry*> Storage::searchName(string keyword) {
-	vector <Entry*> result;
+vector <Event*> Storage::searchEventsByName(vector <string> keywords) {
+	vector <Event*> result;
 
-	for (int i = 0; i < _eventList.size(); i++) {
-		size_t found = _eventList[i]->getName().find(keyword);
-		if (found != string::npos) {
-			result.push_back(_eventList[i]);
+	for (int i = 0; i < keywords.size(); i++) {
+		string keyword = keywords[i];
+		for (int j = 0; j < _eventList.size(); j++) {
+			size_t found = _eventList[j]->getName().find(keyword);
+			if (found != string::npos) {
+				result.push_back(_eventList[j]);
+			}
 		}
 	}
-
-	for (int i = 0; i < _taskList.size(); i++) {
-		size_t found = _taskList[i]->getName().find(keyword);
-		if (found != string::npos) {
-			result.push_back(_taskList[i]);
-		}
-	}
-
-	return result;
+	
+	removeDuplicateEvents(result);
 }
+
+vector <Task*> Storage::searchTasksByName(vector <string> keywords) {
+	vector <Task*> result;
+
+	for (int i = 0; i < keywords.size(); i++) {
+		string keyword = keywords[i];
+		for (int j = 0; j < _taskList.size(); j++) {
+			size_t found = _taskList[j]->getName().find(keyword);
+			if (found != string::npos) {
+				result.push_back(_taskList[j]);
+			}
+		}
+	}
+
+	removeDuplicateTasks(result);
+}
+
 
 // Saves to txt file in the following format:
 // Entry Type
@@ -80,7 +132,7 @@ vector <Entry*> Storage::searchName(string keyword) {
 // Attribute 3 of that Entry type (if any)
 // Attribute 4 of that Entry type (if any)
 // Attribute 5 of that Entry type (if any)
-void Storage::saveToFile(){
+void Storage::saveToFile() {
 	ofstream output(_saveDir);
 
 	for (int i = 0; i < _eventList.size(); i++) {
@@ -102,23 +154,25 @@ void Storage::saveToFile(){
 		if (!_taskList[i]->isFloatingTask()) {
 			output << to_iso_string(_taskList[i]->getDueTime()) << endl;
 		}
-		
+
 		if (_taskList[i]->getCompleted()) {
 			output << TASK_COMPLETED << endl;
-		} else {
+		}
+		else {
 			output << TASK_NOT_COMPLETED << endl;
 		}
 
 		if (_taskList[i]->getOverdue()) {
 			output << TASK_OVERDUE << endl;
-		} else {
+		}
+		else {
 			output << TASK_NOT_OVERDUE << endl;
 		}
 	}
 	output.close();
 }
 
-void Storage::loadFromFile(){
+void Storage::loadFromFile() {
 	ifstream input(_saveDir);
 
 	string entryType;
@@ -138,7 +192,8 @@ void Storage::loadFromFile(){
 			newEvent = new Event(name, startTime, endTime);
 
 			_eventList.push_back(newEvent);
-		} else if (entryType == TASK_ENTRY) {
+		}
+		else if (entryType == TASK_ENTRY) {
 			string name;
 			getline(input, name);
 
@@ -151,7 +206,8 @@ void Storage::loadFromFile(){
 			getline(input, completed);
 			if (completed == TASK_COMPLETED) {
 				isCompleted = true;
-			} else {
+			}
+			else {
 				isCompleted = false;
 			}
 
@@ -160,14 +216,16 @@ void Storage::loadFromFile(){
 			getline(input, overdue);
 			if (overdue == TASK_OVERDUE) {
 				isOverdue = true;
-			} else {
+			}
+			else {
 				isOverdue = false;
 			}
 
 			Task *newTask;
 			newTask = new Task(name, dueTime, isCompleted, isOverdue);
 			_taskList.push_back(newTask);
-		} else if (entryType == FTASK_ENTRY) {
+		}
+		else if (entryType == FTASK_ENTRY) {
 			string name;
 			getline(input, name);
 
@@ -194,29 +252,26 @@ void Storage::loadFromFile(){
 	input.close();
 }
 
-void Storage::displayByDate(vector<Event*> *eventList, vector<Task*> *taskList, date requestedDate)
-{
-}
-
 void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *taskDisplay) {
 	ptime currentTime(second_clock::local_time());
 
 	vector <Event*>::iterator itE = eventDisplay->begin();
 
 	for (int i = 0; i < _eventList.size(); i++) {
-		
+
 		ptime eventTime(_eventList[i]->getStartTime());
 		if (eventTime.date() == currentTime.date()) {
 			if (itE != eventDisplay->end()) {
 				*itE = _eventList[i];
 				itE++;
-			} else {
+			}
+			else {
 				eventDisplay->push_back(_eventList[i]);
 				itE = eventDisplay->end();
 			}
 		}
 	}
-	
+
 	vector <Task*>::iterator itT = taskDisplay->begin();
 
 	for (int i = 0; i < _taskList.size(); i++) {
@@ -224,7 +279,8 @@ void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *task
 			if (itT != taskDisplay->end()) {
 				*itT = _taskList[i];
 				itT++;
-			} else {
+			}
+			else {
 				taskDisplay->push_back(_taskList[i]);
 				itT = taskDisplay->end();
 			}
@@ -245,23 +301,11 @@ void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *task
 	}
 }
 
-vector <Event*> Storage::displayByDate(string timeIndicator) {
+vector <Event*> Storage::displayByDate(ptime timeIndicator) {
 	vector <Event*> eventResult;
 
-	date dateRequired;
-
-	if (timeIndicator == TODAY_INDICATOR) {
-		dateRequired = day_clock::local_day();
-	} else if (timeIndicator == TOMORROW_INDICATOR) {
-		date currentDate(day_clock::local_day());
-		date_duration dayDiff(1);
-		dateRequired = currentDate + dayDiff;
-	} else {
-		dateRequired = from_undelimited_string(timeIndicator);
-	}
-
 	for (int i = 0; i < _eventList.size(); i++) {
-		if (_eventList[i]->getStartTime().date() == dateRequired) {
+		if (_eventList[i]->getStartTime().date() == timeIndicator.date() || _eventList[i]->getEndTime().date() == timeIndicator.date()) {
 			eventResult.push_back(_eventList[i]);
 		}
 	}
@@ -269,7 +313,19 @@ vector <Event*> Storage::displayByDate(string timeIndicator) {
 	return eventResult;
 }
 
-vector<Task*> Storage::displayIncompleteTasks(){
+vector <Event*> Storage::displayByDate(ptime timeIndicator1, ptime timeIndicator2) {
+	vector <Event*> eventResult;
+
+	for (int i = 0; i < _eventList.size(); i++) {
+		if (_eventList[i]->getEndTime().date() >= timeIndicator1.date() || _eventList[i]->getStartTime().date() >= timeIndicator2.date()) {
+			eventResult.push_back(_eventList[i]);
+		}
+	}
+
+	return eventResult;
+}
+
+vector<Task*> Storage::displayIncompleteTasks() {
 	vector<Task*> taskResult;
 
 	for (int i = 0; i < _taskList.size(); i++) {
@@ -281,9 +337,9 @@ vector<Task*> Storage::displayIncompleteTasks(){
 	return taskResult;
 }
 
-vector<Task*> Storage::displayCompletedTasks(){
+vector<Task*> Storage::displayCompletedTasks() {
 	vector <Task*> taskResult;
-	
+
 	for (int i = 0; i < _taskList.size(); i++) {
 		if (_taskList[i]->getCompleted()) {
 			taskResult.push_back(_taskList[i]);
@@ -293,7 +349,9 @@ vector<Task*> Storage::displayCompletedTasks(){
 	return taskResult;
 }
 
-void Storage::deleteFromEventList(Event * eventPointer){
+void Storage::deleteFromEventList(Event * eventPointer) {
+	assert(eventPointer != NULL);
+
 	vector<Event*>::iterator it = _eventList.begin();
 
 	while (*it != eventPointer) {
@@ -303,7 +361,9 @@ void Storage::deleteFromEventList(Event * eventPointer){
 	_eventList.erase(it);
 }
 
-void Storage::deleteFromTaskLIst(Task * taskPointer){
+void Storage::deleteFromTaskLIst(Task * taskPointer) {
+	assert(taskPointer != NULL);
+
 	vector<Task*>::iterator it = _taskList.begin();
 
 	while (*it != taskPointer) {

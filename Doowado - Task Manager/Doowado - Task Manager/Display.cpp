@@ -31,7 +31,7 @@ Event * Display::retrieveEvent(int taskID)
 {
 	Event* event;
 	if (taskID < _eventList.size()) {
-		event = _eventList[taskID];
+		event = _eventList[taskID-1];
 	}
 	else {
 		event = nullptr;
@@ -55,4 +55,14 @@ Task * Display::retrieveTask(int taskID)
 void Display::checkValidFeedback(vector<string>& feedback)
 {
 	assert(feedback.size() != 0);
+}
+
+vector<Event*>& Display::getEventList()
+{
+	return _eventList;
+}
+
+vector<Task*>& Display::getTaskList()
+{
+	return _taskList;
 }

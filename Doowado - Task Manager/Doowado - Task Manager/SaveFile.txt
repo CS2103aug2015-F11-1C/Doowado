@@ -114,30 +114,6 @@ prepare presentation
 Not Completed
 Not Overdue
 FTask
-                     
-Not Completed
-Not Overdue
-FTask
 newtask
-Not Completed
-Not Overdue
-FTask
-anothertask
-Not Completed
-Not Overdue
-FTask
-fetch students
-Not Completed
-Not Overdue
-FTask
-yetanothertask
-Not Completed
-Not Overdue
-FTask
-go home
-Not Completed
-Not Overdue
-FTask
-dek
 Not Completed
 Not Overdue

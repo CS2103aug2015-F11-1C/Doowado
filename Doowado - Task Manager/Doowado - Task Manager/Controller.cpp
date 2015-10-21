@@ -5,20 +5,17 @@
 #include "Parser.h"
 #include "UserInterface.h"
 #include "Display.h"
-#include "History.h"
 
 int main() {
 
 	UserInterface UI;
-	Storage LocalStorage("SaveFile.txt");
-	CommandBuilder *builder;
+	Storage LocalStorage;
 	Command *cmd = nullptr;
-	Parser parser;
+	Parser* parser = new Parser(); 
 	string input;
 	static ptime currentTime(second_clock::local_time());
 	Display displayList;
-	vector<string>* commandResult;
-	History history;
+	CommandBuilder* builder = new CommandBuilder();
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
@@ -29,14 +26,11 @@ int main() {
 	getline(cin, input);
 	
 	while (input != "exit") {
+		ParserResult* parserResult = new ParserResult(); 
+		*parserResult = parser->parse(input);
 
-		vector<string> parsedInput;
 
-//		parser.parse(input);
-
-		builder = new CommandBuilder(parsedInput);
-		cmd = builder->buildCommand();
-
+		cmd = builder->buildCommand(*parserResult);
 		cmd->execute(&LocalStorage, &displayList);
 
 		UI.updateDefaultDisplay(&LocalStorage);

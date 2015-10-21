@@ -9,14 +9,17 @@ protected:
 public:
 	Display();
 	~Display();
-
+	
+	//updateDefault
 	void updateCommandFeedback(vector<string>&);
-
 	void updateDisplayEventList(vector<Event*>&);
 	void updateDisplayTaskList(vector<Task*>&);
 	Event* retrieveEvent(int);
 	Task* retrieveTask(int);
 
 	void checkValidFeedback(vector<string>&);
+
+	vector<Event*>& getEventList();
+	vector<Task*>& getTaskList();
 };
 

@@ -1,19 +1,21 @@
-#include "EditTitleCommand.h"
+#include "EditCommand.h"
 
-
-EditTitleCommand::EditTitleCommand(string entryType, int displayIndex, string newTitle)
+EditCommand::EditCommand(string entryType, int displayIndex, string newTitle, ptime newStartTime, ptime newEndTime, ptime newDueTime)
 {
 	string _entryType = entryType;
 	int _taskId = displayIndex;
 	string _newTitle = newTitle;
+	ptime _newStartTime = newStartTime;
+	ptime _newEndTime = newEndTime;
+	ptime _newDueTime = newDueTime;
 }
 
 
-EditTitleCommand::~EditTitleCommand()
+EditCommand::~EditCommand()
 {
 }
 
-void EditTitleCommand::execute(Storage* data, Display *display)
+void EditCommand::execute(Storage* data, Display *display)
 {
 	if (_entryType == eventType) {
 		Event* eventEntry = display->retrieveEvent(_taskID);

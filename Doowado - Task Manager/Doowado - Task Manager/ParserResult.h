@@ -26,6 +26,7 @@ private:
 	vector<string> _endTime;
 
 public:
+	ParserResult();
 	void setUserCommand(string userCommand);
 	void setDescription(vector<string> description);
 	void setIndex(vector<int> index);
@@ -43,5 +44,7 @@ public:
 	vector<string>& getEndDate();
 	vector<string>& getStartTime();
 	vector<string>& getEndTime();
+	
+	~ParserResult();
 };
 #endif

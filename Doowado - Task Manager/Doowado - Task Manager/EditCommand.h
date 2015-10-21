@@ -4,16 +4,19 @@
 const string eventType = "e";
 const string taskType = "t";
 
-class EditTitleCommand : public Command
+class EditCommand : public Command
 {
 private:
 	string _entryType;
 	int _taskID;
 	string _newTitle;
+	ptime _newStartTime;
+	ptime _newEndTime;
+	ptime _newDueTime;
 
 public:
-	EditTitleCommand(string, int, string);
-	~EditTitleCommand();
+	EditCommand(string, int, string, ptime, ptime, ptime);
+	~EditCommand();
 	void execute(Storage* data, Display* display);
 };
 

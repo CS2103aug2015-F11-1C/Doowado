@@ -129,7 +129,7 @@
     <ClCompile Include="DeleteCommand.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="EditTimeCommand.cpp" />
-    <ClCompile Include="EditTitleCommand.cpp" />
+    <ClCompile Include="EditCommand.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="History.cpp" />
@@ -147,7 +147,7 @@
     <ClInclude Include="DeleteCommand.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="EditTimeCommand.h" />
-    <ClInclude Include="EditTitleCommand.h" />
+    <ClInclude Include="EditCommand.h" />
     <ClInclude Include="Entry.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="History.h" />

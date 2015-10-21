@@ -1,8 +1,6 @@
 #include "ShowCommand.h"
 
-
-
-ShowCommand::ShowCommand(date requestedDate)
+ShowCommand::ShowCommand(ptime requestedDate)
 {
 	_requestedDate = requestedDate;
 }
@@ -14,10 +12,10 @@ ShowCommand::~ShowCommand()
 
 void ShowCommand::execute(Storage * data, Display * display)
 {
-	data->displayByDate(&_requestedEventList, &_requestedTaskList, _requestedDate);
+	_requestedEventList = data->displayByDate(_requestedDate);
 
 	display->updateDisplayEventList(_requestedEventList);
-	display->updateDisplayTaskList(_requestedTaskList);
+//	display->updateDisplayTaskList(_requestedTaskList);
 
 	generateFeedback();
 	display->updateCommandFeedback(_feedback);

@@ -1,0 +1,35 @@
+For add
+possible input format for time
+("." and "/" can be used interchangeably)
+(lower case and upper case can be used interchangeably)
+21/10/2015 or 21.10.2015
+21/oct or 21.OCT or 21/October or 21/10 
+fri or friday or tmr or tomorrow or Today
+
+Example input
+add watch movie on fri 12 to 14
+add complete homework 1 by 25.oct
+add shopping with mum at today 1730
+add basketball camp from 21/oct 1200 to 26/10/2015
+
+For delete
+(both upper case and lower case is allowed)
+delete 1t or delete 1E 
+
+For edit
+edit 2t complete ie3110 lab
+edit 3t start at 1500
+edit 4t end by 1700
+
+For display
+display on tmr
+display on friday
+
+For search
+search ie3101
+
+For save
+save C:\Program Files
+
+For undo
+undo

@@ -19,23 +19,22 @@ int main() {
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
-	UI.updateDefaultDisplay(&LocalStorage);
+	//UI.updateDefaultDisplay(&LocalStorage);
 	UI.printWelcome();
-	UI.printList();
-
 	getline(cin, input);
 	
 	while (input != "exit") {
-		ParserResult* parserResult = new ParserResult(); 
-		*parserResult = parser->parse(input);
+		ParserResult parserResult;
+		parserResult = parser->parse(input);
 
-
-		cmd = builder->buildCommand(*parserResult);
+		cmd = builder->buildCommand(parserResult);
 		cmd->execute(&LocalStorage, &displayList);
 
-		UI.updateDefaultDisplay(&LocalStorage);
-		UI.printList();
+		//UI.updateDefaultDisplay(&LocalStorage);
+		UI.printList(displayList);
 		getline(cin, input);
+
+//		delete parserResult;
 	} 
 
 	LocalStorage.saveToFile();
@@ -58,7 +57,6 @@ int main() {
 	cmd->execute(&data);
 	cmd2->execute(&data);
 	cmd3->execute(&data);
->>>>>>> 8cff09cb14f5ee9a33684c91368e4515f86d6425
 	return 0;
 }
 */

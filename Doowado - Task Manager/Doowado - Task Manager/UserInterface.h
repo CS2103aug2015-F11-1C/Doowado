@@ -8,38 +8,33 @@
 #include "Event.h"
 #include "Task.h"
 #include "Storage.h"
+#include "Display.h"
 
 using namespace std;
 
+const string MESSAGE_ADDED = "Added: ";
+const string MESSAGE_TIME = "Time: ";
+const string MESSAGE_WRONG = "Oops.It seems that something is wrong with your command.";
+const string MESSAGE_FOUNDNOTHING = "Sorry. No results were found. Please try again.";
+const string MESSAGE_DELETED = "Deleted£º ";
+const string MESSAGE_WELCOME_1 = "Welcome to DOOWADO!";
+const string MESSAGE_WELCOME_2 = "You have following events and tasks for today: ";
+const string MESSAGE_UPDATED = "Updated: ";
+const string MESSAGE_SAVED = " File was saved to: ";
+const string TASK_LIST = "Tasks: ";
+const string EVENT_LIST = "Events: ";
+const string WRONG = "wrong";
+
 class UserInterface {
 private:
-	static const string MESSAGE_ADDED;
-	static const string MESSAGE_TIME;
-	static const string MESSAGE_WRONG;
-	static const string MESSAGE_UPDATED;
-	static const string MESSAGE_SAVED;
-	static const string TASK_LIST;
-	static const string EVENT_LIST;
-	static const string MESSAGE_FOUNDNOTHING;
-	static const string MESSAGE_DELETED;
-	static const string WRONG;
-	static const string MESSAGE_WELCOME_1;
-	static const string MESSAGE_WELCOME_2;
-private:
-	string command;
-	vector<string> feedback;
-	vector<Event*> EventList;
-	vector<Task*> TaskList;
 
-private:
-	int convertCharToInt(char input);
 
 public:
+	string getCommand();
 	void showFeedback(vector<string>&, bool isSuccessful, string _commandType);
-	void printList();
-	void getCommand(string& command);
+	void printList(Display&);
+	
 	void printWelcome();
-	void getEntry(string input, string& output);
-	void updateDefaultDisplay(Storage *LocalData);
+//	void updateDefaultDisplay(Storage *LocalData);
 };
 

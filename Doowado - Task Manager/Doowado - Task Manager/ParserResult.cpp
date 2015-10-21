@@ -142,3 +142,7 @@ vector<string>& ParserResult::getStartTime(){
 vector<string>& ParserResult::getEndTime(){
 	return _endTime;
 }
+
+ParserResult::~ParserResult()
+{
+}

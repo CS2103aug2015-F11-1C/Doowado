@@ -174,15 +174,30 @@ Command * CommandBuilder::createEditTimeCommand(ParserResult& parserResult)
 	newEditTimeCommand = new EditTimeCommand(entryType, displayIndex, newStartTime, newEndTime);
 	return newEditTimeCommand;
 }
-
+*/
 Command * CommandBuilder::createDeleteCommand(ParserResult& parserResult)
 {
-	Command* newDeleteCommand;
-	int displayIndex = stoi(_vInputs[INDEX_DELETE_DISPLAY_INDEX]);
-	newDeleteCommand = new DeleteCommand(displayIndex);
-	return newDeleteCommand;
-}
+	Command* deleteCommand;
 
+	vector<string> vEntryTypes = parserResult.getEntryType();
+	vector<int> vIndices = parserResult.getIndex();
+
+	EntryType entryType;
+
+	if (vEntryTypes[0] == "e") {
+		entryType = event;
+	}
+
+	else if (vEntryTypes[0] == "t") {
+		entryType = task;
+	}
+
+	int displayIndex = vIndices[0];
+
+	deleteCommand = new DeleteCommand(entryType, displayIndex);
+	return deleteCommand;
+}
+/*
 Command * CommandBuilder::createSearchCommand(ParserResult& parserResult)
 {
 	//create SearchCommand;

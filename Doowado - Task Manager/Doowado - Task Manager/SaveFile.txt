@@ -114,30 +114,6 @@ prepare presentation
 Not Completed
 Not Overdue
 FTask
-                     
-Not Completed
-Not Overdue
-FTask
 newtask
-Not Completed
-Not Overdue
-FTask
-12345
-Not Completed
-Not Overdue
-FTask
-12345
-Not Completed
-Not Overdue
-FTask
-qqq
-Not Completed
-Not Overdue
-FTask
-jjj
-Not Completed
-Not Overdue
-FTask
-jjj
 Not Completed
 Not Overdue

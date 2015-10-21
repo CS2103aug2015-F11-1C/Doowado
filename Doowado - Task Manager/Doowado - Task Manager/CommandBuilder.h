@@ -15,7 +15,7 @@ const string COMMANDTYPE_SHOW = "show";
 const string COMMANDTYPE_HELP = "help";
 const string COMMANDTYPE_SAVE = "save";
 
-enum EntryType {event, task, floatingTask};
+//enum EntryType {event, task, floatingTask};
 enum TypeOfEdit {	editTitle,
 					editStartDate,
 					editStartTime,
@@ -38,7 +38,7 @@ class CommandBuilder {
 		Command* createEditCommand(ParserResult&);
 //		Command* createEditTitleCommand(ParserResult&);
 //		Command* createEditTimeCommand(ParserResult&);
-//		Command* createDeleteCommand(ParserResult&);
+		Command* createDeleteCommand(ParserResult&);
 //		Command* createSearchCommand(ParserResult&);
 		Command* createShowCommand(ParserResult&);
 //		Command* createHelpCommand(ParserResult&);

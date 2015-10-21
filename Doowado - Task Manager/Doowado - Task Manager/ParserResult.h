@@ -44,5 +44,7 @@ public:
 	vector<string>& getEndDate();
 	vector<string>& getStartTime();
 	vector<string>& getEndTime();
+	
+	~ParserResult();
 };
 #endif

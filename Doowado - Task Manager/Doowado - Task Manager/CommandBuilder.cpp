@@ -279,11 +279,11 @@ Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 	else if (commandType == COMMANDTYPE_SEARCH) {
 		cmd = createSearchCommand(parserResult);
 	}
-
+*/
 	else if (commandType == COMMANDTYPE_SHOW) {
 		cmd = createShowCommand(parserResult);
 	}
-	
+/*	
 	else if (commandType == COMMANDTYPE_SAVE) {
 		cmd = createSaveCommand(parserResult);
 	}

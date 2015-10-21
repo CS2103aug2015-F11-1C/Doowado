@@ -27,7 +27,9 @@ const string WRONG = "wrong";
 
 class UserInterface {
 private:
-
+	vector<string> _eventStringList;
+	vector<string> _eventTaskList;
+	vector<string> _feedback;
 
 public:
 	string getCommand();
@@ -35,6 +37,10 @@ public:
 	void printList(Display&);
 	
 	void printWelcome();
-//	void updateDefaultDisplay(Storage *LocalData);
+	//void updateDefaultDisplay(Storage *LocalData);
+	void updateDisplay(Display&);
+
+	void generateEventStringList(vector<Event*>&);
+	void generateTaskStringList(vector<Task*>&);
 };
 

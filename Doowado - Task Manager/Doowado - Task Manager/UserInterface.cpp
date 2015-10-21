@@ -10,6 +10,26 @@ void UserInterface::printWelcome() {
 	cout << MESSAGE_WELCOME_1 << endl << MESSAGE_WELCOME_2 << endl;
 }
 
+void UserInterface::updateDisplay(Display &display)
+{
+	vector<Event*> eventList;
+	vector<Task*> taskList;
+
+	eventList = display.getEventList();
+	taskList = display.getTaskList();
+
+	generateEventStringList(eventList);
+
+}
+
+void UserInterface::generateEventStringList(vector<Event*>&)
+{
+}
+
+void UserInterface::generateTaskStringList(vector<Task*>&)
+{
+}
+
 
 //To print the feedbacks
 void UserInterface::showFeedback(vector<string>& feedback, bool isSuccessful, string _commandType) {

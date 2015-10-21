@@ -66,3 +66,8 @@ vector<Task*>& Display::getTaskList()
 {
 	return _taskList;
 }
+
+vector<string>& Display::getCommandFeedback()
+{
+	return _commandFeedback;
+}

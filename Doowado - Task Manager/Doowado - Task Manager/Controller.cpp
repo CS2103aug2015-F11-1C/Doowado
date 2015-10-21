@@ -31,7 +31,10 @@ int main() {
 		cmd->execute(&LocalStorage, &displayList);
 
 		//UI.updateDefaultDisplay(&LocalStorage);
-		UI.printList(displayList);
+		//UI.printList(displayList);
+		
+		UI.updateDisplay(displayList);
+		
 		getline(cin, input);
 
 //		delete parserResult;

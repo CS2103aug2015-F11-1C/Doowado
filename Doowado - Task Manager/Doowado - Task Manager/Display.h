@@ -21,5 +21,6 @@ public:
 
 	vector<Event*>& getEventList();
 	vector<Task*>& getTaskList();
+	vector<string>& getCommandFeedback();
 };
 

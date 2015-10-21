@@ -335,6 +335,11 @@ void Storage::displayByDate(ptime timeIndicator, vector <Event*>& eventResult, v
 		}
 	}
 
+	for (int i = 0; i < _taskList.size(); i++) {
+		if (_taskList[i]->getDueTime().date() == timeIndicator.date() || _taskList[i]->isFloatingTask()) {
+			taskResult.push_back(_taskList[i]);
+		}
+	}
 }
 
 

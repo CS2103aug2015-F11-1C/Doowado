@@ -214,8 +214,8 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 	string date;
 	string time;
 
-	vector<string> vDateRequirement = parserResult.getStartDate();
-	vector<string> vTimeRequirement = parserResult.getStartTime();
+	vector<string> vDateRequirement = parserResult.getEndDate();
+	vector<string> vTimeRequirement = parserResult.getEndTime();
 	
 	assert(!vDateRequirement.empty() || !vTimeRequirement.empty());
 

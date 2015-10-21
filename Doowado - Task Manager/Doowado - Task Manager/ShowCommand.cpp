@@ -12,10 +12,10 @@ ShowCommand::~ShowCommand()
 
 void ShowCommand::execute(Storage * data, Display * display)
 {
-	_requestedEventList = data->displayByDate(_requestedDate);
+	data->displayByDate(_requestedDate, _requestedEventList, _requestedTaskList);
 
 	display->updateDisplayEventList(_requestedEventList);
-//	display->updateDisplayTaskList(_requestedTaskList);
+	display->updateDisplayTaskList(_requestedTaskList);
 
 	generateFeedback();
 	display->updateCommandFeedback(_feedback);

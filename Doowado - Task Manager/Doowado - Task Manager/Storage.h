@@ -23,6 +23,7 @@ public:
 
 	void displayDefault(vector <Event*> *eventList, vector <Task*> *taskList);				// Display today's event and all uncompleted tasks
 	vector <Event*> displayByDate(ptime timeIndicator);
+	void displayByDate(ptime timeIndicator, vector<Event*>& eventResult, vector<Task*>& taskResult);
 	vector <Event*> displayByDate(ptime timeIndicator1, ptime timeIndicator2);
 	vector <Task*> displayIncompleteTasks();
 	vector <Task*> displayCompletedTasks();

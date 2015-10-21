@@ -324,6 +324,20 @@ vector<Event*> Storage::displayByDate(ptime timeIndicator) {
 	return eventResult;
 }
 
+void Storage::displayByDate(ptime timeIndicator, vector <Event*>& eventResult, vector <Task*>& taskResult) {
+	
+	eventResult.clear();
+	taskResult.clear();
+
+	for (int i = 0; i < _eventList.size(); i++) {
+		if (_eventList[i]->getStartTime().date() == timeIndicator.date() || _eventList[i]->getEndTime().date() == timeIndicator.date()) {
+			eventResult.push_back(_eventList[i]);
+		}
+	}
+
+}
+
+
 vector <Event*> Storage::displayByDate(ptime timeIndicator1, ptime timeIndicator2) {
 	vector <Event*> eventResult;
 

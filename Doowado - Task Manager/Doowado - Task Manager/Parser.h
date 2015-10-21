@@ -47,6 +47,8 @@ private:
 	vector<int> _endTime;
 
 private:
+	void resetAll();
+
 	void resetDateAndTime();
 
 	string removeExtraSpacePadding(string input);

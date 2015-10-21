@@ -12,6 +12,22 @@ int const DATE_NOT_FOUND = 43;
 
 Parser::Parser(){}
 
+void Parser::resetAll(){
+	_userDelimiter.clear();
+	_userCommand.clear();
+	_description.clear();
+	_index.clear();
+	_entryType.clear();
+	_startYear.clear();
+	_startMonth.clear();
+	_startDay.clear();
+	_startTime.clear();
+	_endYear.clear();
+	_endMonth.clear();
+	_endDay.clear();
+	_endTime.clear();
+}
+
 void Parser::resetDateAndTime() {
 	_startYear.clear();
 	_startMonth.clear();
@@ -73,7 +89,7 @@ void Parser::setIndex(string& input){
 			_entryType.push_back(entryType);
 			_index.push_back(indexInt);
 			input = input.substr(spacePos + 1);
-
+			
 		}
 	}
 	//rmb to include case for multiple task or event number.
@@ -808,6 +824,7 @@ ParserResult Parser::parse(string input){
 	parserResult.setStartTime(_startTime);
 	parserResult.setEndDate(_endYear, _endMonth, _endDay);
 	parserResult.setEndTime(_endTime);
-	
+	resetAll();
+
 	return parserResult;
 }

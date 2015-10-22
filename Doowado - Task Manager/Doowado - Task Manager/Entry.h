@@ -4,6 +4,7 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <iomanip>
+#include <sstream>
 
 using namespace std;
 using namespace boost::gregorian;

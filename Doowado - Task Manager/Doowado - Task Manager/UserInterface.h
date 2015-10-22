@@ -25,10 +25,14 @@ const string TASK_LIST = "Tasks: ";
 const string EVENT_LIST = "Events: ";
 const string WRONG = "wrong";
 
+const string EVENT_IDENTIFIER = "E";
+const string TASK_IDENTIFIER = "T";
+const string INDEX_SEPARATOR = " . ";
+
 class UserInterface {
 private:
 	vector<string> _eventStringList;
-	vector<string> _eventTaskList;
+	vector<string> _taskStringList;
 	vector<string> _feedback;
 
 public:
@@ -42,5 +46,14 @@ public:
 
 	void generateEventStringList(vector<Event*>&);
 	void generateTaskStringList(vector<Task*>&);
+
+	void getFeedbackDisplay(Display&);
+
+	void displayEventList();
+	void displayTaskList();
+
+	void displayFeedback();
+
+	void displayStringsByIndex(string, vector<string>&);
 };
 

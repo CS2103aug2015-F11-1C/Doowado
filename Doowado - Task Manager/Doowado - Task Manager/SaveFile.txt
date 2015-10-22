@@ -59,6 +59,10 @@ movie
 20151022T120000
 20151022T140000
 Event
+meeting
+20151201T120000
+20151201T130000
+Event
 4567event
 20151201T120000
 20151201T140000
@@ -80,6 +84,11 @@ Overdue
 Task
 meeting
 20151022T120000
+Not Completed
+Not Overdue
+Task
+meeting
+20151023T120000
 Not Completed
 Not Overdue
 Task
@@ -201,5 +210,13 @@ Not Completed
 Not Overdue
 FTask
 thirsTask
+Not Completed
+Not Overdue
+FTask
+newTask
+Not Completed
+Not Overdue
+FTask
+meeting
 Not Completed
 Not Overdue

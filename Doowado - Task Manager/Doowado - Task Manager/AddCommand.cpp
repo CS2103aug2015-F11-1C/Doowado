@@ -34,19 +34,19 @@ void AddCommand::execute(Storage* data, Display *display) {
 	checkValidName(_entryName);
 
 	if (!_entryStartTime.is_not_a_date_time()) {
-		cout << "Event" << endl;
+		//cout << "Event" << endl;
 		entryType = type_event;
 		Event* newEvent = new Event(_entryName, _entryStartTime, _entryEndTime);
 		data->addEvent(newEvent);
 	}
 	else if (!_entryDueTime.is_not_a_date_time()) {
-		cout << "Task" << endl;
+		//cout << "Task" << endl;
 		entryType = type_timed_task;
 		Task* newTask = new Task(_entryName, _entryDueTime);
 		data->addTask(newTask);
 	}
 	else {
-		cout << "Floating Task" << endl;
+		//cout << "Floating Task" << endl;
 		entryType = type_floating_task;
 		Task* newFloatingTask = new Task(_entryName);
 		data->addTask(newFloatingTask);

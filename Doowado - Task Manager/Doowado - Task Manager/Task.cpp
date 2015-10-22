@@ -60,3 +60,11 @@ void Task::printTask(){
 	cout << setw(20) << left << _name;
 	cout << " Due: " << setw(20) << to_simple_string(_dueTime) << endl;
 }
+
+string Task::toString()
+{
+	ostringstream taskSummary;
+	taskSummary << setw(20) << left << _name;
+	taskSummary << " Due: " << setw(20) << to_simple_string(_dueTime) << endl;
+	return taskSummary.str();
+}

@@ -19,4 +19,6 @@ public:
 	void setCompleted();
 	void setOverdue();
 	void printTask();
+
+	string toString();
 };

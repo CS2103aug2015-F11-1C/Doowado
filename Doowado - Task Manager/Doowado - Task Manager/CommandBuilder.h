@@ -7,8 +7,7 @@
 using namespace std;
 
 const string COMMANDTYPE_ADD = "add";
-const string COMMANDTYPE_EDIT_TITLE = "editTitle";
-const string COMMANDTYPE_EDIT_TIME = "editTime";
+const string COMMANDTYPE_EDIT = "edit";
 const string COMMANDTYPE_DELETE = "delete";
 const string COMMANDTYPE_SEARCH = "search";
 const string COMMANDTYPE_SHOW = "show";
@@ -36,8 +35,6 @@ class CommandBuilder {
 	
 		Command* createAddCommand(ParserResult&);
 		Command* createEditCommand(ParserResult&);
-//		Command* createEditTitleCommand(ParserResult&);
-//		Command* createEditTimeCommand(ParserResult&);
 		Command* createDeleteCommand(ParserResult&);
 //		Command* createSearchCommand(ParserResult&);
 		Command* createShowCommand(ParserResult&);

@@ -163,32 +163,6 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 	return editCommand;
 }
 
-/*
-
-Command * CommandBuilder::createEditTitleCommand(ParserResult& parserResult)
-{
-	Command* newEditTitleCommand;
-	string eventType = _vInputs[INDEX_EDIT_ENTRY_TYPE];
-	int displayIndex = stoi(_vInputs[INDEX_EDIT_DISPLAY_INDEX]);
-	string newTitle = _vInputs[INDEX_EDIT_NEW_TITLE];
-
-	newEditTitleCommand = new EditTitleCommand(eventType, displayIndex, newTitle);
-	
-	return newEditTitleCommand;
-}
-
-Command * CommandBuilder::createEditTimeCommand(ParserResult& parserResult)
-{
-	Command* newEditTimeCommand;
-	string entryType = _vInputs[INDEX_EDIT_ENTRY_TYPE];
-	int displayIndex = stoi(_vInputs[INDEX_EDIT_DISPLAY_INDEX]);
-	ptime newStartTime = from_iso_string(_vInputs[INDEX_EDIT_NEW_START_TIME]);
-	ptime newEndTime = from_iso_string(_vInputs[INDEX_EDIT_NEW_END_TIME]);
-
-	newEditTimeCommand = new EditTimeCommand(entryType, displayIndex, newStartTime, newEndTime);
-	return newEditTimeCommand;
-}
-*/
 Command * CommandBuilder::createDeleteCommand(ParserResult& parserResult)
 {
 	Command* deleteCommand;
@@ -277,15 +251,11 @@ Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 	if (commandType == COMMANDTYPE_ADD) {
 		cmd = createAddCommand(parserResult);
 	}
-	/*
-	else if (commandType == COMMANDTYPE_EDIT_TITLE) {
-		cmd = createEditTimeCommand(parserResult);
+	
+	else if (commandType == COMMANDTYPE_EDIT) {
+		cmd = createEditCommand(parserResult);
 	}
 
-	else if (commandType == COMMANDTYPE_EDIT_TIME) {
-		cmd = createEditTimeCommand(parserResult);
-	}
-	*/
 	else if (commandType == COMMANDTYPE_DELETE) {
 		cmd = createDeleteCommand(parserResult);
 	}

@@ -26,3 +26,11 @@ void Event::printEvent(){
 	cout << setw(20) << left << _name;
 	cout << " Start: " << to_simple_string(_startTime) << " End: " << to_simple_string(_endTime) << endl;
 }
+
+string Event::toString()
+{
+	ostringstream eventSummary;
+	eventSummary << setw(20) << left << _name;
+	eventSummary << " Start: " << to_simple_string(_startTime) << " End: " << to_simple_string(_endTime) << endl;
+	return eventSummary.str();
+}

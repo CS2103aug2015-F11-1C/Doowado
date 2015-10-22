@@ -29,12 +29,20 @@ void UserInterface::updateDisplay(Display &display)
 	displayFeedback();
 }
 
-void UserInterface::generateEventStringList(vector<Event*>&)
+void UserInterface::generateEventStringList(vector<Event*>& eventList)
 {
+	_eventStringList.clear();
+	for (int i = 0; i < eventList.size(); i++) {
+		_eventStringList.push_back(eventList[i]->toString());
+	}
 }
 
-void UserInterface::generateTaskStringList(vector<Task*>&)
+void UserInterface::generateTaskStringList(vector<Task*>& taskList)
 {
+	_taskStringList.clear();
+	for (int i = 0; i < taskList.size(); i++) {
+		_taskStringList.push_back(taskList[i]->toString());
+	}
 }
 
 void UserInterface::getFeedbackDisplay(Display &display)
@@ -44,10 +52,12 @@ void UserInterface::getFeedbackDisplay(Display &display)
 
 void UserInterface::displayEventList()
 {
+	displayStringsByIndex(EVENT_IDENTIFIER,_eventStringList);
 }
 
 void UserInterface::displayTaskList()
 {
+	displayStringsByIndex(TASK_IDENTIFIER, _taskStringList);
 }
 
 void UserInterface::displayFeedback()
@@ -55,6 +65,15 @@ void UserInterface::displayFeedback()
 	cout << endl;
 	for (int i = 0; i < _feedback.size(); i++) {
 		cout << _feedback[i] << endl;
+	}
+	cout << endl;
+}
+
+void UserInterface::displayStringsByIndex(string identifier, vector<string>& stringList)
+{
+	cout << endl;
+	for (int index = 0; index < stringList.size(); index++) {
+		cout << identifier << index+1 << INDEX_SEPARATOR << stringList[index] << endl;
 	}
 	cout << endl;
 }

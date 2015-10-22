@@ -14,4 +14,6 @@ public:
 	void setStartTime(ptime newStartTime);
 	void setEndTime(ptime newEndTime);
 	void printEvent();
+
+	string toString();
 };

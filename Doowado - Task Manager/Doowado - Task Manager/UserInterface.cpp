@@ -19,7 +19,14 @@ void UserInterface::updateDisplay(Display &display)
 	taskList = display.getTaskList();
 
 	generateEventStringList(eventList);
+	generateTaskStringList(taskList);
 
+	getFeedbackDisplay(display);
+
+	displayEventList();
+	displayTaskList();
+
+	displayFeedback();
 }
 
 void UserInterface::generateEventStringList(vector<Event*>&)
@@ -28,6 +35,28 @@ void UserInterface::generateEventStringList(vector<Event*>&)
 
 void UserInterface::generateTaskStringList(vector<Task*>&)
 {
+}
+
+void UserInterface::getFeedbackDisplay(Display &display)
+{
+	_feedback = display.getCommandFeedback();
+}
+
+void UserInterface::displayEventList()
+{
+}
+
+void UserInterface::displayTaskList()
+{
+}
+
+void UserInterface::displayFeedback()
+{
+	cout << endl;
+	for (int i = 0; i < _feedback.size(); i++) {
+		cout << _feedback[i] << endl;
+	}
+	cout << endl;
 }
 
 

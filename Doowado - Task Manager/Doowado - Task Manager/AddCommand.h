@@ -27,5 +27,7 @@ public:
 
 	void generateFeedback();
 	void checkValidName(string);
+
+	void updateDisplay(Display*, Storage*);
 };
 

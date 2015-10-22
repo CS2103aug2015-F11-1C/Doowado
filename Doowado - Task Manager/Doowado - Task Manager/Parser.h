@@ -59,6 +59,8 @@ private:
 
 	void setIndex(string & input);
 
+	bool isIndexVaild(string input);
+
 	void setDateAndTime(string & input);
 
 	void removeStartOrEndKeyword(string & input);

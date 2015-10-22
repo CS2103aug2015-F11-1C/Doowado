@@ -70,6 +70,18 @@ Event
 4567event
 20151201T120000
 20151201T140000
+Event
+meeting
+20151205T120000
+20151205T140000
+Event
+book train tickets
+20151212T120000
+20151212T170000
+Event
+book flight tickets
+20151220T120000
+20151220T170000
 Task
 finish simulation
 20151010T140000
@@ -93,6 +105,11 @@ Not Overdue
 Task
 meeting
 20151023T120000
+Not Completed
+Not Overdue
+Task
+complete homework
+20151101T120000
 Not Completed
 Not Overdue
 Task
@@ -222,5 +239,25 @@ Not Completed
 Not Overdue
 FTask
 meeting
+Not Completed
+Not Overdue
+FTask
+finish tutorial
+Not Completed
+Not Overdue
+FTask
+contact supplier by 1 Nov
+Not Completed
+Not Overdue
+FTask
+contact supplier by 12 Nov 1200
+Not Completed
+Not Overdue
+FTask
+contact test facility by 14 Nov
+Not Completed
+Not Overdue
+FTask
+finish painting
 Not Completed
 Not Overdue

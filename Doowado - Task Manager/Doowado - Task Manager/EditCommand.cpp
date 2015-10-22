@@ -44,34 +44,57 @@ void EditCommand::execute(Storage* data, Display *display)
 			ptime editStartTime(startDate, startTime);
 			eventEntry->setStartTime(editStartTime);
 		}
-		/*
+		
 		if (!_newEndDate.is_not_a_date_time()) {
 			date endDate = _newEndDate.date();
-			if (!_newStartTime.is_not_a_date_time()) {
-				time_duration startTime = _newStartTime.time_of_day();
-				ptime editStartTime(startDate, startTime);
-				eventEntry->setStartTime(editStartTime);
+			if (!_newEndTime.is_not_a_date_time()) {
+				time_duration endTime = _newEndTime.time_of_day();
+				ptime editEndTime(endDate, endTime);
+				eventEntry->setEndTime(editEndTime);
 			}
 			else {
-				ptime originalStartTime = eventEntry->getStartTime();
-				time_duration startTime = originalStartTime.time_of_day();
-				ptime editStartTime(startDate, startTime);
-				eventEntry->setStartTime(editStartTime);
+				ptime originalEndTime = eventEntry->getEndTime();
+				time_duration endTime = originalEndTime.time_of_day();
+				ptime editEndTime(endDate, endTime);
+				eventEntry->setEndTime(editEndTime);
 			}
 		}
-		else if (!_newStartTime.is_not_a_date_time()) {
-			time_duration startTime = _newStartTime.time_of_day();
-			ptime originalStartDate = eventEntry->getStartTime();
-			date startDate = originalStartDate.date();
-			ptime editStartTime(startDate, startTime);
-			eventEntry->setStartTime(editStartTime);
+		else if (!_newEndTime.is_not_a_date_time()) {
+			time_duration endTime = _newEndTime.time_of_day();
+			ptime originalEndDate = eventEntry->getEndTime();
+			date endDate = originalEndDate.date();
+			ptime editEndTime(endDate, endTime);
+			eventEntry->setEndTime(editEndTime);
 		}
-		*/
+		
 	}
 
 	else if (_entryType == task) {
 		Task* taskEntry = display->retrieveTask(_taskID);
-		taskEntry->setName(_newTitle);
+		if (_newTitle != "") {
+			taskEntry->setName(_newTitle);
+		}
+		if (!_newEndDate.is_not_a_date_time()) {
+			date dueDate = _newEndDate.date();
+			if (!_newEndTime.is_not_a_date_time()) {
+				time_duration dueTime = _newEndTime.time_of_day();
+				ptime editDueTime(dueDate, dueTime);
+				taskEntry->setDueTime(editDueTime);
+			}
+			else {
+				ptime originalDueTime = taskEntry->getDueTime();
+				time_duration dueTime = originalDueTime.time_of_day();
+				ptime editDueTime(dueDate, dueTime);
+				taskEntry->setDueTime(editDueTime);
+			}
+		}
+		else if (!_newEndTime.is_not_a_date_time()) {
+			time_duration dueTime = _newEndTime.time_of_day();
+			ptime originalDueDate = taskEntry->getDueTime();
+			date dueDate = originalDueDate.date();
+			ptime editDueTime(dueDate, dueTime);
+			taskEntry->setDueTime(editDueTime);
+		}
 	}
 
 	return;

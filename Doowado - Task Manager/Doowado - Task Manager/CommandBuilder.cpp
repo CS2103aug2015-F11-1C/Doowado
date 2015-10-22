@@ -285,11 +285,11 @@ Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 	else if (commandType == COMMANDTYPE_EDIT_TIME) {
 		cmd = createEditTimeCommand(parserResult);
 	}
-
+	*/
 	else if (commandType == COMMANDTYPE_DELETE) {
 		cmd = createDeleteCommand(parserResult);
 	}
-
+/*
 	else if (commandType == COMMANDTYPE_SEARCH) {
 		cmd = createSearchCommand(parserResult);
 	}

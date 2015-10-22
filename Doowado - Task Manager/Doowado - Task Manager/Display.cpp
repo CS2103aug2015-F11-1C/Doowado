@@ -29,22 +29,22 @@ void Display::updateDisplayTaskList(vector<Task*>& updatedTaskList)
 
 Event * Display::retrieveEvent(int taskID)
 {
-	Event* event;
-	if (taskID < _eventList.size()) {
-		event = _eventList[taskID-1];
+	Event* eventToDelete;
+	if (taskID <= _eventList.size()) {
+		eventToDelete = _eventList[taskID-1];
 	}
 	else {
-		event = nullptr;
+		eventToDelete = nullptr;
 	}
 	
-	return event;
+	return eventToDelete;
 }
 
 Task * Display::retrieveTask(int taskID)
 {
 	Task* task;
-	if (taskID < _taskList.size()) {
-		task = _taskList[taskID];
+	if (taskID <= _taskList.size()) {
+		task = _taskList[taskID-1];
 	}
 	else {
 		task = nullptr;

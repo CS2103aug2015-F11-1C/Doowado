@@ -5,6 +5,7 @@
 #include "Parser.h"
 #include "UserInterface.h"
 #include "Display.h"
+#include "DeleteCommand.h"
 
 int main() {
 
@@ -22,11 +23,11 @@ int main() {
 	//UI.updateDefaultDisplay(&LocalStorage);
 	UI.printWelcome();
 	getline(cin, input);
-	
+
 	while (input != "exit") {
 		ParserResult parserResult;
 		parserResult = parser->parse(input);
-
+		
 		cmd = builder->buildCommand(parserResult);
 		cmd->execute(&LocalStorage, &displayList);
 

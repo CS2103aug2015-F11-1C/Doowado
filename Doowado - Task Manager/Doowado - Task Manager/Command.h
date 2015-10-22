@@ -11,7 +11,7 @@ using namespace std;
 using namespace boost::gregorian;
 using namespace boost::posix_time;
 
-enum EntryType { event, task, floatingTask };
+enum EntryType { event, task };
 
 class Command
 {

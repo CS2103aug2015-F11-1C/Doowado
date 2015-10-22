@@ -108,19 +108,21 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 
 	return addCommand;
 }
-/*
+
 Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 {
 	Command* editCommand;
 	
-	string entryType;
-	int taskID;
-	string newTitle;
+	EntryType entryType;
+	int taskID = 0;
+	string newTitle = "";
+	ptime newStartDate;
 	ptime newStartTime;
+	ptime newEndDate;
 	ptime newEndTime;
 	ptime newDueTime;
 
-	vector<string> vEntryType = parserResult.getEntryType();
+	vector<string> vEntryTypes = parserResult.getEntryType();
 	vector<int> vTaskIDs = parserResult.getIndex();
 	vector<string> vNewTitles = parserResult.getDescription();
 	vector<string> vNewStartDates = parserResult.getStartDate();
@@ -131,23 +133,35 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 	assert(vNewTitles.size() <= 1);
 	assert(!vTaskIDs.empty());
 
-	entryType = vEntryType[0];
-	taskID = vTaskIDs[0];
-	newTitle = vNewTitles[0];
-
-	//typeOfEdit
-	if (entryType == "e") {
-
+	if (vEntryTypes[0] == "e") {
+		entryType = event;
+	}
+	else if (vEntryTypes[0] == "t") {
+		entryType = task;
 	}
 
-	newStartTime = createPTimeObject(vNewStartDates[0], vNewStartTimes[0]);
-	newEndTime = createPTimeObject(vNewEndDates[0], vNewEndTimes[0]);
+	taskID = vTaskIDs[0];
+	
+	if (!vNewTitles.empty()) {
+		newTitle = vNewTitles[0];
+	}
+	if (!vNewStartDates.empty()) {
+		newStartDate = createPTimeObject(vNewStartDates[0], "000000");
+	}
+	if (!vNewStartTimes.empty()) {
+		newStartTime = createPTimeObject("00000000", vNewStartTimes[0]);
+	}
+	if (!vNewEndDates.empty()) {
+		newEndDate = createPTimeObject(vNewEndDates[0], "000000");
+	}
+	if (!vNewEndTimes.empty()) {
+		newEndTime = createPTimeObject("00000000", vNewEndTimes[0]);
+	}
 
+	editCommand = new EditCommand(entryType, taskID, newTitle, newStartDate, newStartTime, newEndDate, newEndTime);
 	
-	
-	return nullptr;
+	return editCommand;
 }
-*/
 
 /*
 

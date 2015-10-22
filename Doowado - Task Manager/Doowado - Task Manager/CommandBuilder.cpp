@@ -80,8 +80,8 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 
 	entryTitle = description[0];
 
-	assert(startDate.size() == startTime.size());
-	assert(endDate.size() == endTime.size());
+	//assert(startDate.size() == startTime.size());
+	//assert(endDate.size() == endTime.size());
 
 	if (!startDate.empty() && !startTime.empty()) {
 		assert(!endDate.empty() && !endTime.empty());

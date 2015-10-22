@@ -77,22 +77,41 @@ void Parser::setDescription(string input){
 void Parser::setIndex(string& input){
 	size_t spacePos = input.find_first_of(" ");
 
-	if (spacePos != string::npos) {
-		string entryType = input.substr(0, spacePos);
-		entryType = convertStringTolowerCase(entryType);
-
-		string index = entryType.substr(1);
-		int indexInt = convertStringToInt(index);
-		entryType = entryType.substr(0, 1);
-
-		if ((entryType == "t" || entryType == "e") && indexInt != -1) {
-			_entryType.push_back(entryType);
-			_index.push_back(indexInt);
-			input = input.substr(spacePos + 1);
-			
+	if (!input.empty()) {
+		if (spacePos != string::npos) {
+			string entryAndIndex = input.substr(0, spacePos);
+			if (isIndexVaild(entryAndIndex)) {
+				string entryType = entryAndIndex.substr(0, 1);
+				int indexInt = convertStringToInt(entryAndIndex.substr(1));
+				_entryType.push_back(entryType);
+				_index.push_back(indexInt);
+				input = input.substr(spacePos + 1);
+			}
+		}else {
+			if (isIndexVaild(input)) {
+				string entryType = input.substr(0, 1);
+				int indexInt = convertStringToInt(input.substr(1));
+				_entryType.push_back(entryType);
+				_index.push_back(indexInt);
+				input = "";
+			}
 		}
 	}
 	//rmb to include case for multiple task or event number.
+}
+
+bool Parser::isIndexVaild(string input){
+	input = convertStringTolowerCase(input);
+
+	string index = input.substr(1);
+	int indexInt = convertStringToInt(index);
+	string entryType = input.substr(0, 1);
+
+	if ((entryType == "t" || entryType == "e") && indexInt != -1) {
+		return true;
+	}else {
+		return false;
+	}
 }
 
 //take in the user input with command removed by setCommand already

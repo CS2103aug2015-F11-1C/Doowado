@@ -12,8 +12,8 @@ void UserInterface::printWelcome() {
 
 void UserInterface::updateDisplay(Display &display)
 {
-	vector<Event*> eventList;
-	vector<Task*> taskList;
+	vector<Entry*> eventList;
+	vector<Entry*> taskList;
 
 	eventList = display.getEventList();
 	taskList = display.getTaskList();
@@ -29,19 +29,19 @@ void UserInterface::updateDisplay(Display &display)
 	displayFeedback();
 }
 
-void UserInterface::generateEventStringList(vector<Event*>& eventList)
+void UserInterface::generateEventStringList(vector<Entry*>& eventList)
 {
 	_eventStringList.clear();
 	for (int i = 0; i < eventList.size(); i++) {
-		_eventStringList.push_back(eventList[i]->toString());
+		_eventStringList.push_back(eventList[i]->toStringEvent());
 	}
 }
 
-void UserInterface::generateTaskStringList(vector<Task*>& taskList)
+void UserInterface::generateTaskStringList(vector<Entry*>& taskList)
 {
 	_taskStringList.clear();
 	for (int i = 0; i < taskList.size(); i++) {
-		_taskStringList.push_back(taskList[i]->toString());
+		_taskStringList.push_back(taskList[i]->toStringTask());
 	}
 }
 
@@ -106,8 +106,8 @@ void UserInterface::showFeedback(vector<string>& feedback, bool isSuccessful, st
 
 //To print the list of events and tasks
 void UserInterface::printList(Display& display) {
-	vector<Event*> eventList = display.getEventList();
-	vector<Task*> taskList = display.getTaskList();
+	vector<Entry*> eventList = display.getEventList();
+	vector<Entry*> taskList = display.getTaskList();
 
 	if (!eventList.empty()) {
 		cout << endl;

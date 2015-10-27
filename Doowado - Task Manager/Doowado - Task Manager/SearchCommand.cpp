@@ -14,8 +14,8 @@ SearchCommand::~SearchCommand()
 
 void SearchCommand::execute(Storage * data, Display * display)
 {
-	vector<Event*> eventSearchResult;
-	vector<Task*> taskSearchResult;
+	vector<Entry*> eventSearchResult;
+	vector<Entry*> taskSearchResult;
 
 	eventSearchResult = data->searchEventsByTitle(_keywords);
 	taskSearchResult = data->searchTasksByTitle(_keywords);

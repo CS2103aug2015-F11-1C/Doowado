@@ -8,10 +8,10 @@ private:
 #else 
 public: 
 #endif
-	vector<Event*> _requestedEventList;
+	vector<Entry*> _requestedEventList;
 	ptime _requestedDate;
 
-	vector<Task*> _requestedTaskList;
+	vector<Entry*> _requestedTaskList;
 
 	vector<string> _feedback;
 

@@ -4,23 +4,23 @@ class Display
 {
 protected:
 	vector<string> _commandFeedback;
-	vector<Event*> _eventList;
-	vector<Task*> _taskList;
+	vector<Entry*> _eventList;
+	vector<Entry*> _taskList;
 public:
 	Display();
 	~Display();
 	
 	//updateDefault
 	void updateCommandFeedback(vector<string>&);
-	void updateDisplayEventList(vector<Event*>&);
-	void updateDisplayTaskList(vector<Task*>&);
-	Event* retrieveEvent(int);
-	Task* retrieveTask(int);
+	void updateDisplayEventList(vector<Entry*>&);
+	void updateDisplayTaskList(vector<Entry*>&);
+	Entry* retrieveEvent(int);
+	Entry* retrieveTask(int);
 
 	void checkValidFeedback(vector<string>&);
 
-	vector<Event*>& getEventList();
-	vector<Task*>& getTaskList();
+	vector<Entry*>& getEventList();
+	vector<Entry*>& getTaskList();
 	vector<string>& getCommandFeedback();
 };
 

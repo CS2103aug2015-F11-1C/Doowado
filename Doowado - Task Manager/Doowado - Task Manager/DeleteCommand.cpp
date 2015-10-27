@@ -26,7 +26,7 @@ void DeleteCommand::generateFeedback()
 	else if (_entryType == task) {
 		entryTypeString = "T";
 		title = _taskDeleted->getTitle();
-		endTimeString = to_simple_string(_taskDeleted->getDueTime());
+		endTimeString = to_simple_string(_taskDeleted->getEndTime());
 
 		_feedback.push_back(entryTypeString + indexString);
 		_feedback.push_back(title);

@@ -7,8 +7,8 @@ class DeleteCommand: public Command {
 	private:
 		EntryType _entryType;
 		int _taskID;
-		Event* _eventDeleted;
-		Task* _taskDeleted;
+		Entry* _eventDeleted;
+		Entry* _taskDeleted;
 		vector<string> _feedback;
 
 		void generateFeedback();

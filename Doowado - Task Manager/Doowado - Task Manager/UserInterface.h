@@ -44,8 +44,8 @@ public:
 	//void updateDefaultDisplay(Storage *LocalData);
 	void updateDisplay(Display&);
 
-	void generateEventStringList(vector<Event*>&);
-	void generateTaskStringList(vector<Task*>&);
+	void generateEventStringList(vector<Entry*>&);
+	void generateTaskStringList(vector<Entry*>&);
 
 	void getFeedbackDisplay(Display&);
 

@@ -1,21 +1,21 @@
 #include "Task.h"
 
-Task::Task(string name, ptime dueTime, bool isCompleted, bool isOverdue){
-	_name = name;
+Task::Task(string title, ptime dueTime, bool isCompleted, bool isOverdue){
+	_title = title;
 	_dueTime = dueTime;
 	_isCompleted = isCompleted;
 	_isOverdue = isOverdue;
 }
 
-Task::Task(string name, ptime dueTime) {
-	_name = name;
+Task::Task(string title, ptime dueTime) {
+	_title = title;
 	_dueTime = dueTime;
 	_isCompleted = false;
 	_isOverdue = false;
 }
 
-Task::Task(string name) {
-	_name = name;
+Task::Task(string title) {
+	_title = title;
 	_isCompleted = false;
 	_isOverdue = false;
 }
@@ -57,14 +57,14 @@ void Task::setOverdue(){
 }
 
 void Task::printTask(){
-	cout << setw(20) << left << _name;
+	cout << setw(20) << left << _title;
 	cout << " Due: " << setw(20) << to_simple_string(_dueTime) << endl;
 }
 
 string Task::toString()
 {
 	ostringstream taskSummary;
-	taskSummary << setw(20) << left << _name;
+	taskSummary << setw(20) << left << _title;
 	taskSummary << " Due: " << setw(20) << to_simple_string(_dueTime) << endl;
 	return taskSummary.str();
 }

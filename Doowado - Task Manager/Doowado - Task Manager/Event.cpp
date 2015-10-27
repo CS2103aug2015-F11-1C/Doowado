@@ -1,7 +1,7 @@
 #include "Event.h"
 
-Event::Event(string name, ptime startTime, ptime endTime){
-	_name = name;
+Event::Event(string title, ptime startTime, ptime endTime){
+	_title = title;
 	_startTime = startTime;
 	_endTime = endTime;
 }
@@ -23,14 +23,14 @@ void Event::setEndTime(ptime newEndTime){
 }
 
 void Event::printEvent(){
-	cout << setw(20) << left << _name;
+	cout << setw(20) << left << _title;
 	cout << " Start: " << to_simple_string(_startTime) << " End: " << to_simple_string(_endTime) << endl;
 }
 
 string Event::toString()
 {
 	ostringstream eventSummary;
-	eventSummary << setw(20) << left << _name;
+	eventSummary << setw(20) << left << _title;
 	eventSummary << " Start: " << to_simple_string(_startTime) << " End: " << to_simple_string(_endTime) << endl;
 	return eventSummary.str();
 }

@@ -12,11 +12,26 @@ using namespace boost::posix_time;
 
 class Entry {
 protected:
-	string _name;
+	string _title;
+	ptime _startTime;
+	ptime _endTime;
+	bool _isDone;
+	bool _isConfirmed;
 
 public:
 	Entry();
-	Entry(string name);
-	virtual string getName();
-	virtual void setName(string newName);
+	Entry(string, ptime, ptime);
+	Entry(string, ptime);
+	Entry(string);
+	string getTitle();
+	ptime getStartTime();
+	ptime getEndTime();
+	bool isDone();
+	bool isConfirmed();
+
+	void setTitle(string newTitle);
+	void setStartTime(ptime);
+	void setEndTime(ptime);
+	void setDone(bool);
+	void setConfirmed(bool);
 };

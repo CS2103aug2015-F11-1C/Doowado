@@ -13,7 +13,7 @@ int main() {
 	Storage LocalStorage;
 	Command *cmd = nullptr;
 	Parser* parser = new Parser(); 
-	string input;
+	string input; 
 	static ptime currentTime(second_clock::local_time());
 	Display displayList;
 	CommandBuilder* builder = new CommandBuilder();
@@ -32,7 +32,7 @@ int main() {
 		cmd->execute(&LocalStorage, &displayList);
 
 		//UI.updateDefaultDisplay(&LocalStorage);
-		//UI.printList(displayList);
+		//UI.printList(displayList); 
 		
 		UI.updateDisplay(displayList);
 		

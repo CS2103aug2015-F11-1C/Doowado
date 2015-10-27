@@ -22,7 +22,7 @@ void EditTimeCommand::execute(Storage* data, Display *display) {
 	/*
 	else if (_entryType == taskType) {
 		Task* taskEntry = display->retrieveTask(_taskID);
-		taskEntry->setName(_newTitle);
+		taskEntry->setTitle(_newTitle);
 	}
 	*/
 }

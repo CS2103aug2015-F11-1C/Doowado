@@ -6,7 +6,7 @@
 #include <fstream>
 
 class Storage {
-private:
+protected:
 	vector <Event*> _eventList;
 	vector <Task*> _taskList;
 	string _saveDir;
@@ -18,8 +18,8 @@ public:
 	void addEvent(Event* newEvent);
 	void addTask(Task* newTask);
 
-	vector <Event*> searchEventsByName(vector <string> keywords);
-	vector <Task*> searchTasksByName(vector <string> keywords);
+	vector <Event*> searchEventsByTitle(vector <string> keywords);
+	vector <Task*> searchTasksByTitle(vector <string> keywords);
 
 	void displayDefault(vector <Event*> *eventList, vector <Task*> *taskList);				// Display today's event and all uncompleted tasks
 	vector <Event*> retrieveByDate(ptime timeIndicator);

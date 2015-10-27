@@ -8,9 +8,9 @@ private:
 	bool _isOverdue;
 
 public:
-	Task(string name, ptime dueTime, bool isCompleted, bool isOverdue);
-	Task(string name, ptime dueTime);
-	Task(string name);
+	Task(string title, ptime dueTime, bool isCompleted, bool isOverdue);
+	Task(string title, ptime dueTime);
+	Task(string title);
 	ptime getDueTime();
 	bool getCompleted();
 	bool getOverdue();

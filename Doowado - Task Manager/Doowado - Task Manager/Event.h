@@ -8,7 +8,7 @@ private:
 	ptime _endTime;
 
 public:
-	Event(string name, ptime startTime, ptime endTime);
+	Event(string title, ptime startTime, ptime endTime);
 	ptime getStartTime();
 	ptime getEndTime();
 	void setStartTime(ptime newStartTime);

@@ -21,7 +21,7 @@ void EditCommand::execute(Storage* data, Display *display)
 		Event* eventEntry = display->retrieveEvent(_taskID);
 		
 		if (_newTitle != "") {
-			eventEntry->setName(_newTitle);
+			eventEntry->setTitle(_newTitle);
 		}
 		if (!_newStartDate.is_not_a_date_time()) {
 			date startDate = _newStartDate.date();
@@ -72,7 +72,7 @@ void EditCommand::execute(Storage* data, Display *display)
 	else if (_entryType == task) {
 		Task* taskEntry = display->retrieveTask(_taskID);
 		if (_newTitle != "") {
-			taskEntry->setName(_newTitle);
+			taskEntry->setTitle(_newTitle);
 		}
 		if (!_newEndDate.is_not_a_date_time()) {
 			date dueDate = _newEndDate.date();

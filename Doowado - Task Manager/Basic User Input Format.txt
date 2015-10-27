@@ -1,35 +1,52 @@
-For add
-possible input format for time
-("." and "/" can be used interchangeably)
-(lower case and upper case can be used interchangeably)
-21/10/2015 or 21.10.2015
-21/oct or 21.OCT or 21/October or 21/10 
-fri or friday or tmr or tomorrow or Today
+Upper case or lower case input is allowed
+Time input format
+Use "." or "/" to delimite date month and year
+e.g. 31/10/2015 31.10.2015
 
-Example input
-add watch movie on fri 12 to 14
-add complete homework 1 by 25.oct
-add shopping with mum at today 1730
-add basketball camp from 21/oct 1200 to 26/10/2015
+Month and day keywords are supported
+e.g december fridy tomorrow
+Short forms are also supported
+e.g. dec fri tmr
+
+For add
+add (new event/task description)
+e.g. add watch movie
+
+add (new event/task description) from/on (starting date/time) to (ending date/time)
+e.g. add basketball camp from friday 1200 to sunday 1200
+
+add (new event/task description) by (ending date/time)
+e.g add complete homework by 25.oct
 
 For delete
-(both upper case and lower case is allowed)
-delete 1t or delete 1E 
+delete (entry index)
+e.g. delete t1
 
 For edit
-edit 2t complete ie3110 lab
-edit 3t start at 1500
-edit 4t end by 1700
+edit (entry index) (new event/task description)
+e.g. edit t2 complete ie3110 lab
+
+edit (entry index) start at (new starting time)
+e.g. edit t3 start at 1500
+
+edit (entry index) end at (new ending time)
+e.g. edit t4 end at 1500
 
 For display
-display on tmr
-display on friday
+display (date)
+e.g. display tmr
+e.g. display 15/10/2015
 
 For search
-search ie3101
+search (event or task description)
+e.g. search ie3101
 
 For save
-save C:\Program Files
+save (new directory)
+e.g. save C:\Program Files
 
 For undo
 undo
+
+For help
+help

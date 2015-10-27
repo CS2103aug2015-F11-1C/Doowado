@@ -312,7 +312,7 @@ void Storage::displayDefault(vector <Event*> *eventDisplay, vector <Task*> *task
 	}
 }
 
-vector<Event*> Storage::displayByDate(ptime timeIndicator) {
+vector<Event*> Storage::retrieveByDate(ptime timeIndicator) {
 	vector <Event*> eventResult;
 
 	for (int i = 0; i < _eventList.size(); i++) {
@@ -324,7 +324,7 @@ vector<Event*> Storage::displayByDate(ptime timeIndicator) {
 	return eventResult;
 }
 
-void Storage::displayByDate(ptime timeIndicator, vector <Event*>& eventResult, vector <Task*>& taskResult) {
+void Storage::retrieveByDate(ptime timeIndicator, vector <Event*>& eventResult, vector <Task*>& taskResult) {
 	
 	eventResult.clear();
 	taskResult.clear();
@@ -343,7 +343,7 @@ void Storage::displayByDate(ptime timeIndicator, vector <Event*>& eventResult, v
 }
 
 
-vector <Event*> Storage::displayByDate(ptime timeIndicator1, ptime timeIndicator2) {
+vector <Event*> Storage::retrieveByDate(ptime timeIndicator1, ptime timeIndicator2) {
 	vector <Event*> eventResult;
 
 	for (int i = 0; i < _eventList.size(); i++) {
@@ -355,7 +355,7 @@ vector <Event*> Storage::displayByDate(ptime timeIndicator1, ptime timeIndicator
 	return eventResult;
 }
 
-vector<Task*> Storage::displayIncompleteTasks() {
+vector<Task*> Storage::retrieveIncompleteTasks() {
 	vector<Task*> taskResult;
 
 	for (int i = 0; i < _taskList.size(); i++) {
@@ -367,7 +367,7 @@ vector<Task*> Storage::displayIncompleteTasks() {
 	return taskResult;
 }
 
-vector<Task*> Storage::displayCompletedTasks() {
+vector<Task*> Storage::retrieveCompletedTasks() {
 	vector <Task*> taskResult;
 
 	for (int i = 0; i < _taskList.size(); i++) {
@@ -401,4 +401,8 @@ void Storage::deleteFromTaskLIst(Task * taskPointer) {
 	}
 
 	_taskList.erase(it);
+}
+
+void Storage::changeSaveDirectory(string newSaveDir) {
+	_saveDir = newSaveDir;
 }

@@ -22,14 +22,16 @@ public:
 	vector <Task*> searchTasksByTitle(vector <string> keywords);
 
 	void displayDefault(vector <Event*> *eventList, vector <Task*> *taskList);				// Display today's event and all uncompleted tasks
-	vector <Event*> displayByDate(ptime timeIndicator);
-	void displayByDate(ptime timeIndicator, vector<Event*>& eventResult, vector<Task*>& taskResult);
-	vector <Event*> displayByDate(ptime timeIndicator1, ptime timeIndicator2);
-	vector <Task*> displayIncompleteTasks();
-	vector <Task*> displayCompletedTasks();
+	vector <Event*> retrieveByDate(ptime timeIndicator);
+	void retrieveByDate(ptime timeIndicator, vector<Event*>& eventResult, vector<Task*>& taskResult);
+	vector <Event*> retrieveByDate(ptime timeIndicator1, ptime timeIndicator2);
+	vector <Task*> retrieveIncompleteTasks();
+	vector <Task*> retrieveCompletedTasks();
 
 	void deleteFromEventList(Event* eventPointer);
 	void deleteFromTaskLIst(Task* taskPointer);
+
+	void changeSaveDirectory(string newSaveDir);
 
 	void saveToFile();
 	void loadFromFile();

@@ -83,14 +83,14 @@ void AddCommand::updateDisplay(Display* display, Storage* data)
 	vector<Task*> relevantTaskList;
 
 	if (type_event == entryType) {
-		data->displayByDate(_entryStartTime, relevantEventList, relevantTaskList);
+		data->retrieveByDate(_entryStartTime, relevantEventList, relevantTaskList);
 	}
 	else if (type_timed_task == entryType) {
-		data->displayByDate(_entryDueTime, relevantEventList, relevantTaskList);
+		data->retrieveByDate(_entryDueTime, relevantEventList, relevantTaskList);
 	}
 	else if (type_floating_task == entryType) {
 		ptime currentTime(second_clock::local_time());
-		data->displayByDate(currentTime, relevantEventList, relevantTaskList);
+		data->retrieveByDate(currentTime, relevantEventList, relevantTaskList);
 	}
 
 	display->updateDisplayEventList(relevantEventList);

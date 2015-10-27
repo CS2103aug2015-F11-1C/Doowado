@@ -63,8 +63,6 @@ private:
 
 	void setDateAndTime(string & input);
 
-	void removeStartOrEndKeyword(string & input);
-
 	void dateSetter(vector<string> input);
 
 	vector<int> extractYearMonthDay(string input);

@@ -1,4 +1,4 @@
-#include "Logic.h"
+/*#include "Logic.h"
 
 Logic::Logic()
 {
@@ -34,3 +34,4 @@ Display * Logic::getDisplay()
 {
 	return _display;
 }
+*/

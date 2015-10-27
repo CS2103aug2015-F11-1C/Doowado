@@ -16,7 +16,7 @@ Command * History::getLastCommand()
 	return nullptr;
 }
 
-void History::pushCommand()
+void History::pushCommand(Command* cmd)
 {
-
+	_commandStack.push(cmd);
 }

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include <string> 
 #include <boost/date_time/gregorian/gregorian.hpp>
@@ -6,6 +7,7 @@
 #include "Storage.h"
 #include "Display.h"
 #include <assert.h>
+#include "History.h"
 
 using namespace std;
 using namespace boost::gregorian;
@@ -19,7 +21,7 @@ public:
 	Command();
 	virtual ~Command();
 
-	virtual void execute(Storage* data, Display* display);
+	virtual void execute(Storage* data, Display* display, History* history);
 
 };
 

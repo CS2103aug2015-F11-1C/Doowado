@@ -6,6 +6,7 @@
 #include "UserInterface.h"
 #include "Display.h"
 #include "DeleteCommand.h"
+#include "History.h"
 
 int main() {
 
@@ -17,6 +18,7 @@ int main() {
 	static ptime currentTime(second_clock::local_time());
 	Display displayList;
 	CommandBuilder* builder = new CommandBuilder();
+	History history;
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
@@ -29,7 +31,7 @@ int main() {
 		parserResult = parser->parse(input);
 		
 		cmd = builder->buildCommand(parserResult);
-		cmd->execute(&LocalStorage, &displayList);
+		cmd->execute(&LocalStorage, &displayList, &history);
 
 		//UI.updateDefaultDisplay(&LocalStorage);
 		//UI.printList(displayList); 

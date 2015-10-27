@@ -1,6 +1,8 @@
 #pragma once
+class Command;
 #include <stack>
-#include "Command.h"
+using namespace std;
+
 class History
 {
 private:
@@ -10,6 +12,6 @@ public:
 	~History();
 
 	Command* getLastCommand();
-	void pushCommand();
+	void pushCommand(Command* cmd);
 };
 

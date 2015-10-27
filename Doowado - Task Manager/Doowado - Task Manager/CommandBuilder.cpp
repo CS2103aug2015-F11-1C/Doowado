@@ -5,6 +5,7 @@
 #include "EditTimeCommand.h"
 #include "DeleteCommand.h"
 #include "ShowCommand.h"
+#include "SearchCommand.h"
 
 
 /*
@@ -185,14 +186,18 @@ Command * CommandBuilder::createDeleteCommand(ParserResult& parserResult)
 	deleteCommand = new DeleteCommand(entryType, displayIndex);
 	return deleteCommand;
 }
-/*
+
 Command * CommandBuilder::createSearchCommand(ParserResult& parserResult)
 {
 	//create SearchCommand;
-	return nullptr;
+	Command* searchCommand;
+	
+	vector<string> keywords = parserResult.getDescription();
+	searchCommand = new SearchCommand(keywords);
+	return searchCommand;
 		
 }
-*/
+
 Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 {
 	//create ShowCommand;
@@ -259,11 +264,11 @@ Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 	else if (commandType == COMMANDTYPE_DELETE) {
 		cmd = createDeleteCommand(parserResult);
 	}
-/*
+
 	else if (commandType == COMMANDTYPE_SEARCH) {
 		cmd = createSearchCommand(parserResult);
 	}
-*/
+
 	else if (commandType == COMMANDTYPE_SHOW) {
 		cmd = createShowCommand(parserResult);
 	}

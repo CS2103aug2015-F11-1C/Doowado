@@ -25,7 +25,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -136,6 +136,7 @@
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParserResult.cpp" />
+    <ClCompile Include="SearchCommand.cpp" />
     <ClCompile Include="ShowCommand.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParserResult.h" />
+    <ClInclude Include="SearchCommand.h" />
     <ClInclude Include="ShowCommand.h" />
     <ClInclude Include="Storage.h" />
     <ClInclude Include="Task.h" />

@@ -13,7 +13,14 @@ History::~History()
 
 Command * History::getLastCommand()
 {
-	return nullptr;
+	if (_commandStack.empty()) { 
+		return nullptr; 
+	}
+
+	Command* lastReversibleCmd;
+	lastReversibleCmd = _commandStack.top();
+	_commandStack.pop();
+	return lastReversibleCmd;
 }
 
 void History::pushCommand(Command* cmd)

@@ -17,3 +17,4 @@
 #include "DisplayStub.h"
 #include "StorageStub.h"
 #include "HistoryStub.h"
+#include "ReversibleCommandStub.h"

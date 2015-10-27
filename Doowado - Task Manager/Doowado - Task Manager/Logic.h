@@ -23,5 +23,6 @@ public:
 	~Logic();
 	void processCommand(string);
 	void initialiseProgram();
+	Display* getDisplay();
 };
 

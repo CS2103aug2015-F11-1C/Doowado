@@ -29,3 +29,8 @@ void Logic::initialiseProgram()
 	_storage->loadFromFile();
 	_storage->saveToFile();
 }
+
+Display * Logic::getDisplay()
+{
+	return _display;
+}

@@ -4,14 +4,13 @@
 //
 
 #pragma once
-#define TESTMODE
+
 #include "targetver.h"
 
 // Headers for CppUnitTest
 #include "CppUnitTest.h"
 
 // TODO: reference additional headers your program requires here
-#include "ShowCommand.h"
-#include "EditCommand.h"
-#include "DisplayStub.h"
+#include "DeleteCommand.h"
 #include "StorageStub.h"
+#include "DisplayStub.h"

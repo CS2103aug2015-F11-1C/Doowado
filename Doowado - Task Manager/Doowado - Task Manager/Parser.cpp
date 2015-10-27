@@ -142,12 +142,14 @@ void Parser::setDateAndTime(string& input){
 	}else if (input.find_first_of(" ") == string::npos) {
 		dateAndTime = input;
 		dateAndTime = convertStringTolowerCase(dateAndTime);
-		dateAndTimeFragment = fragmentizeString(dateAndTime);
+		if (isDateOrTimeKeywordValid(dateAndTime)) {
+			dateAndTimeFragment = fragmentizeString(dateAndTime);
 
-		dateSetter(dateAndTimeFragment);
-		timeSetter(dateAndTimeFragment);
+			dateSetter(dateAndTimeFragment);
+			timeSetter(dateAndTimeFragment);
 
-		input = "";
+			input = "";
+		}
 	}else {
 		resetDateAndTime();
 	}

@@ -21,7 +21,7 @@ public:
 	Command();
 	virtual ~Command();
 
-	virtual void execute(Storage* data, Display* display, History* history);
-	virtual void undo(Storage* data, Display* display, History* history);
+	virtual void execute(Storage* data, Display* display);
+	virtual void undo(Storage* data, Display* display);
 };
 

@@ -1,6 +1,6 @@
 #include "History.h"
 
-
+stack<Command*> History::_commandStack;
 
 History::History()
 {

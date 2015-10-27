@@ -11,7 +11,7 @@ ReversibleCommandStub::~ReversibleCommandStub()
 {
 }
 
-void ReversibleCommandStub::undo(Storage *storage, Display *display, History *history)
+void ReversibleCommandStub::undo(Storage *storage, Display *display)
 {
 	vector<string> hardCodedFeedback;
 	hardCodedFeedback.push_back("Undo Complete");

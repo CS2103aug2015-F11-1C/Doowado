@@ -30,7 +30,7 @@ AddCommand::~AddCommand()
 {
 }
 
-void AddCommand::execute(Storage* data, Display *display, History* history) {
+void AddCommand::execute(Storage* data, Display *display) {
 	checkValidTitle(_entryTitle);
 
 	if (!_entryStartTime.is_not_a_date_time()) {
@@ -54,7 +54,6 @@ void AddCommand::execute(Storage* data, Display *display, History* history) {
 
 	generateFeedback();
 	updateDisplay(display, data);
-	history->pushCommand(this);
 	data->saveToFile();
 }
 

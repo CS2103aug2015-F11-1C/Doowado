@@ -11,10 +11,10 @@ UndoCommand::~UndoCommand()
 {
 }
 
-void UndoCommand::execute(Storage * data, Display * display, History * history)
+void UndoCommand::execute(Storage * data, Display * display)
 {
 	Command* lastReversibleCmd;
-	lastReversibleCmd =  history->getLastCommand();
+	lastReversibleCmd =  History::getLastCommand();
 
 	if (doesNotExist(lastReversibleCmd)) {
 		generateFailureFeedback();
@@ -22,7 +22,7 @@ void UndoCommand::execute(Storage * data, Display * display, History * history)
 		return;
 	}
 
-	lastReversibleCmd->undo(data, display, history);
+	lastReversibleCmd->undo(data, display);
 }
 
 bool UndoCommand::doesNotExist(Command *cmd)

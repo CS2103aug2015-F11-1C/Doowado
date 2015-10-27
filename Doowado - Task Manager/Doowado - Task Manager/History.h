@@ -6,12 +6,12 @@ using namespace std;
 class History
 {
 private:
-	stack<Command*> _commandStack;
+	static stack<Command*> _commandStack;
 public:
 	History();
 	~History();
 
-	Command* getLastCommand();
-	void pushCommand(Command* cmd);
+	static Command* getLastCommand();
+	static void pushCommand(Command* cmd);
 };
 

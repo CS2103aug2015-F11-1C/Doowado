@@ -30,7 +30,7 @@ namespace CommandTest
 			vector<string> idealFeedback;
 			vector<string> actualFeedback;
 
-			cmd->execute(&testStorage, &displayList, &history);
+			cmd->execute(&testStorage, &displayList);
 
 			actualFeedback = displayList.getCommandFeedback();
 			idealFeedback.push_back(MSG_NOTHING_TO_UNDO);
@@ -55,7 +55,7 @@ namespace CommandTest
 
 			history.pushCommand(&reversibleCmd);
 
-			cmd->execute(&testStorage, &displayList, &history);
+			cmd->execute(&testStorage, &displayList);
 
 			actualFeedback = displayList.getCommandFeedback();
 			idealFeedback.push_back("Undo Complete");
@@ -83,7 +83,7 @@ namespace CommandTest
 			idealFeedback.push_back("Undo Complete");
 
 			for (int i = 0; i < 2; i++) {
-				cmd->execute(&testStorage, &displayList, &history);
+				cmd->execute(&testStorage, &displayList);
 				actualFeedback = displayList.getCommandFeedback();
 
 				Assert::AreEqual(actualFeedback.size(), size_t(1));

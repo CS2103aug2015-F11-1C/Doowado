@@ -14,7 +14,7 @@ public:
 	UndoCommand();
 	~UndoCommand();
 
-	void execute(Storage* data, Display* display, History* history);
+	void execute(Storage* data, Display* display);
 	bool doesNotExist(Command*);
 	void generateFailureFeedback();
 };

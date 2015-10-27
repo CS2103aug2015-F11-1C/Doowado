@@ -18,7 +18,7 @@ int main() {
 	static ptime currentTime(second_clock::local_time());
 	Display displayList;
 	CommandBuilder* builder = new CommandBuilder();
-	History history;
+
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
@@ -31,7 +31,7 @@ int main() {
 		parserResult = parser->parse(input);
 		
 		cmd = builder->buildCommand(parserResult);
-		cmd->execute(&LocalStorage, &displayList, &history);
+		cmd->execute(&LocalStorage, &displayList);
 
 		//UI.updateDefaultDisplay(&LocalStorage);
 		//UI.printList(displayList); 

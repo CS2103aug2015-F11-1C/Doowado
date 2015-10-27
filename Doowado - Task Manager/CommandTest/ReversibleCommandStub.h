@@ -6,6 +6,6 @@ public:
 	ReversibleCommandStub();
 	~ReversibleCommandStub();
 
-	void undo(Storage*, Display*, History*);
+	void undo(Storage*, Display*);
 };
 

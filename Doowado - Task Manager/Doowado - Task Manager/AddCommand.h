@@ -23,7 +23,7 @@ public:
 	AddCommand(string, ptime, ptime, ptime);
 	~AddCommand();
 
-	void execute(Storage* data, Display *display, History* history);
+	void execute(Storage* data, Display *display);
 
 	void generateFeedback();
 	void checkValidTitle(string);

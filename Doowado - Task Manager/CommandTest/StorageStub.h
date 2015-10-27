@@ -6,7 +6,7 @@ public:
 	StorageStub();
 	~StorageStub();
 
-	void displayByDate(vector<Event*>*, vector<Task*>*, date);
-	vector<Event*> getEventsList();
+	void displayByDate(vector<Entry*>*, vector<Entry*>*, date);
+	vector<Entry*> getEventsList();
 };
 

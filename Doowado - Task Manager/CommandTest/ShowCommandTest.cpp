@@ -33,13 +33,13 @@ namespace CommandTest
 			DisplayStub displayList;
 			StorageStub testStorage;
 
-			Event event1("Sample event", t1, t2);
+			Entry event1("Sample event", t1, t2);
 			testStorage.addEvent(&event1);
 
-			vector<Event*> idealEventsList;
+			vector<Entry*> idealEventsList;
 			idealEventsList.push_back(&event1);
 
-			vector<Event*> actualEventsList;
+			vector<Entry*> actualEventsList;
 
 			cmd->execute(&testStorage, &displayList);
 			Assert::AreEqual((cmd->_requestedEventList).size(),size_t(1));
@@ -56,10 +56,10 @@ namespace CommandTest
 
 			StorageStub testStorage;
 
-			Event event1("Sample event", t1, t2);
+			Entry event1("Sample event", t1, t2);
 			testStorage.addEvent(&event1);
 
-			vector<Event*> actualEventsList;
+			vector<Entry*> actualEventsList;
 
 			actualEventsList = testStorage.getEventsList();
 
@@ -75,11 +75,11 @@ namespace CommandTest
 
 			StorageStub testStorage;
 
-			Event event1("Sample event", t1, t2);
+			Entry event1("Sample event", t1, t2);
 			testStorage.addEvent(&event1);
 
-			vector<Event*> actualEventsList;
-			vector<Task*> actualTaskList;
+			vector<Entry*> actualEventsList;
+			vector<Entry*> actualTaskList;
 
 			testStorage.displayByDate(&actualEventsList, &actualTaskList, testDate);
 
@@ -93,15 +93,15 @@ namespace CommandTest
 			date testDate(2015, Oct, 18);
 			ptime t1(testDate, hours(5) + minutes(30));
 			ptime t2(testDate, hours(6) + minutes(30));
-			Event event1("Sample event", t1, t2);
-			vector<Event*> testEventsList;
+			Entry event1("Sample event", t1, t2);
+			vector<Entry*> testEventsList;
 			testEventsList.push_back(&event1);
 			
 			DisplayStub displayList;
 
 			displayList.updateDisplayEventList(testEventsList);
 
-			vector<Event*> actualEventsList;
+			vector<Entry*> actualEventsList;
 			actualEventsList = displayList.getEventsList();
 
 			Assert::AreEqual(actualEventsList.size(), size_t(1));

@@ -9,13 +9,13 @@ StorageStub::~StorageStub()
 {
 }
 
-void StorageStub::displayByDate(vector<Event*>* eventList, vector<Task*>* taskList, date)
+void StorageStub::displayByDate(vector<Entry*>* eventList, vector<Entry*>* taskList, date)
 {
 	*eventList = _eventList;
 	*taskList = _taskList;
 }
 
-vector<Event*> StorageStub::getEventsList()
+vector<Entry*> StorageStub::getEventsList()
 {
 	return _eventList;
 }

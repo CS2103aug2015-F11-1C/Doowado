@@ -11,7 +11,7 @@ DisplayStub::~DisplayStub()
 {
 }
 
-vector<Event*> DisplayStub::getEventsList()
+vector<Entry*> DisplayStub::getEventsList()
 {
 	return _eventList;
 }

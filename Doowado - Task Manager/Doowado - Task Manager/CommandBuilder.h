@@ -39,7 +39,7 @@ class CommandBuilder {
 		Command* createSearchCommand(ParserResult&);
 		Command* createShowCommand(ParserResult&);
 //		Command* createHelpCommand(ParserResult&);
-//		Command* createSaveCommand(ParserResult&);
+		Command* createSaveCommand(ParserResult&);
 
 	public:
 		CommandBuilder();

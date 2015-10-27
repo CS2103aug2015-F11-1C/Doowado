@@ -136,6 +136,7 @@
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParserResult.cpp" />
+    <ClCompile Include="SaveCommand.cpp" />
     <ClCompile Include="SearchCommand.cpp" />
     <ClCompile Include="ShowCommand.cpp" />
     <ClCompile Include="Storage.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParserResult.h" />
+    <ClInclude Include="SaveCommand.h" />
     <ClInclude Include="SearchCommand.h" />
     <ClInclude Include="ShowCommand.h" />
     <ClInclude Include="Storage.h" />

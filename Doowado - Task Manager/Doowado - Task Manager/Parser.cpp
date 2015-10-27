@@ -5,9 +5,9 @@ using namespace std;
 
 //CONSTANTS
 string const ERROR_EMPTY_USER_INPUT = "empty input";
-string const DATE_DELIMITER[] = { "on","from","by","at","fr" };
+string const DATE_DELIMITER[] = { "on","from","by","at","fr","start","st","end","ed" };
 string const DATE_SPLITER = "./";
-int const DATE_DELIMITER_SIZE = 5;
+int const DATE_DELIMITER_SIZE = 9;
 int const DATE_NOT_FOUND = 43;
 
 Parser::Parser(){}
@@ -138,7 +138,9 @@ void Parser::setDateAndTime(string& input){
 		//to remove the date and time keywords form the user input string
 		input = input.substr(0, delimiterPos);
 		input = removeExtraSpacePadding(input);
-		removeStartOrEndKeyword(input);
+
+//		removeStartOrEndKeyword(input);
+
 	}else if (input.find_first_of(" ") == string::npos) {
 		dateAndTime = input;
 		dateAndTime = convertStringTolowerCase(dateAndTime);
@@ -152,18 +154,6 @@ void Parser::setDateAndTime(string& input){
 		}
 	}else {
 		resetDateAndTime();
-	}
-}
-
-//remove the start or end keywords before the on and by time delimiter
-void Parser::removeStartOrEndKeyword(string & input){
-	size_t spacePos = input.find_last_of(" ");
-	string keyword = input.substr(spacePos + 1);
-	keyword = convertStringTolowerCase(keyword);
-
-	if (keyword == "start" || keyword == "end") {
-		input = input.substr(0, spacePos);
-		input = removeExtraSpacePadding(input);
 	}
 }
 
@@ -236,10 +226,18 @@ void Parser::dateSetter(vector<string> input){
 		for (int z = 0; z < input.size(); z++) {
 			endYearMonthDay = extractYearMonthDay(input[z]);
 			if (!endYearMonthDay.empty()) {
-				_endYear.push_back(endYearMonthDay[0]);
-				_endMonth.push_back(endYearMonthDay[1]);
-				_endDay.push_back(endYearMonthDay[2]);
-				break;
+				if (_userDelimiter == "start" || _userDelimiter == "st") {
+					_startYear.push_back(endYearMonthDay[0]);
+					_startMonth.push_back(endYearMonthDay[1]);
+					_startDay.push_back(endYearMonthDay[2]);
+					break;
+				}
+				else {
+					_endYear.push_back(endYearMonthDay[0]);
+					_endMonth.push_back(endYearMonthDay[1]);
+					_endDay.push_back(endYearMonthDay[2]);
+					break;
+				}
 			}
 		}
 	}
@@ -619,8 +617,14 @@ void Parser::timeSetter(vector<string> input){
 		for (int z = 0; z < input.size(); z++) {
 			endTime = extractTime(input[z]);
 			if (endTime != -1) {
-				_endTime.push_back(endTime);
-				break;
+				if (_userDelimiter == "start" || _userDelimiter == "st") {
+					_startTime.push_back(endTime);
+					break;
+				}
+				else {
+					_endTime.push_back(endTime);
+					break;
+				}
 			}
 		}
 	}
@@ -702,10 +706,75 @@ vector<string> Parser::fragmentizeString(string input){
 	return dateAndTime;
 }
 
+
 //take in full user input
-size_t Parser::findDateDelimiterPos(string input){
+size_t Parser::findDateDelimiterPos(string input) {
+	string delimiter = "";
+	size_t foundDelimiter;
+	string lowerCaseInput;
 	string temp;
-	string delimiter="";
+
+	lowerCaseInput = convertStringTolowerCase(input);
+	temp = lowerCaseInput;
+
+	for (int i = 0; i < DATE_DELIMITER_SIZE; i++) {
+		foundDelimiter = temp.rfind(DATE_DELIMITER[i]);
+
+		if (foundDelimiter != string::npos) {
+			
+			//it's foundDelimiter - 1 not temp[foundDelimiter - 1] !!! debug for 5 hrs!!!
+			//in case for on mon, fr fri, the date delimiter is found in the date keywords itself!
+			if (foundDelimiter - 1 == string::npos) {	
+				if (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i]) {
+					delimiter = DATE_DELIMITER[i];
+					break;
+				}
+			}
+			else {
+				if (temp.substr(foundDelimiter - 1, 1) == " ") {
+					if (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i]) {
+						delimiter = DATE_DELIMITER[i];
+						break;
+					}
+					else {
+						temp = temp.substr(0, foundDelimiter);
+						foundDelimiter = temp.rfind(DATE_DELIMITER[i]);
+						if (foundDelimiter != string::npos) {
+							i--;
+						}
+					}
+				}else {
+					temp = temp.substr(0, foundDelimiter);
+					foundDelimiter = temp.rfind(DATE_DELIMITER[i]);
+					if (foundDelimiter != string::npos) {
+						i--;
+					}
+				}
+			}
+		}
+	}
+
+
+	if (foundDelimiter != string::npos && delimiter != "") {
+		if (!isDateDelimiterValid(lowerCaseInput, foundDelimiter)) {
+			return string::npos;
+		}
+		else {
+			_userDelimiter = delimiter;		//found which delimeter did the user use.
+			return foundDelimiter;
+		}
+	}
+	else {
+		return string::npos;
+	}
+}
+
+
+/*
+//take in full user input
+size_t Parser::findDateDelimiterPos(string input) {
+	string temp;
+	string delimiter = "";
 	size_t foundDelimiter;
 	string lowerCaseInput;
 
@@ -722,14 +791,17 @@ size_t Parser::findDateDelimiterPos(string input){
 	if (foundDelimiter != string::npos && delimiter != "") {
 		if (!isDateDelimiterValid(lowerCaseInput, foundDelimiter)) {
 			return string::npos;
-		}else {
+		}
+		else {
 			_userDelimiter = delimiter;		//found which delimeter did the user use.
 			return foundDelimiter;
 		}
-	}else {
+	}
+	else {
 		return string::npos;
 	}
 }
+*/
 
 bool Parser::isDateDelimiterValid(string input, size_t pos){
 	string temp;

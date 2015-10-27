@@ -2,10 +2,10 @@
 #include "Command.h"
 #include "AddCommand.h"
 #include "EditCommand.h"
-#include "EditTimeCommand.h"
 #include "DeleteCommand.h"
 #include "ShowCommand.h"
 #include "SearchCommand.h"
+#include "SaveCommand.h"
 
 
 /*
@@ -237,13 +237,19 @@ Command * CommandBuilder::createHelpCommand(ParserResult& parserResult)
 	//create HelpCommand;
 	return nullptr;
 }
-
+*/
 Command * CommandBuilder::createSaveCommand(ParserResult& parserResult)
 {
-	//create SaveCommand
-	return nullptr;
+	Command * saveCommand;
+	vector<string> vSaveDirs;
+	vSaveDirs = parserResult.getDescription();
+
+	string saveDir = vSaveDirs[0];
+	saveCommand = new SaveCommand(saveDir);
+
+	return saveCommand;
 }
-*/
+
 CommandBuilder::CommandBuilder() {
 
 }
@@ -272,11 +278,11 @@ Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 	else if (commandType == COMMANDTYPE_SHOW) {
 		cmd = createShowCommand(parserResult);
 	}
-/*	
+	
 	else if (commandType == COMMANDTYPE_SAVE) {
 		cmd = createSaveCommand(parserResult);
 	}
-
+/*
 	else if (commandType == COMMANDTYPE_HELP) {
 		cmd = createHelpCommand(parserResult);
 	}

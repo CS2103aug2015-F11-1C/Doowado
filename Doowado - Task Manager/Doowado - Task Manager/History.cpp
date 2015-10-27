@@ -1,6 +1,5 @@
 #include "History.h"
 
-stack<Command*> History::_commandStack;
 
 History::History()
 {
@@ -13,17 +12,10 @@ History::~History()
 
 Command * History::getLastCommand()
 {
-	if (_commandStack.empty()) { 
-		return nullptr; 
-	}
-
-	Command* lastReversibleCmd;
-	lastReversibleCmd = _commandStack.top();
-	_commandStack.pop();
-	return lastReversibleCmd;
+	return nullptr;
 }
 
-void History::pushCommand(Command* cmd)
+void History::pushCommand()
 {
-	_commandStack.push(cmd);
+
 }

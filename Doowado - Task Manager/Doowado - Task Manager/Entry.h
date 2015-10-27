@@ -17,6 +17,7 @@ protected:
 	ptime _endTime;
 	bool _isDone;
 	bool _isConfirmed;
+	bool _isOverdue;
 
 public:
 	Entry();
@@ -28,10 +29,17 @@ public:
 	ptime getEndTime();
 	bool isDone();
 	bool isConfirmed();
+	bool isOverdue();
 
 	void setTitle(string newTitle);
 	void setStartTime(ptime);
 	void setEndTime(ptime);
 	void setDone(bool);
 	void setConfirmed(bool);
+	void setOverdue(bool);
+
+	void printEvent();
+	void printTask();
+	string toStringEvent();
+	string toStringTask();
 };

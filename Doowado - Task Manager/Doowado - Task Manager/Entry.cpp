@@ -10,6 +10,7 @@ Entry::Entry(string title, ptime endTime)
 	_endTime = endTime;
 	_isDone = false;
 	_isConfirmed = true;
+	_isOverdue = false;
 }
 
 Entry::Entry(string title, ptime startTime, ptime endTime)
@@ -19,12 +20,14 @@ Entry::Entry(string title, ptime startTime, ptime endTime)
 	_endTime = endTime;
 	_isDone = false;
 	_isConfirmed = true;
+	_isOverdue = false;
 }
 
 Entry::Entry(string title){
 	_title = title;
 	_isDone = false;
 	_isConfirmed = true;
+	_isOverdue = false;
 }
 
 string Entry::getTitle(){
@@ -51,6 +54,11 @@ bool Entry::isConfirmed()
 	return _isConfirmed;
 }
 
+bool Entry::isOverdue()
+{
+	return _isOverdue;
+}
+
 void Entry::setTitle(string newTitle)
 {
 	_title = newTitle;
@@ -74,4 +82,37 @@ void Entry::setDone(bool doneStatus)
 void Entry::setConfirmed(bool confirmStatus)
 {
 	_isConfirmed = confirmStatus;
+}
+
+void Entry::setOverdue(bool overdueStatus)
+{
+	_isOverdue = overdueStatus;
+}
+
+void Entry::printEvent()
+{
+	cout << setw(20) << left << _title;
+	cout << " Start: " << to_simple_string(_startTime) << " End: " << to_simple_string(_endTime) << endl;
+}
+
+void Entry::printTask()
+{
+	cout << setw(20) << left << _title;
+	cout << " Due: " << setw(20) << to_simple_string(_endTime) << endl;
+}
+
+string Entry::toStringEvent()
+{
+	ostringstream eventSummary;
+	eventSummary << setw(20) << left << _title;
+	eventSummary << " Start: " << to_simple_string(_startTime) << " End: " << to_simple_string(_endTime) << endl;
+	return eventSummary.str();
+}
+
+string Entry::toStringTask()
+{
+	ostringstream taskSummary;
+	taskSummary << setw(20) << left << _title;
+	taskSummary << " Due: " << setw(20) << to_simple_string(_endTime) << endl;
+	return taskSummary.str();
 }

@@ -18,7 +18,7 @@ EditCommand::~EditCommand()
 void EditCommand::execute(Storage* data, Display *display)
 {
 	if (_entryType == event) {
-		Event* eventEntry = display->retrieveEvent(_taskID);
+		Entry* eventEntry = display->retrieveEvent(_taskID);
 		
 		if (_newTitle != "") {
 			eventEntry->setTitle(_newTitle);
@@ -70,7 +70,7 @@ void EditCommand::execute(Storage* data, Display *display)
 	}
 
 	else if (_entryType == task) {
-		Task* taskEntry = display->retrieveTask(_taskID);
+		Entry* taskEntry = display->retrieveTask(_taskID);
 		if (_newTitle != "") {
 			taskEntry->setTitle(_newTitle);
 		}
@@ -79,21 +79,21 @@ void EditCommand::execute(Storage* data, Display *display)
 			if (!_newEndTime.is_not_a_date_time()) {
 				time_duration dueTime = _newEndTime.time_of_day();
 				ptime editDueTime(dueDate, dueTime);
-				taskEntry->setDueTime(editDueTime);
+				taskEntry->setEndTime(editDueTime);
 			}
 			else {
-				ptime originalDueTime = taskEntry->getDueTime();
+				ptime originalDueTime = taskEntry->getEndTime();
 				time_duration dueTime = originalDueTime.time_of_day();
 				ptime editDueTime(dueDate, dueTime);
-				taskEntry->setDueTime(editDueTime);
+				taskEntry->setEndTime(editDueTime);
 			}
 		}
 		else if (!_newEndTime.is_not_a_date_time()) {
 			time_duration dueTime = _newEndTime.time_of_day();
-			ptime originalDueDate = taskEntry->getDueTime();
+			ptime originalDueDate = taskEntry->getEndTime();
 			date dueDate = originalDueDate.date();
 			ptime editDueTime(dueDate, dueTime);
-			taskEntry->setDueTime(editDueTime);
+			taskEntry->setEndTime(editDueTime);
 		}
 	}
 

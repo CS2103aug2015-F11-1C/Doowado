@@ -128,7 +128,6 @@
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="DeleteCommand.cpp" />
     <ClCompile Include="Display.cpp" />
-    <ClCompile Include="EditTimeCommand.cpp" />
     <ClCompile Include="EditCommand.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Event.cpp" />
@@ -136,6 +135,7 @@
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParserResult.cpp" />
+    <ClCompile Include="SaveCommand.cpp" />
     <ClCompile Include="SearchCommand.cpp" />
     <ClCompile Include="ShowCommand.cpp" />
     <ClCompile Include="Storage.cpp" />
@@ -149,7 +149,6 @@
     <ClInclude Include="CommandBuilder.h" />
     <ClInclude Include="DeleteCommand.h" />
     <ClInclude Include="Display.h" />
-    <ClInclude Include="EditTimeCommand.h" />
     <ClInclude Include="EditCommand.h" />
     <ClInclude Include="Entry.h" />
     <ClInclude Include="Event.h" />
@@ -157,6 +156,7 @@
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParserResult.h" />
+    <ClInclude Include="SaveCommand.h" />
     <ClInclude Include="SearchCommand.h" />
     <ClInclude Include="ShowCommand.h" />
     <ClInclude Include="Storage.h" />

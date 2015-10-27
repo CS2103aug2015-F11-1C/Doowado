@@ -36,19 +36,19 @@ void AddCommand::execute(Storage* data, Display *display) {
 	if (!_entryStartTime.is_not_a_date_time()) {
 		//cout << "Event" << endl;
 		entryType = type_event;
-		Event* newEvent = new Event(_entryTitle, _entryStartTime, _entryEndTime);
+		Entry* newEvent = new Entry(_entryTitle, _entryStartTime, _entryEndTime);
 		data->addEvent(newEvent);
 	}
 	else if (!_entryDueTime.is_not_a_date_time()) {
 		//cout << "Task" << endl;
 		entryType = type_timed_task;
-		Task* newTask = new Task(_entryTitle, _entryDueTime);
+		Entry* newTask = new Entry(_entryTitle, _entryDueTime);
 		data->addTask(newTask);
 	}
 	else {
 		//cout << "Floating Task" << endl;
 		entryType = type_floating_task;
-		Task* newFloatingTask = new Task(_entryTitle);
+		Entry* newFloatingTask = new Entry(_entryTitle);
 		data->addTask(newFloatingTask);
 	}
 
@@ -79,8 +79,8 @@ void AddCommand::checkValidTitle(string title)
 
 void AddCommand::updateDisplay(Display* display, Storage* data)
 {
-	vector<Event*> relevantEventList;
-	vector<Task*> relevantTaskList;
+	vector<Entry*> relevantEventList;
+	vector<Entry*> relevantTaskList;
 
 	if (type_event == entryType) {
 		data->retrieveByDate(_entryStartTime, relevantEventList, relevantTaskList);

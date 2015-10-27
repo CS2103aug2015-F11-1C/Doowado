@@ -17,39 +17,39 @@ void Display::updateCommandFeedback(vector<string>& feedback)
 	_commandFeedback = feedback;
 }
 
-void Display::updateDisplayEventList(vector<Event*>& updatedEventList)
+void Display::updateDisplayEventList(vector<Entry*>& updatedEventList)
 {
 	_eventList = updatedEventList;
 }
 
-void Display::updateDisplayTaskList(vector<Task*>& updatedTaskList)
+void Display::updateDisplayTaskList(vector<Entry*>& updatedTaskList)
 {
 	_taskList = updatedTaskList;
 }
 
-Event * Display::retrieveEvent(int taskID)
+Entry * Display::retrieveEvent(int taskID)
 {
-	Event* eventToDelete;
+	Entry* eventToRetrieve;
 	if (taskID <= _eventList.size()) {
-		eventToDelete = _eventList[taskID-1];
+		eventToRetrieve = _eventList[taskID-1];
 	}
 	else {
-		eventToDelete = nullptr;
+		eventToRetrieve = nullptr;
 	}
 	
-	return eventToDelete;
+	return eventToRetrieve;
 }
 
-Task * Display::retrieveTask(int taskID)
+Entry * Display::retrieveTask(int taskID)
 {
-	Task* task;
+	Entry* taskToRetrieve;
 	if (taskID <= _taskList.size()) {
-		task = _taskList[taskID-1];
+		taskToRetrieve = _taskList[taskID-1];
 	}
 	else {
-		task = nullptr;
+		taskToRetrieve = nullptr;
 	}
-	return task;
+	return taskToRetrieve;
 }
 
 void Display::checkValidFeedback(vector<string>& feedback)
@@ -57,12 +57,12 @@ void Display::checkValidFeedback(vector<string>& feedback)
 	assert(feedback.size() != 0);
 }
 
-vector<Event*>& Display::getEventList()
+vector<Entry*>& Display::getEventList()
 {
 	return _eventList;
 }
 
-vector<Task*>& Display::getTaskList()
+vector<Entry*>& Display::getTaskList()
 {
 	return _taskList;
 }

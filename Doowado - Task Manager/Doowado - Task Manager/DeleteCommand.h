@@ -16,6 +16,9 @@ class DeleteCommand: public Command {
 	public:
 		DeleteCommand(EntryType, int);
 		~DeleteCommand();
+		EntryType getEntryType();
+		int getIndex();
+
 		void execute(Storage* data, Display* display);
 //		void undo(Storage* data, Display* display);
 };

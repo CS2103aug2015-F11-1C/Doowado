@@ -14,7 +14,7 @@ void DeleteCommand::generateFeedback()
 
 	if (_entryType == event) {
 		entryTypeString = "E";
-		title = _eventDeleted->getName();
+		title = _eventDeleted->getTitle();
 		startTimeString = to_simple_string(_eventDeleted->getStartTime());
 		endTimeString = to_simple_string(_eventDeleted->getEndTime());
 
@@ -25,7 +25,7 @@ void DeleteCommand::generateFeedback()
 	}
 	else if (_entryType == task) {
 		entryTypeString = "T";
-		title = _taskDeleted->getName();
+		title = _taskDeleted->getTitle();
 		endTimeString = to_simple_string(_taskDeleted->getDueTime());
 
 		_feedback.push_back(entryTypeString + indexString);
@@ -43,6 +43,16 @@ DeleteCommand::DeleteCommand(EntryType entryType, int displayIndex) {
 
 DeleteCommand::~DeleteCommand()
 {
+}
+
+EntryType DeleteCommand::getEntryType()
+{
+	return _entryType;
+}
+
+int DeleteCommand::getIndex()
+{
+	return _taskID;
 }
 
 void DeleteCommand::execute(Storage* data, Display* display) {

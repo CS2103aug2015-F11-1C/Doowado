@@ -96,13 +96,13 @@ void Storage::addTask(Task * newTask) {
 	}
 }
 
-vector <Event*> Storage::searchEventsByName(vector <string> keywords) {
+vector <Event*> Storage::searchEventsByTitle(vector <string> keywords) {
 	vector <Event*> result;
 
 	for (int i = 0; i < keywords.size(); i++) {
 		string keyword = keywords[i];
 		for (int j = 0; j < _eventList.size(); j++) {
-			size_t found = _eventList[j]->getName().find(keyword);
+			size_t found = _eventList[j]->getTitle().find(keyword);
 			if (found != string::npos) {
 				result.push_back(_eventList[j]);
 			}
@@ -113,13 +113,13 @@ vector <Event*> Storage::searchEventsByName(vector <string> keywords) {
 	return result;
 }
 
-vector <Task*> Storage::searchTasksByName(vector <string> keywords) {
+vector <Task*> Storage::searchTasksByTitle(vector <string> keywords) {
 	vector <Task*> result;
 
 	for (int i = 0; i < keywords.size(); i++) {
 		string keyword = keywords[i];
 		for (int j = 0; j < _taskList.size(); j++) {
-			size_t found = _taskList[j]->getName().find(keyword);
+			size_t found = _taskList[j]->getTitle().find(keyword);
 			if (found != string::npos) {
 				result.push_back(_taskList[j]);
 			}
@@ -143,7 +143,7 @@ void Storage::saveToFile() {
 
 	for (int i = 0; i < _eventList.size(); i++) {
 		output << EVENT_ENTRY << endl;
-		output << _eventList[i]->getName() << endl;
+		output << _eventList[i]->getTitle() << endl;
 		output << to_iso_string(_eventList[i]->getStartTime()) << endl;
 		output << to_iso_string(_eventList[i]->getEndTime()) << endl;
 	}
@@ -155,7 +155,7 @@ void Storage::saveToFile() {
 		else {
 			output << TASK_ENTRY << endl;
 		}
-		output << _taskList[i]->getName() << endl;
+		output << _taskList[i]->getTitle() << endl;
 
 		if (!_taskList[i]->isFloatingTask()) {
 			output << to_iso_string(_taskList[i]->getDueTime()) << endl;
@@ -190,8 +190,8 @@ void Storage::loadFromFile() {
 
 	while (getline(input, entryType)) {
 		if (entryType == EVENT_ENTRY) {
-			string name;
-			getline(input, name);
+			string title;
+			getline(input, title);
 
 			string time;
 			getline(input, time);
@@ -200,13 +200,13 @@ void Storage::loadFromFile() {
 			ptime endTime(from_iso_string(time));
 
 			Event *newEvent;
-			newEvent = new Event(name, startTime, endTime);
+			newEvent = new Event(title, startTime, endTime);
 
 			_eventList.push_back(newEvent);
 		}
 		else if (entryType == TASK_ENTRY) {
-			string name;
-			getline(input, name);
+			string title;
+			getline(input, title);
 
 			string time;
 			getline(input, time);
@@ -233,12 +233,12 @@ void Storage::loadFromFile() {
 			}
 
 			Task *newTask;
-			newTask = new Task(name, dueTime, isCompleted, isOverdue);
+			newTask = new Task(title, dueTime, isCompleted, isOverdue);
 			_taskList.push_back(newTask);
 		}
 		else if (entryType == FTASK_ENTRY) {
-			string name;
-			getline(input, name);
+			string title;
+			getline(input, title);
 
 			ptime dueTime;
 
@@ -255,7 +255,7 @@ void Storage::loadFromFile() {
 			bool isOverdue = false;
 
 			Task *newFTask;
-			newFTask = new Task(name, dueTime, isCompleted, isOverdue);
+			newFTask = new Task(title, dueTime, isCompleted, isOverdue);
 			_taskList.push_back(newFTask);
 		}
 	}

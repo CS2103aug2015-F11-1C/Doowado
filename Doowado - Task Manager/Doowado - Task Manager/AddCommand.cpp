@@ -2,24 +2,24 @@
 
 const string AddCommand::MESSAGE_ADDED = "Added";
 
-AddCommand::AddCommand(string name) {
-	_entryName = name;
+AddCommand::AddCommand(string title) {
+	_entryTitle = title;
 }
 
-AddCommand::AddCommand(string name, ptime time1) {
-	_entryName = name;
+AddCommand::AddCommand(string title, ptime time1) {
+	_entryTitle = title;
 	_entryDueTime = time1;
 }
 
-AddCommand::AddCommand(string name, ptime time1, ptime time2) {
-	_entryName = name;
+AddCommand::AddCommand(string title, ptime time1, ptime time2) {
+	_entryTitle = title;
 	_entryStartTime = time1;
 	_entryEndTime = time2;
 }
 
 AddCommand::AddCommand(string entryTitle, ptime entryStartTime, ptime entryEndTime, ptime entryDueTime)
 {
-	_entryName = entryTitle;
+	_entryTitle = entryTitle;
 	_entryStartTime = entryStartTime;
 	_entryEndTime = entryEndTime;
 	_entryDueTime = entryDueTime;
@@ -31,24 +31,24 @@ AddCommand::~AddCommand()
 }
 
 void AddCommand::execute(Storage* data, Display *display) {
-	checkValidName(_entryName);
+	checkValidTitle(_entryTitle);
 
 	if (!_entryStartTime.is_not_a_date_time()) {
 		//cout << "Event" << endl;
 		entryType = type_event;
-		Event* newEvent = new Event(_entryName, _entryStartTime, _entryEndTime);
+		Event* newEvent = new Event(_entryTitle, _entryStartTime, _entryEndTime);
 		data->addEvent(newEvent);
 	}
 	else if (!_entryDueTime.is_not_a_date_time()) {
 		//cout << "Task" << endl;
 		entryType = type_timed_task;
-		Task* newTask = new Task(_entryName, _entryDueTime);
+		Task* newTask = new Task(_entryTitle, _entryDueTime);
 		data->addTask(newTask);
 	}
 	else {
 		//cout << "Floating Task" << endl;
 		entryType = type_floating_task;
-		Task* newFloatingTask = new Task(_entryName);
+		Task* newFloatingTask = new Task(_entryTitle);
 		data->addTask(newFloatingTask);
 	}
 
@@ -59,7 +59,7 @@ void AddCommand::execute(Storage* data, Display *display) {
 
 void AddCommand::generateFeedback() {
 	_feedback.push_back(MESSAGE_ADDED);
-	_feedback.push_back(_entryName);
+	_feedback.push_back(_entryTitle);
 
 	if (type_event == entryType) {
 		_feedback.push_back(to_simple_string(_entryStartTime));
@@ -72,9 +72,9 @@ void AddCommand::generateFeedback() {
 
 }
 
-void AddCommand::checkValidName(string name)
+void AddCommand::checkValidTitle(string title)
 {
-	assert(name != "");
+	assert(title != "");
 }
 
 void AddCommand::updateDisplay(Display* display, Storage* data)

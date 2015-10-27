@@ -5,9 +5,9 @@ using namespace std;
 
 //CONSTANTS
 string const ERROR_EMPTY_USER_INPUT = "empty input";
-string const DATE_DELIMITER[] = { "on","from","by","at" };
+string const DATE_DELIMITER[] = { "on","from","by","at","fr" };
 string const DATE_SPLITER = "./";
-int const DATE_DELIMITER_SIZE = 4;
+int const DATE_DELIMITER_SIZE = 5;
 int const DATE_NOT_FOUND = 43;
 
 Parser::Parser(){}
@@ -139,6 +139,15 @@ void Parser::setDateAndTime(string& input){
 		input = input.substr(0, delimiterPos);
 		input = removeExtraSpacePadding(input);
 		removeStartOrEndKeyword(input);
+	}else if (input.find_first_of(" ") == string::npos) {
+		dateAndTime = input;
+		dateAndTime = convertStringTolowerCase(dateAndTime);
+		dateAndTimeFragment = fragmentizeString(dateAndTime);
+
+		dateSetter(dateAndTimeFragment);
+		timeSetter(dateAndTimeFragment);
+
+		input = "";
 	}else {
 		resetDateAndTime();
 	}

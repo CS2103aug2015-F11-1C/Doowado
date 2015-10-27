@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "StorageStub.h"
 
-
-StorageStub::StorageStub(string saveDir): Storage::Storage(saveDir)
+StorageStub::StorageStub()
 {
 }
-
 
 StorageStub::~StorageStub()
 {

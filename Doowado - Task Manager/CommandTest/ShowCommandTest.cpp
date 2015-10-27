@@ -12,13 +12,13 @@ namespace CommandTest
 		TEST_METHOD(ConstructorTest)
 		{
 			date testDate(2015,Oct,17);
-			ptime t1;
+			ptime t1(testDate);
 			ptime t2;
 			
 			ShowCommand* cmd;
-			cmd = new ShowCommand(testDate);
+			cmd = new ShowCommand(t1);
 
-			Assert::AreEqual(to_simple_string(cmd->_requestedDate),to_simple_string(testDate));
+			Assert::AreEqual(to_simple_string(cmd->_requestedDate),to_simple_string(t1));
 		}
 
 		TEST_METHOD(ShowEventTest)
@@ -28,10 +28,10 @@ namespace CommandTest
 			ptime t2(testDate, hours(6) + minutes(30));
 
 			ShowCommand* cmd;
-			cmd = new ShowCommand(testDate);
+			cmd = new ShowCommand(t1);
 
 			DisplayStub displayList;
-			StorageStub testStorage("TestFile.txt");
+			StorageStub testStorage;
 
 			Event event1("Sample event", t1, t2);
 			testStorage.addEvent(&event1);
@@ -54,7 +54,7 @@ namespace CommandTest
 			ptime t1(testDate, hours(5) + minutes(30));
 			ptime t2(testDate, hours(6) + minutes(30));
 
-			StorageStub testStorage("TestFile.txt");
+			StorageStub testStorage;
 
 			Event event1("Sample event", t1, t2);
 			testStorage.addEvent(&event1);
@@ -73,7 +73,7 @@ namespace CommandTest
 			ptime t1(testDate, hours(5) + minutes(30));
 			ptime t2(testDate, hours(6) + minutes(30));
 
-			StorageStub testStorage("TestFile.txt");
+			StorageStub testStorage;
 
 			Event event1("Sample event", t1, t2);
 			testStorage.addEvent(&event1);

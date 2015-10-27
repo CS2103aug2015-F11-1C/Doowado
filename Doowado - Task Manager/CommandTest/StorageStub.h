@@ -3,7 +3,7 @@
 class StorageStub: public Storage
 {
 public:
-	StorageStub(string saveDir);
+	StorageStub();
 	~StorageStub();
 
 	void displayByDate(vector<Event*>*, vector<Task*>*, date);

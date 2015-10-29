@@ -54,22 +54,50 @@ string Parser::removeExtraSpacePadding(string input){
 
 //take in full user input
 //remove command from the user input string
-void Parser::setCommand(string& input){
+void Parser::setCommand(string& input) {
 	size_t spacePos = input.find_first_of(" ");
-	
+
 	if (spacePos == string::npos) {
-		_userCommand = input;
+		_userCommand = convertStringTolowerCase(input);
 		input = "";
-	}else {
-		_userCommand = input.substr(0, spacePos);
+	}
+	else {
+		_userCommand = convertStringTolowerCase(input.substr(0, spacePos));
 		input = input.substr(spacePos + 1);
 	}
 }
 
+
 //take in only the description
 void Parser::setDescription(string input){
+	string const MULTIPLE_KEYWORDS_DELIMITER = "|";
+	size_t delimiterPos;
+
 	if (input != "") {
-		_description.push_back(input);
+		delimiterPos = input.find_first_of(MULTIPLE_KEYWORDS_DELIMITER);
+		if (delimiterPos != string::npos) {
+			while (delimiterPos != string::npos) {
+				string temp = input.substr(0, delimiterPos);
+				temp = removeExtraSpacePadding(temp);
+				if (!temp.empty()) {
+					_description.push_back(temp);
+				}
+				
+				if (delimiterPos + 1 == string::npos) {
+					input = "";
+					break;
+				}
+
+				input = input.substr(delimiterPos + 1);
+				delimiterPos = input.find_first_of(MULTIPLE_KEYWORDS_DELIMITER);
+			}
+			if (!input.empty()) {
+				input = removeExtraSpacePadding(input);
+				_description.push_back(input);
+			}
+		}else {
+			_description.push_back(input);
+		}	
 	}
 }
 

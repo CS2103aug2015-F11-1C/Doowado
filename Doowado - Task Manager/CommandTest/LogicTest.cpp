@@ -25,32 +25,61 @@ namespace LogicTest
 			Storage testStorage;
 			History history;
 
-			vector<Entry*> ActualStorageEventList;
-			vector<Entry*> ActualStorageTaskList;
+			vector<Entry*> actualStorageEventList;
+			vector<Entry*> actualStorageTaskList;
 
 			vector<Entry*> IdealStorageEventList;
 			vector<Entry*> IdealStorageTaskList;
 			IdealStorageEventList.push_back(&newEntry);
 
+			vector<string> actualFeedback;
+			vector<string> idealFeedback;
+			idealFeedback.push_back("Added");
+			idealFeedback.push_back(testName);
+			idealFeedback.push_back(to_simple_string(time1));
+			idealFeedback.push_back(to_simple_string(time2));
+
+			vector<Entry*> actualDisplayEventList;
+			vector<Entry*> idealDisplayEventList;
+			idealDisplayEventList.push_back(&newEntry);
+
+			vector<Entry*> actualDisplayTaskList;
+			vector<Entry*> idealDisplayTaskList;
+
 			AddCommand addCmd(testName, time1, time2, time3);
 
 			addCmd.execute(&testStorage, &displayList);
 
-			ActualStorageEventList = testStorage.getEventList();
-			ActualStorageTaskList = testStorage.getTaskList();
+			// Check storage
+			actualStorageEventList = testStorage.getEventList();
+			actualStorageTaskList = testStorage.getTaskList();
 
-			Assert::AreEqual(ActualStorageEventList.size(), IdealStorageEventList.size());
-			Assert::AreEqual(ActualStorageTaskList.size(), IdealStorageTaskList.size());
+			Assert::AreEqual(actualStorageEventList.size(), IdealStorageEventList.size());
+			Assert::AreEqual(actualStorageTaskList.size(), IdealStorageTaskList.size());
 
 
-			for (int i = 0; i < IdealStorageEventList.size(); i++) {
-				Assert::IsTrue(areEqual(ActualStorageEventList[i], IdealStorageEventList[i]));
-			}
+			Assert::IsTrue(areSameList(actualStorageEventList, IdealStorageEventList));
+			Assert::IsTrue(areSameList(actualStorageTaskList, IdealStorageTaskList));
 
 			for (int i = 0; i < IdealStorageTaskList.size(); i++) {
-				Assert::IsTrue(areEqual(ActualStorageTaskList[i], IdealStorageTaskList[i]));
+				Assert::IsTrue(areEqual(actualStorageTaskList[i], IdealStorageTaskList[i]));
 			}
 
+			//Check history
+			Assert::AreEqual(History::getSize(), size_t(1));
+
+			//Check display
+			actualFeedback = displayList.getCommandFeedback();
+			Assert::IsTrue(areSameFeedback(actualFeedback, idealFeedback));
+
+			actualDisplayEventList = displayList.getEventList();
+			actualDisplayTaskList = displayList.getTaskList();
+
+			Assert::AreEqual(actualDisplayEventList.size(), idealDisplayEventList.size());
+			Assert::AreEqual(actualDisplayTaskList.size(), idealDisplayTaskList.size());
+
+			Assert::IsTrue(areSameList(actualDisplayEventList, idealDisplayEventList));
+			Assert::IsTrue(areSameList(actualDisplayTaskList, idealDisplayTaskList));
 		}
 
 		bool areEqual(Entry* entry1, Entry* entry2) {
@@ -58,6 +87,24 @@ namespace LogicTest
 				&&	entry1->getStartTime() == entry2->getStartTime() 
 				&&  entry1->getEndTime() == entry2->getEndTime()
 				);
+		}
+
+		bool areSameFeedback(vector<string> feedback1, vector<string> feedback2) {
+			for (int i = 0; i < feedback2.size(); i++) {
+				if (feedback1[i] != feedback2[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		bool areSameList(vector<Entry*> list1, vector<Entry*> list2) {
+			for (int i = 0; i < list2.size(); i++) {
+				if (!areEqual(list1[i], list2[i])) {
+					return false;
+				}
+			}
+			return true;
 		}
 	};
 }

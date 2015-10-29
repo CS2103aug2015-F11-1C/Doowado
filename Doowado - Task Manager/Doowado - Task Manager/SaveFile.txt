@@ -63,6 +63,18 @@ test12345 at
 20151023T120000
 20151023T140000
 Event
+DEMO V0,3
+20151030T110000
+20151030T120000
+Event
+2103 lecture
+20151030T140000
+20151030T160000
+Event
+dhl recruitment talk
+20151030T150000
+20151030T170000
+Event
 meeting
 20151201T120000
 20151201T130000
@@ -135,10 +147,6 @@ Not Overdue
 Task
 ccc
 20160201T120000
-Not Completed
-Not Overdue
-FTask
-meeting
 Not Completed
 Not Overdue
 FTask
@@ -251,21 +259,5 @@ Not Completed
 Not Overdue
 FTask
 contact supplier by 12 Nov 1200
-Not Completed
-Not Overdue
-FTask
-contact test facility by 14 Nov
-Not Completed
-Not Overdue
-FTask
-finish painting
-Not Completed
-Not Overdue
-FTask
-testTESTtest today
-Not Completed
-Not Overdue
-FTask
-meeting today
 Not Completed
 Not Overdue

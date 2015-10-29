@@ -27,7 +27,13 @@ void Logic::processCommand(string userInput)
 void Logic::initialiseProgram()
 {
 	_storage->loadFromFile();
-	_storage->saveToFile();
+	vector<Entry*> eventDefaultList;
+	vector<Entry*> taskDefaultList;
+
+	_storage->retrieveByDate(currentTime, eventDefaultList, taskDefaultList);
+	_display->updateDisplayEventList(eventDefaultList);
+	_display->updateDisplayTaskList(taskDefaultList);
+//	_storage->saveToFile();
 }
 
 Display * Logic::getDisplay()

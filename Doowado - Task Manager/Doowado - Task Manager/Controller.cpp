@@ -6,9 +6,28 @@
 #include "UserInterface.h"
 #include "Display.h"
 #include "DeleteCommand.h"
+#include "Logic.h"
 
 int main() {
+	Logic * logic = new Logic;
+	string input;
+	UserInterface UI;
 
+	logic->initialiseProgram();
+	Display* displayList = logic->getDisplay();
+	UI.updateDisplay(*displayList);
+
+	getline(cin, input);
+
+	while (input != "exit") {
+		logic->processCommand(input);
+		displayList = logic->getDisplay();
+		UI.updateDisplay(*displayList);
+
+		getline(cin, input);
+	}
+
+	/*
 	UserInterface UI;
 	Storage LocalStorage;
 	Command *cmd = nullptr;
@@ -20,8 +39,20 @@ int main() {
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();
-	//UI.updateDefaultDisplay(&LocalStorage);
+
+	vector<Entry*> eventDefaultList;
+	vector<Entry*> taskDefaultList;
+
 	UI.printWelcome();
+
+	LocalStorage.retrieveByDate(currentTime, eventDefaultList, taskDefaultList);
+	displayList.updateDisplayEventList(eventDefaultList);
+	displayList.updateDisplayTaskList(taskDefaultList);
+	
+	UI.updateDisplay(displayList);
+
+	//UI.updateDefaultDisplay(&LocalStorage);
+
 	getline(cin, input);
 
 	while (input != "exit") {
@@ -32,6 +63,7 @@ int main() {
 		cmd->execute(&LocalStorage, &displayList);
 
 		//UI.updateDefaultDisplay(&LocalStorage);
+		
 		//UI.printList(displayList); 
 		
 		UI.updateDisplay(displayList);
@@ -42,7 +74,7 @@ int main() {
 	} 
 
 	LocalStorage.saveToFile();
-
+*/
 	return 0;
 }
 /*

@@ -24,6 +24,7 @@ public:
 	~AddCommand();
 
 	void execute(Storage* data, Display *display);
+	void undo(Storage* data, Display* display);
 
 	void generateFeedback();
 	void checkValidTitle(string);

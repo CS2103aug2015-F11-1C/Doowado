@@ -55,6 +55,12 @@ void AddCommand::execute(Storage* data, Display *display) {
 	generateFeedback();
 	updateDisplay(display, data);
 	data->saveToFile();
+
+	History::pushCommand(this);
+}
+
+void AddCommand::undo(Storage * data, Display * display)
+{
 }
 
 void AddCommand::generateFeedback() {

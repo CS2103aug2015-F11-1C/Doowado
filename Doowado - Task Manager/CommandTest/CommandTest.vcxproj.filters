@@ -56,5 +56,8 @@
     <ClCompile Include="ReversibleCommandStub.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LogicTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

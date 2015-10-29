@@ -14,6 +14,15 @@ protected:
 public:
 	Storage();
 
+#ifdef TESTMODE
+	vector<Entry*> getEventList() {
+		return _eventList;
+	}
+	vector<Entry*>  getTaskList() {
+		return _taskList;
+	}
+#endif
+
 	void addEvent(Entry* newEvent);
 	void addTask(Entry* newTask);
 

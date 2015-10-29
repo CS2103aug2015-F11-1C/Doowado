@@ -19,3 +19,8 @@ vector<Entry*> StorageStub::getEventsList()
 {
 	return _eventList;
 }
+
+vector<Entry*> StorageStub::getTasksList()
+{
+	return _taskList;
+}

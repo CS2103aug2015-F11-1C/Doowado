@@ -61,7 +61,15 @@ void AddCommand::execute(Storage* data, Display *display) {
 
 void AddCommand::undo(Storage * data, Display * display)
 {
-
+	if (type_event == entryType) {
+		data->deleteFromEventList(_newEntry);
+	}
+	else if (type_timed_task == entryType) {
+		data->deleteFromTaskLIst(_newEntry);
+	}
+	else if (type_floating_task == entryType) {
+		data->deleteFromTaskLIst(_newEntry);
+	}
 }
 
 void AddCommand::generateFeedback() {

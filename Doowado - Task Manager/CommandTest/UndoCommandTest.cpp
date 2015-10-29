@@ -94,8 +94,37 @@ namespace CommandTest
 
 		TEST_METHOD(UndoAddCommandTest)
 		{
-			string testName = ""; 
+			string testName = "Untimed task"; 
+
+			ptime time1;
+			ptime time2;
+			ptime time3;
+
+			DisplayStub displayList;
+			StorageStub testStorage;
+			//HistoryStub history;
+
+			vector<Entry*> actualEventsList;
+			vector<Entry*> actualTasksList;
+
+			AddCommand addCmd(testName, time1, time2, time3);
+			addCmd.execute(&testStorage, &displayList);
 			
+			actualEventsList = testStorage.getEventsList();
+			actualTasksList = testStorage.getTasksList();
+
+			Assert::AreEqual(actualEventsList.size(), size_t(0));
+			Assert::AreEqual(actualTasksList.size(), size_t(1));
+
+			UndoCommand undoCmd;
+			undoCmd.execute(&testStorage, &displayList);
+
+			actualEventsList = testStorage.getEventsList();
+			actualTasksList = testStorage.getTasksList();
+
+			Assert::AreEqual(actualEventsList.size(), size_t(0));
+			Assert::AreEqual(actualTasksList.size(), size_t(0));
+
 		}
 
 	};

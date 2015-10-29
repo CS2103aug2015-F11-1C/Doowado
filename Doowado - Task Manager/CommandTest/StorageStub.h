@@ -8,5 +8,6 @@ public:
 
 	void displayByDate(vector<Entry*>*, vector<Entry*>*, date);
 	vector<Entry*> getEventsList();
+	vector<Entry*> getTasksList();
 };
 

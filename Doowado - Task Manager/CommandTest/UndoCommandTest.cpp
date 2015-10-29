@@ -92,7 +92,7 @@ namespace CommandTest
 
 		}
 
-		TEST_METHOD(UndoAddCommandTest)
+		TEST_METHOD(UndoAddCommandTest_DeleteEntry)
 		{
 			string testName = "Untimed task"; 
 
@@ -125,6 +125,43 @@ namespace CommandTest
 			Assert::AreEqual(actualEventsList.size(), size_t(0));
 			Assert::AreEqual(actualTasksList.size(), size_t(0));
 
+		}
+
+		TEST_METHOD(UndoAddCommandTest_SendFeedback)
+		{
+			string testName = "Untimed task";
+
+			ptime time1;
+			ptime time2;
+			ptime time3;
+
+			DisplayStub displayList;
+			StorageStub testStorage;
+			//HistoryStub history;
+
+			vector<Entry*> actualEventsList;
+			vector<Entry*> actualTasksList;
+
+			vector<string> actualFeedback;
+			vector<string> idealFeedback;
+
+			idealFeedback.push_back("Undone");
+			idealFeedback.push_back("Added");
+			idealFeedback.push_back(testName);
+
+			AddCommand addCmd(testName, time1, time2, time3);
+			addCmd.execute(&testStorage, &displayList);
+
+			UndoCommand undoCmd;
+			undoCmd.execute(&testStorage, &displayList);
+
+			actualFeedback = displayList.getCommandFeedback();
+
+			Assert::AreEqual(actualFeedback.size(), idealFeedback.size());
+			
+			for (int i = 0; i < idealFeedback.size(); i++) {
+				Assert::AreEqual(actualFeedback[i], idealFeedback[i]);
+			}
 		}
 
 	};

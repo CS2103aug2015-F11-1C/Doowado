@@ -13,7 +13,7 @@ private:
 	ptime _entryDueTime;
 
 	vector<string> _feedback;
-	
+
 	EntryType entryType;
 	Entry* _newEntry;
 
@@ -31,5 +31,7 @@ public:
 	void checkValidTitle(string);
 
 	void updateDisplay(Display*, Storage*);
+
+	void generateUndoFeedback();
 };
 

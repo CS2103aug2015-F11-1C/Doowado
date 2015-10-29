@@ -70,6 +70,9 @@ void AddCommand::undo(Storage * data, Display * display)
 	else if (type_floating_task == entryType) {
 		data->deleteFromTaskLIst(_newEntry);
 	}
+
+	generateUndoFeedback();
+	updateDisplay(display, data);
 }
 
 void AddCommand::generateFeedback() {
@@ -112,5 +115,12 @@ void AddCommand::updateDisplay(Display* display, Storage* data)
 	display->updateDisplayTaskList(relevantTaskList);
 
 	display->updateCommandFeedback(_feedback);
+}
+
+void AddCommand::generateUndoFeedback()
+{
+	vector<string>::iterator front = _feedback.begin();
+
+	_feedback.insert(front, "Undone");
 }
 

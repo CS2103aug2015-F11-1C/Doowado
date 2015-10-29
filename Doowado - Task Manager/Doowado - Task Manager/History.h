@@ -1,15 +1,17 @@
 #pragma once
+class Command;
 #include <stack>
-#include "Command.h"
+using namespace std;
+
 class History
 {
 private:
-	stack<Command*> _commandStack;
+	static stack<Command*> _commandStack;
 public:
 	History();
 	~History();
 
-	Command* getLastCommand();
-	void pushCommand();
+	static Command* getLastCommand();
+	static void pushCommand(Command* cmd);
 };
 

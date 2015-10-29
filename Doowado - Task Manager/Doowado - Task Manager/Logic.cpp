@@ -40,3 +40,4 @@ Display * Logic::getDisplay()
 {
 	return _display;
 }
+

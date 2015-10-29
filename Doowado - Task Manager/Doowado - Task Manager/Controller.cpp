@@ -7,6 +7,7 @@
 #include "Display.h"
 #include "DeleteCommand.h"
 #include "Logic.h"
+#include "History.h"
 
 int main() {
 	Logic * logic = new Logic;
@@ -36,6 +37,7 @@ int main() {
 	static ptime currentTime(second_clock::local_time());
 	Display displayList;
 	CommandBuilder* builder = new CommandBuilder();
+
 
 	LocalStorage.loadFromFile();
 	LocalStorage.saveToFile();

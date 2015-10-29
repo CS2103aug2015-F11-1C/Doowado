@@ -13,8 +13,9 @@ private:
 	ptime _entryDueTime;
 
 	vector<string> _feedback;
-	
+
 	EntryType entryType;
+	Entry* _newEntry;
 
 public:
 	AddCommand(string title);
@@ -24,10 +25,13 @@ public:
 	~AddCommand();
 
 	void execute(Storage* data, Display *display);
+	void undo(Storage* data, Display* display);
 
 	void generateFeedback();
 	void checkValidTitle(string);
 
 	void updateDisplay(Display*, Storage*);
+
+	void generateUndoFeedback();
 };
 

@@ -13,5 +13,9 @@
 // TODO: reference additional headers your program requires here
 #include "ShowCommand.h"
 #include "EditCommand.h"
+#include "AddCommand.h"
+#include "UndoCommand.h"
 #include "DisplayStub.h"
 #include "StorageStub.h"
+#include "HistoryStub.h"
+#include "ReversibleCommandStub.h"

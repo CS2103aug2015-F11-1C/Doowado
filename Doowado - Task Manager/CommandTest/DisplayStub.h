@@ -7,7 +7,7 @@ public:
 	DisplayStub();
 	~DisplayStub();
 
-	vector<Event*> getEventsList();
+	vector<Entry*> getEventsList();
 };
 
 

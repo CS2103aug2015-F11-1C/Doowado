@@ -7,6 +7,7 @@
 #include "SearchCommand.h"
 #include "SaveCommand.h"
 #include "MarkDoneCommand.h"
+#include "UndoCommand.h"
 
 /*
 EntryType CommandBuilder::checkEntryType(ParserResult &parserResult)
@@ -273,6 +274,13 @@ Command * CommandBuilder::createMarkDoneCommand(ParserResult &parserResult)
 	return markDoneCommand;
 }
 
+Command * CommandBuilder::createUndoCommand(ParserResult &)
+{
+	Command * undoCommand;
+	undoCommand = new UndoCommand();
+	return undoCommand;
+}
+
 CommandBuilder::CommandBuilder() {
 
 }
@@ -304,6 +312,9 @@ Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 	
 	else if (commandType == COMMANDTYPE_SAVE) {
 		cmd = createSaveCommand(parserResult);
+	}
+	else if (commandType == COMMANDTYPE_UNDO) {
+		cmd = createUndoCommand(parserResult);
 	}
 /*
 	else if (commandType == COMMANDTYPE_HELP) {

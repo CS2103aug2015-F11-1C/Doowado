@@ -3,10 +3,11 @@
 class StorageStub: public Storage
 {
 public:
-	StorageStub(string saveDir);
+	StorageStub();
 	~StorageStub();
 
-	void displayByDate(vector<Event*>*, vector<Task*>*, date);
-	vector<Event*> getEventsList();
+	void displayByDate(vector<Entry*>*, vector<Entry*>*, date);
+	vector<Entry*> getEventsList();
+	vector<Entry*> getTasksList();
 };
 

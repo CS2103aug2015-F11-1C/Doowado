@@ -155,12 +155,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DisplayStub.h" />
+    <ClInclude Include="HistoryStub.h" />
+    <ClInclude Include="ReversibleCommandStub.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StorageStub.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayStub.cpp" />
+    <ClCompile Include="HistoryStub.cpp" />
+    <ClCompile Include="ReversibleCommandStub.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -169,6 +173,7 @@
     </ClCompile>
     <ClCompile Include="ShowCommandTest.cpp" />
     <ClCompile Include="StorageStub.cpp" />
+    <ClCompile Include="UndoCommandTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Doowado - Task Manager\Doowado - Task Manager.vcxproj">

@@ -1,23 +1,26 @@
 #include "stdafx.h"
 #include "StorageStub.h"
 
-
-StorageStub::StorageStub(string saveDir): Storage::Storage(saveDir)
+StorageStub::StorageStub()
 {
 }
-
 
 StorageStub::~StorageStub()
 {
 }
 
-void StorageStub::displayByDate(vector<Event*>* eventList, vector<Task*>* taskList, date)
+void StorageStub::displayByDate(vector<Entry*>* eventList, vector<Entry*>* taskList, date)
 {
 	*eventList = _eventList;
 	*taskList = _taskList;
 }
 
-vector<Event*> StorageStub::getEventsList()
+vector<Entry*> StorageStub::getEventsList()
 {
 	return _eventList;
+}
+
+vector<Entry*> StorageStub::getTasksList()
+{
+	return _taskList;
 }

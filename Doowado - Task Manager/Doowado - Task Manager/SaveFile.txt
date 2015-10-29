@@ -258,11 +258,3 @@ FTask
 finish tutorial
 Not Completed
 Not Overdue
-FTask
-contact supplier by 1 Nov
-Not Completed
-Not Overdue
-FTask
-do laundry
-Not Completed
-Not Overdue

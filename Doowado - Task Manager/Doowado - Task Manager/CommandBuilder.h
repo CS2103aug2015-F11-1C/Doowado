@@ -13,6 +13,7 @@ const string COMMANDTYPE_SEARCH = "search";
 const string COMMANDTYPE_SHOW = "show";
 const string COMMANDTYPE_HELP = "help";
 const string COMMANDTYPE_SAVE = "save";
+const string COMMANDTYPE_UNDO = "undo";
 
 //enum EntryType {event, task, floatingTask};
 enum TypeOfEdit {	editTitle,
@@ -40,6 +41,7 @@ class CommandBuilder {
 		Command* createShowCommand(ParserResult&);
 //		Command* createHelpCommand(ParserResult&);
 		Command* createSaveCommand(ParserResult&);
+		Command* createUndoCommand(ParserResult&);
 
 	public:
 		CommandBuilder();

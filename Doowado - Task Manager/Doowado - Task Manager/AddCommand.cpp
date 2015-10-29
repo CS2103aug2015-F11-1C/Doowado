@@ -61,6 +61,7 @@ void AddCommand::execute(Storage* data, Display *display) {
 
 void AddCommand::undo(Storage * data, Display * display)
 {
+
 }
 
 void AddCommand::generateFeedback() {

@@ -82,6 +82,7 @@ void Parser::setIndex(string& input){
 			string entryAndIndex = input.substr(0, spacePos);
 			if (isIndexVaild(entryAndIndex)) {
 				string entryType = entryAndIndex.substr(0, 1);
+				entryType = convertStringTolowerCase(entryType);
 				int indexInt = convertStringToInt(entryAndIndex.substr(1));
 				_entryType.push_back(entryType);
 				_index.push_back(indexInt);
@@ -90,6 +91,7 @@ void Parser::setIndex(string& input){
 		}else {
 			if (isIndexVaild(input)) {
 				string entryType = input.substr(0, 1);
+				entryType = convertStringTolowerCase(entryType);
 				int indexInt = convertStringToInt(input.substr(1));
 				_entryType.push_back(entryType);
 				_index.push_back(indexInt);

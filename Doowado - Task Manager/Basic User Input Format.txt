@@ -26,20 +26,23 @@ For edit
 edit (entry index) (new event/task description)
 e.g. edit t2 complete ie3110 lab
 
-edit (entry index) start at (new starting time)
+edit (entry index) start (new starting time)
 e.g. edit t3 start at 1500
 
-edit (entry index) end at (new ending time)
+edit (entry index) end (new ending time)
 e.g. edit t4 end at 1500
 
-For display
-display (date)
-e.g. display tmr
-e.g. display 15/10/2015
+For show
+show (date)
+e.g. show tmr
+e.g. show 15/10/2015
 
 For search
 search (event or task description)
 e.g. search ie3101
+
+search (1st keyword) | (2nd keyword) | (3rd keyword)
+e.g search ie3101 | homework | lecture
 
 For save
 save (new directory)

@@ -36,20 +36,20 @@ void AddCommand::execute(Storage* data, Display *display) {
 	if (!_entryStartTime.is_not_a_date_time()) {
 		//cout << "Event" << endl;
 		entryType = type_event;
-		Entry* newEvent = new Entry(_entryTitle, _entryStartTime, _entryEndTime);
-		data->addEvent(newEvent);
+		_newEntry = new Entry(_entryTitle, _entryStartTime, _entryEndTime);
+		data->addEvent(_newEntry);
 	}
 	else if (!_entryDueTime.is_not_a_date_time()) {
 		//cout << "Task" << endl;
 		entryType = type_timed_task;
-		Entry* newTask = new Entry(_entryTitle, _entryDueTime);
-		data->addTask(newTask);
+		_newEntry = new Entry(_entryTitle, _entryDueTime);
+		data->addTask(_newEntry);
 	}
 	else {
 		//cout << "Floating Task" << endl;
 		entryType = type_floating_task;
-		Entry* newFloatingTask = new Entry(_entryTitle);
-		data->addTask(newFloatingTask);
+		_newEntry = new Entry(_entryTitle);
+		data->addTask(_newEntry);
 	}
 
 	generateFeedback();

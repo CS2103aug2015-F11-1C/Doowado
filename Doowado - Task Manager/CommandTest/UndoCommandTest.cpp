@@ -94,9 +94,8 @@ namespace CommandTest
 
 		TEST_METHOD(UndoAddCommandTest)
 		{
-			string testName = "";
-
-			AddCommand addCmd();
+			string testName = ""; 
+			
 		}
 
 	};

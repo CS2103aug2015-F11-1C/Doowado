@@ -15,6 +15,7 @@ private:
 	vector<string> _feedback;
 	
 	EntryType entryType;
+	Entry* _newEntry;
 
 public:
 	AddCommand(string title);

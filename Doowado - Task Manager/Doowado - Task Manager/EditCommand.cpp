@@ -18,7 +18,7 @@ EditCommand::~EditCommand()
 void EditCommand::execute(Storage* data, Display *display)
 {
 	if (_entryType == event) {
-		Entry* eventEntry = display->retrieveEvent(_taskID);
+		Entry* eventEntry = display->retrieveEntry(_entryType, _taskID);
 		
 		if (_newTitle != "") {
 			eventEntry->setTitle(_newTitle);
@@ -70,7 +70,7 @@ void EditCommand::execute(Storage* data, Display *display)
 	}
 
 	else if (_entryType == task) {
-		Entry* taskEntry = display->retrieveTask(_taskID);
+		Entry* taskEntry = display->retrieveEntry(_entryType, _taskID);
 		if (_newTitle != "") {
 			taskEntry->setTitle(_newTitle);
 		}

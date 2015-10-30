@@ -27,31 +27,36 @@ void Display::updateDisplayTaskList(vector<Entry*>& updatedTaskList)
 	_taskList = updatedTaskList;
 }
 
-Entry * Display::retrieveEvent(int taskID)
+Entry * Display::retrieveEntry(EntryType entryType, int taskID)
 {
-	Entry* eventToRetrieve;
-	if (taskID <= _eventList.size()) {
-		eventToRetrieve = _eventList[taskID-1];
-	}
-	else {
-		eventToRetrieve = nullptr;
-	}
+	Entry* entryToRetrieve = nullptr;
 	
-	return eventToRetrieve;
+	if (entryType == event) {
+		if (taskID < _eventList.size()) {
+			entryToRetrieve = _eventList[taskID];
+		}
+		else {
+			entryToRetrieve = nullptr;
+		}
+	}
+	else if (entryType == task) {
+		if (taskID < _taskList.size()) {
+			entryToRetrieve = _taskList[taskID];
+		}
+		else {
+			entryToRetrieve = nullptr;
+		}
+	}
+	return entryToRetrieve;
 }
-
+/*
 Entry * Display::retrieveTask(int taskID)
 {
 	Entry* taskToRetrieve;
-	if (taskID <= _taskList.size()) {
-		taskToRetrieve = _taskList[taskID-1];
-	}
-	else {
-		taskToRetrieve = nullptr;
-	}
+
 	return taskToRetrieve;
 }
-
+*/
 void Display::checkValidFeedback(vector<string>& feedback)
 {
 	assert(feedback.size() != 0);
@@ -70,4 +75,24 @@ vector<Entry*>& Display::getTaskList()
 vector<string>& Display::getCommandFeedback()
 {
 	return _commandFeedback;
+}
+
+string Display::getEventDisplayState()
+{
+	return _eventDisplayState;
+}
+
+string Display::getTaskDisplayState()
+{
+	return _taskDisplayState;
+}
+
+void Display::deleteEntry(EntryType entryType, int taskID)
+{
+	if (entryType == event) {
+		_eventList.erase(_eventList.begin() + taskID);
+	}
+	else if (entryType == task) {
+		_taskList.erase(_taskList.begin() + taskID);
+	}
 }

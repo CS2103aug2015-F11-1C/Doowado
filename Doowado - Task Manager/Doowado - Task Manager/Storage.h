@@ -4,6 +4,8 @@
 #include <vector>
 #include <fstream>
 
+enum EntryType { event, task };
+
 class Storage {
 protected:
 	vector <Entry*> _eventList;

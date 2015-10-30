@@ -72,7 +72,7 @@
     <ClCompile Include="SaveCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UndoCommand.cpp">
+    <ClCompile Include="MarkDoneCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -131,7 +131,7 @@
     <ClInclude Include="SaveCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UndoCommand.h">
+    <ClInclude Include="MarkDoneCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

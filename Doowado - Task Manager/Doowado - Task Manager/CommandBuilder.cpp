@@ -6,8 +6,8 @@
 #include "ShowCommand.h"
 #include "SearchCommand.h"
 #include "SaveCommand.h"
+#include "MarkDoneCommand.h"
 #include "UndoCommand.h"
-
 
 /*
 EntryType CommandBuilder::checkEntryType(ParserResult &parserResult)
@@ -142,7 +142,7 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 		entryType = task;
 	}
 
-	taskID = vTaskIDs[0];
+	taskID = vTaskIDs[0] - 1;
 	
 	if (!vNewTitles.empty()) {
 		newTitle = vNewTitles[0];
@@ -182,7 +182,7 @@ Command * CommandBuilder::createDeleteCommand(ParserResult& parserResult)
 		entryType = task;
 	}
 
-	int displayIndex = vIndices[0];
+	int displayIndex = vIndices[0] - 1;
 
 	deleteCommand = new DeleteCommand(entryType, displayIndex);
 	return deleteCommand;
@@ -251,6 +251,29 @@ Command * CommandBuilder::createSaveCommand(ParserResult& parserResult)
 	return saveCommand;
 }
 
+Command * CommandBuilder::createMarkDoneCommand(ParserResult &parserResult)
+{
+	Command* markDoneCommand;
+
+	vector<string> vEntryTypes = parserResult.getEntryType();
+	vector<int> vIndices = parserResult.getIndex();
+
+	EntryType entryType;
+
+	if (vEntryTypes[0] == "e") {
+		entryType = event;
+	}
+
+	else if (vEntryTypes[0] == "t") {
+		entryType = task;
+	}
+
+	int displayIndex = vIndices[0];
+
+	markDoneCommand = new MarkDoneCommand(entryType, displayIndex);
+	return markDoneCommand;
+}
+
 Command * CommandBuilder::createUndoCommand(ParserResult &)
 {
 	Command * undoCommand;
@@ -298,6 +321,9 @@ Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 		cmd = createHelpCommand(parserResult);
 	}
 */
+	else if (commandType == COMMANDTYPE_MARK_DONE) {
+		cmd = createMarkDoneCommand(parserResult);
+	}
 	return cmd;
 }
 

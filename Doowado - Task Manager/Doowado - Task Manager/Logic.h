@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 
 #include "Storage.h"
 #include "CommandBuilder.h"
@@ -25,4 +25,4 @@ public:
 	void initialiseProgram();
 	Display* getDisplay();
 };
-*/
+

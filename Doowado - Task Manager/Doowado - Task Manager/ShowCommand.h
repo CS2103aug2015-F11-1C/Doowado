@@ -14,6 +14,7 @@ public:
 	vector<Entry*> _requestedTaskList;
 
 	vector<string> _feedback;
+	string generateDisplayState(date startDate, date endDate);
 
 public:
 	ShowCommand(ptime);

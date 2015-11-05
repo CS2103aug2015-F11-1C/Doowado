@@ -77,6 +77,16 @@ vector<string>& Display::getCommandFeedback()
 	return _commandFeedback;
 }
 
+void Display::setEventDisplayState(string eventDisplayState)
+{
+	_eventDisplayState = eventDisplayState;
+}
+
+void Display::setTaskDisplayState(string taskDisplayState)
+{
+	_taskDisplayState = taskDisplayState;
+}
+
 string Display::getEventDisplayState()
 {
 	return _eventDisplayState;

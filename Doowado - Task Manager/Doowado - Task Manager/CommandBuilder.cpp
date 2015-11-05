@@ -41,30 +41,6 @@ ptime CommandBuilder::createPTimeObject(string date, string time)
 	return dateTime;
 }
 
-TypeOfEdit CommandBuilder::checkEditType(vector<string> vNewTitles, vector<string> vNewStartDates, vector<string> vNewStartTimes, vector<string> vNewEndDates, vector<string> vNewEndTimes)
-{
-	if (!vNewTitles.empty()) {
-		return editTitle;
-	}
-	else if (!vNewStartDates.empty()) {
-		if (!vNewStartTimes.empty()) {
-			return editStartDateAndTime;
-		}
-		return editStartDate;
-	}
-	else if (!vNewStartTimes.empty()) {
-		return editStartTime;
-	}
-	else if (!vNewEndDates.empty()) {
-		if (!vNewEndTimes.empty()) {
-			return editEndDateAndTime;
-		}
-	}
-	else if (!vNewEndTimes.empty()) {
-
-	}
-	return TypeOfEdit();
-}
 
 Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 {
@@ -90,20 +66,26 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 
 		string entryStartDate = startDate[0];
 		string entryStartTime = startTime[0];
-		string entryISOStartTime = entryStartDate + "T" + entryStartTime;
-		entryStartPtime = from_iso_string(entryISOStartTime);
+		date startDate(from_undelimited_string(entryStartDate));
+		time_duration startTime(duration_from_string(entryStartTime));
+		ptime s(startDate, startTime);
+		entryStartPtime = s;
 
 		string entryEndDate = endDate[0];
 		string entryEndTime = endTime[0];
-		string entryISOEndTime = entryEndDate + "T" + entryEndTime;
-		entryEndPtime = from_iso_string(entryISOEndTime);
+		date endDate(from_undelimited_string(entryEndDate));
+		time_duration endTime(duration_from_string(entryEndTime));
+		ptime e(endDate, endTime);
+		entryEndPtime = e;
 	}
 
 	else if (!endDate.empty() && !endTime.empty()) {
 		string entryEndDate = endDate[0];
 		string entryEndTime = endTime[0];
-		string entryISOEndTime = entryEndDate + "T" + entryEndTime;
-		entryDuePtime = from_iso_string(entryISOEndTime);
+		date endDate(from_undelimited_string(entryEndDate));
+		time_duration endTime(duration_from_string(entryEndTime));
+		ptime e(endDate, endTime);
+		entryEndPtime = e;
 	}
 
 	addCommand = new AddCommand(entryTitle, entryStartPtime, entryEndPtime, entryDuePtime);
@@ -113,51 +95,85 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 
 Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 {
+	//exception for entry like edit 1 instead of T1
 	Command* editCommand;
 	
 	EntryType entryType;
-	int taskID = 0;
+	int taskID =0;
 	string newTitle = "";
-	ptime newStartDate;
-	ptime newStartTime;
-	ptime newEndDate;
-	ptime newEndTime;
-	ptime newDueTime;
-
+	date newStartDate;
+	time_duration newStartTime;
+	date newEndDate;
+	time_duration newEndTime;
+	 
 	vector<string> vEntryTypes = parserResult.getEntryType();
-	vector<int> vTaskIDs = parserResult.getIndex();
-	vector<string> vNewTitles = parserResult.getDescription();
-	vector<string> vNewStartDates = parserResult.getStartDate();
-	vector<string> vNewStartTimes = parserResult.getStartTime();
-	vector<string> vNewEndDates = parserResult.getEndDate();
-	vector<string> vNewEndTimes = parserResult.getEndTime();
-
-	assert(vNewTitles.size() <= 1);
-	assert(!vTaskIDs.empty());
-
+	
 	if (vEntryTypes[0] == "e") {
 		entryType = event;
 	}
 	else if (vEntryTypes[0] == "t") {
 		entryType = task;
 	}
-
+	//exception if it is not "e" or "t"
+	vector<int> vTaskIDs = parserResult.getIndex();
 	taskID = vTaskIDs[0] - 1;
+
+	vector<string> vNewTitles = parserResult.getDescription();
 	
-	if (!vNewTitles.empty()) {
+	if(!vNewTitles.empty()) {
 		newTitle = vNewTitles[0];
 	}
+	
+	vector<string> vNewStartDates = parserResult.getStartDate();
+	
 	if (!vNewStartDates.empty()) {
-		newStartDate = createPTimeObject(vNewStartDates[0], "000000");
+		string stringStartDate = vNewStartDates[0];
+		if (stringStartDate == "null") {
+			date d(neg_infin);
+			newStartDate = d;
+		}
+		else {
+			date d(from_undelimited_string(stringStartDate));
+			newStartDate = d;
+		}
 	}
+
+	vector<string> vNewStartTimes = parserResult.getStartTime();
 	if (!vNewStartTimes.empty()) {
-		newStartTime = createPTimeObject("00000000", vNewStartTimes[0]);
+		string stringStartTime = vNewStartTimes[0];
+		if (stringStartTime == "null") {
+			time_duration td(neg_infin);
+			newStartTime = td;
+		}
+		else {
+			time_duration td(duration_from_string(stringStartTime));
+			//time_duration td(duration_from_string("01:01"));
+			newStartTime = td;
+		}
 	}
+	vector<string> vNewEndDates = parserResult.getEndDate();
 	if (!vNewEndDates.empty()) {
-		newEndDate = createPTimeObject(vNewEndDates[0], "000000");
+		string stringEndDate = vNewEndDates[0];
+		if (stringEndDate == "null") {
+			date d(neg_infin);
+			newEndDate = d;
+		}
+		else {
+			date d(from_undelimited_string(stringEndDate));
+			newEndDate = d;
+		}
 	}
+	vector<string> vNewEndTimes = parserResult.getEndTime();
 	if (!vNewEndTimes.empty()) {
-		newEndTime = createPTimeObject("00000000", vNewEndTimes[0]);
+		string stringEndTime = vNewEndTimes[0];
+		if (stringEndTime == "null") {
+			time_duration td(neg_infin);
+			newEndTime = td;
+		}
+		else {
+			time_duration td(duration_from_string(stringEndTime));
+			newEndTime = td;
+		}
 	}
 
 	editCommand = new EditCommand(entryType, taskID, newTitle, newStartDate, newStartTime, newEndDate, newEndTime);
@@ -203,32 +219,38 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 {
 	//create ShowCommand;
 	Command * showCommand;
-	ptime dateRequirement;
+	date dateRequirement;
+	time_duration timeRequirement;
 
-	string date;
-	string time;
-
+	string stringDate;
+	string stringTime;
+	
 	vector<string> vDateRequirement = parserResult.getEndDate();
 	vector<string> vTimeRequirement = parserResult.getEndTime();
 	
 	assert(!vDateRequirement.empty() || !vTimeRequirement.empty());
 
 	if (vDateRequirement.empty()) {
-		date = "000000000";
+		//throw exception
 	}
 	else {
-		date = vDateRequirement[0];
+		stringDate = vDateRequirement[0];
+		date d(from_undelimited_string(stringDate));
+		dateRequirement = d;
 	}
-
+	/*
 	if (vTimeRequirement.empty()) {
-		time = "000000";
+		time_duration td(not_a_date_time);
+		timeRequirement =
 	}
 	else {
 		time = vTimeRequirement[0];
 	}
 
 	dateRequirement= createPTimeObject(date, time);
-	showCommand = new ShowCommand(dateRequirement);
+	*/
+	ptime ptimeRequirement(dateRequirement, timeRequirement);
+	showCommand = new ShowCommand(ptimeRequirement);
 	
 	return showCommand;
 }

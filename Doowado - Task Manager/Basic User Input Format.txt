@@ -28,9 +28,11 @@ e.g. edit t2 complete ie3110 lab
 
 edit (entry index) start (new starting time)
 e.g. edit t3 start at 1500
+edit t3 -s 1500
 
 edit (entry index) end (new ending time)
 e.g. edit t4 end at 1500
+edit t4 -e 1500
 
 For show
 show (date)

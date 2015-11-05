@@ -130,7 +130,6 @@
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="EditCommand.cpp" />
     <ClCompile Include="Entry.cpp" />
-    <ClCompile Include="Event.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="MarkDoneCommand.cpp" />
@@ -140,7 +139,6 @@
     <ClCompile Include="SearchCommand.cpp" />
     <ClCompile Include="ShowCommand.cpp" />
     <ClCompile Include="Storage.cpp" />
-    <ClCompile Include="Task.cpp" />
     <ClCompile Include="UndoCommand.cpp" />
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
@@ -152,7 +150,6 @@
     <ClInclude Include="Display.h" />
     <ClInclude Include="EditCommand.h" />
     <ClInclude Include="Entry.h" />
-    <ClInclude Include="Event.h" />
     <ClInclude Include="History.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="MarkDoneCommand.h" />
@@ -162,7 +159,6 @@
     <ClInclude Include="SearchCommand.h" />
     <ClInclude Include="ShowCommand.h" />
     <ClInclude Include="Storage.h" />
-    <ClInclude Include="Task.h" />
     <ClInclude Include="UndoCommand.h" />
     <ClInclude Include="UserInterface.h" />
   </ItemGroup>

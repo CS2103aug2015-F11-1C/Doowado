@@ -25,6 +25,9 @@ public:
 	vector<Entry*>& getEventList();
 	vector<Entry*>& getTaskList();
 	vector<string>& getCommandFeedback();
+
+	void setEventDisplayState(string eventDisplayState);
+	void setTaskDisplayState(string taskDisplayState);
 	string getEventDisplayState();
 	string getTaskDisplayState();
 

@@ -12,6 +12,7 @@ class DeleteCommand: public Command {
 		vector<string> _feedback;
 
 		void generateFeedback();
+		void generateUndoFeedback();
 
 	public:
 		DeleteCommand(EntryType, int);
@@ -20,6 +21,6 @@ class DeleteCommand: public Command {
 		int getIndex();
 
 		void execute(Storage* data, Display* display);
-//		void undo(Storage* data, Display* display);
+		void undo(Storage* data, Display* display);
 };
 

@@ -74,5 +74,19 @@ void DeleteCommand::execute(Storage* data, Display* display) {
 	generateFeedback();
 	display->updateCommandFeedback(_feedback);
 
+	History::pushCommand(this);
 }
 
+void DeleteCommand::undo(Storage * data, Display * display)
+{
+	data->addEvent(_eventDeleted);
+	generateUndoFeedback();
+	display->updateCommandFeedback(_feedback);
+}
+
+void DeleteCommand::generateUndoFeedback()
+{
+	vector<string>::iterator front = _feedback.begin();
+
+	_feedback.insert(front, "Undone");
+}

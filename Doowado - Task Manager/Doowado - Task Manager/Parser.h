@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <sstream>
 #include <time.h> 
+#include <exception>
 
 using namespace std;
 
@@ -16,15 +17,16 @@ int const DATE_TIME_KEYWORDS_SIZE = 46;
 int const MONTH_KEYWORD_START_POS = 0;
 int const MONTH_KEYWORD_END_POS = 24;
 int const DATE_KEYWORD_START_POS = 24;
-int const DDATE_KEYWORDS_END_POS = 43;
+int const DDATE_KEYWORDS_END_POS = 44;
 
 string const DATE_KEYWORDS[] = { "january", "jan", "february", "feb", "march", "mar", "april", "apr",
 "may", "may", "june", "jun", "july", "jul", "august", "aug", "september", "sep", "october", "oct",
 "november", "nov", "december", "dec", "monday", "mon", "tuesday", "tue", "wednesday", "wed", "thursday",
 "thu", "friday", "fri", "saturday", "sat", "sunday", "sun", "today", "tomorrow", "tmr", "yesterday", "yest",
-"to", "am", "pm" };
+"null", "to" };
 
 class Parser {
+
 private:
 	string _userDelimiter;
 
@@ -46,12 +48,14 @@ private:
 	vector<int> _endDay;
 	vector<int> _endTime;
 
-private:
+public:
 	void resetAll();
 
 	void resetDateAndTime();
 
 	string removeExtraSpacePadding(string input);
+
+	string removeQuotations(string input);
 
 	void setCommand(string & input);
 
@@ -63,7 +67,7 @@ private:
 
 	void setDateAndTime(string & input);
 
-	void dateSetter(vector<string> input);
+	void dateSetter(vector<string> & input);
 
 	vector<int> extractYearMonthDay(string input);
 
@@ -81,13 +85,13 @@ private:
 
 	int convertStringMonthToInt(string input);
 
-	int isDayValid(string input);
+	int isDayValid(int year, int month, string day);
 
 	int isMonthValid(string input);
 
 	int isYearValid(string input);
 
-	void timeSetter(vector<string> input);
+	void timeSetter(vector<string> & input);
 
 	int extractTime(string input);
 
@@ -107,9 +111,7 @@ private:
 
 	vector<int> currentTime();
 
-//	string currentTime();
-
-public:
+//public:
 	Parser::Parser();
 
 	ParserResult parse(string input);

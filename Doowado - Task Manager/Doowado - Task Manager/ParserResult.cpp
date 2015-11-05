@@ -38,19 +38,26 @@ void ParserResult::setStartDate(vector<int> startYear, vector<int> startMonth, v
 	if (!startYear.empty() && !startMonth.empty() && !startDay.empty()) {
 		for (int i = 0; i < startYear.size(); i++) {
 			ostringstream out;
-			out << startYear[i];
-			if (startMonth[i] < 10) {
-				out << "0" << startMonth[i];
+			if (startYear[i] == -1) {
+				out << "null";
+				_startDate.push_back(out.str());
 			}else {
-				out << startMonth[i];
-			}
+				out << startYear[i];
+				if (startMonth[i] < 10) {
+					out << "0" << startMonth[i];
+				}
+				else {
+					out << startMonth[i];
+				}
 
-			if (startDay[i] < 10) {
-				out << "0" << startDay[i];
-			}else {
-				out << startDay[i];
+				if (startDay[i] < 10) {
+					out << "0" << startDay[i];
+				}
+				else {
+					out << startDay[i];
+				}
+				_startDate.push_back(out.str());
 			}
-			_startDate.push_back(out.str());
 		}
 	}
 }
@@ -60,21 +67,26 @@ void ParserResult::setEndDate(vector<int> endYear, vector<int> endMonth, vector<
 	if (!endYear.empty() && !endMonth.empty() && !endDay.empty()) {
 		for (int i = 0; i < endYear.size(); i++) {
 			ostringstream out;
-			out << endYear[i];
-			if (endMonth[i] < 10) {
-				out << "0" << endMonth[i];
-			}
-			else {
-				out << endMonth[i];
-			}
+			if (endYear[i] == -1) {
+				out << "null";
+				_endDate.push_back(out.str());
+			}else {
+				out << endYear[i];
+				if (endMonth[i] < 10) {
+					out << "0" << endMonth[i];
+				}
+				else {
+					out << endMonth[i];
+				}
 
-			if (endDay[i] < 10) {
-				out << "0" << endDay[i];
+				if (endDay[i] < 10) {
+					out << "0" << endDay[i];
+				}
+				else {
+					out << endDay[i];
+				}
+				_endDate.push_back(out.str());
 			}
-			else {
-				out << endDay[i];
-			}
-			_endDate.push_back(out.str());
 		}
 	}
 }
@@ -85,10 +97,10 @@ void ParserResult::setStartTime(vector<int> startTime){
 		for (int i = 0; i < startTime.size(); i++) {
 			ostringstream out;
 			if (startTime[i] < 1000) {
-				out << "0" << startTime[i];
+				out << "0" << startTime[i] / 100 << ":" << startTime[i] % 100 << ":00";
 				_startTime.push_back(out.str());
 			}else {
-				out << startTime[i];
+				out << startTime[i] / 100 << ":" << startTime[i] % 100 << ":00";
 				_startTime.push_back(out.str());
 			}
 		}
@@ -101,10 +113,10 @@ void ParserResult::setEndTime(vector<int> endTime){
 		for (int i = 0; i < endTime.size(); i++) {
 			ostringstream out;
 			if (endTime[i] < 1000) {
-				out << "0" << endTime[i];
+				out << "0" << endTime[i] / 100 << ":" << endTime[i] % 100 << ":00";
 				_endTime.push_back(out.str());
 			}else {
-				out << endTime[i];
+				out << endTime[i] / 100 << ":" << endTime[i] % 100 << ":00";
 				_endTime.push_back(out.str());
 			}
 		}
@@ -143,6 +155,5 @@ vector<string>& ParserResult::getEndTime(){
 	return _endTime;
 }
 
-ParserResult::~ParserResult()
-{
+ParserResult::~ParserResult(){
 }

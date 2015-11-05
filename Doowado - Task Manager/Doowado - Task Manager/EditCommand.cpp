@@ -85,7 +85,7 @@ void EditCommand::execute(Storage* data, Display *display)
 			}
 		}
 		
-	}
+	} 
 
 	else if (_entryType == task) {
 		//throw exception if it is a floating task and newStartTime and newStartDate are ! is_special 
@@ -129,7 +129,7 @@ void EditCommand::execute(Storage* data, Display *display)
 			ptime editedEndTime(endDate, endTime);
 			editedEntry->setEndTime(editedEndTime);
 		}
-	}
-
+	} 
+	
 	return;
 }

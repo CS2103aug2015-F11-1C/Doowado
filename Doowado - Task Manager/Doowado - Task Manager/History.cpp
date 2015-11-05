@@ -27,3 +27,10 @@ void History::pushCommand(Command* cmd)
 {
 	_commandStack.push(cmd);
 }
+
+void History::empty()
+{
+	while (!_commandStack.empty()) {
+		_commandStack.pop();
+	}
+}

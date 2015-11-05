@@ -32,7 +32,7 @@ AddCommand::~AddCommand()
 
 void AddCommand::execute(Storage* data, Display *display) {
 	checkValidTitle(_entryTitle);
-
+	\
 	if (!_entryStartTime.is_not_a_date_time()) {
 		//cout << "Event" << endl;
 		entryType = type_event;

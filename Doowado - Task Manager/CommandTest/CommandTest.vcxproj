@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="DisplayStub.cpp" />
     <ClCompile Include="HistoryStub.cpp" />
+    <ClCompile Include="LogicTest.cpp" />
     <ClCompile Include="ReversibleCommandStub.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

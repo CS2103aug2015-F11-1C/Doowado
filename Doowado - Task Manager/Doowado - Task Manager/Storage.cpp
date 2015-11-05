@@ -313,19 +313,6 @@ void Storage::displayDefault(vector <Entry*> *eventDisplay, vector <Entry*> *tas
 		}
 	}
 }
-/*
-vector<Entry*> Storage::retrieveByDate(ptime timeIndicator) {
-	vector <Entry*> eventResult;
-
-	for (int i = 0; i < _eventList.size(); i++) {
-		if (_eventList[i]->getStartTime().date() == timeIndicator.date() || _eventList[i]->getEndTime().date() == timeIndicator.date()) {
-			eventResult.push_back(_eventList[i]);
-		}
-	}
-
-	return eventResult;
-}
-*/
 
 void Storage::retrieveByDate(ptime timeIndicator, vector <Entry*>& eventResult, vector <Entry*>& taskResult) {
 	
@@ -362,30 +349,6 @@ void Storage::retrieveByDate(ptime timeIndicator1, ptime timeIndicator2, vector<
 	}
 }
 
-vector<Entry*> Storage::retrieveIncompleteTasks() {
-	vector<Entry*> taskResult;
-
-	for (int i = 0; i < _taskList.size(); i++) {
-		if (!_taskList[i]->isDone()) {
-			taskResult.push_back(_taskList[i]);
-		}
-	}
-
-	return taskResult;
-}
-
-vector<Entry*> Storage::retrieveCompletedTasks() {
-	vector <Entry*> taskResult;
-
-	for (int i = 0; i < _taskList.size(); i++) {
-		if (_taskList[i]->isDone()) {
-			taskResult.push_back(_taskList[i]);
-		}
-	}
-
-	return taskResult;
-}
-
 vector<Entry*> Storage::retrieveEventByDone(bool doneStatus)
 {
 	vector <Entry*> eventResult;
@@ -408,6 +371,18 @@ vector<Entry*> Storage::retrieveTaskByDone(bool doneStatus)
 			taskResult.push_back(_taskList[i]);
 		}
 	}
+	return taskResult;
+}
+
+vector<Entry*> Storage::retrieveOverdueTasks(bool overdueStatus){
+	vector <Entry*> taskResult;
+
+	for (int i = 0; i < _taskList.size(); i++) {
+		if (_taskList[i]->isOverdue() == overdueStatus) {
+			taskResult.push_back(_taskList[i]);
+		}
+	}
+
 	return taskResult;
 }
 

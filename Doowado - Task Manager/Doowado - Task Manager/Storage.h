@@ -32,14 +32,12 @@ public:
 	vector <Entry*> searchTasksByTitle(vector <string> keywords);
 
 	void displayDefault(vector <Entry*> *eventList, vector <Entry*> *taskList);				// Display today's event and all uncompleted tasks
-//	vector <Entry*> retrieveByDate(ptime timeIndicator);
 	void retrieveByDate(ptime timeIndicator, vector<Entry*>& eventResult, vector<Entry*>& taskResult);
 	void retrieveByDate(ptime timeIndicator1, ptime timeIndicator2, vector<Entry*>& eventResult, vector<Entry*>& taskResult);
-	vector <Entry*> retrieveIncompleteTasks();
-	vector <Entry*> retrieveCompletedTasks();
-
+	
 	vector<Entry*> retrieveEventByDone(bool doneStatus);
 	vector<Entry*> retrieveTaskByDone(bool doneStatus);
+	vector<Entry*> retrieveOverdueTasks(bool overdueStatus);
 	void deleteFromEventList(Entry* eventPointer);
 	void deleteFromTaskLIst(Entry* taskPointer);
 

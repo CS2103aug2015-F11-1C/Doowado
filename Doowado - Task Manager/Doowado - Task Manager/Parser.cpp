@@ -5,10 +5,25 @@ using namespace std;
 
 //CONSTANTS
 string const ERROR_EMPTY_USER_INPUT = "empty input";
-string const DATE_DELIMITER[] = { "on","from","by","at","fr","start","st","end","ed" };
+string const DATE_DELIMITER[] = { "\"", "on","from","by","at","fr","start","st","end","ed" };
+int const DATE_DELIMITER_SIZE = 10;
 string const DATE_SPLITER = "./";
-int const DATE_DELIMITER_SIZE = 9;
-int const DATE_NOT_FOUND = 43;
+int const DATE_NOT_FOUND = 44;
+
+string const MULTIPLE_DESCRIPTION_KEYWORDS_DELIMITER = "|";
+string const START_END_DATE_DELIMITER = "to";
+string const START_END_TIME_DELIMITER = "to";
+
+string const ERROR_EMPTY_INPUT = "Empty input";
+string const ERROR_END_DATE_IS_INVALID = "End date is invalid, set end date to start date";
+string const ERROR_START_DATE_IS_INVALID = "Start date is invalid, set start date to end date";
+string const ERROR_INVALID_DATE_TIME_INPUT = "Invalid date or time input";
+string const ERROR_INVALID_YEAR = "Invalid year input";
+string const ERROR_INVALID_MONTH = "Invalid month input";
+string const ERROR_INVALID_DAY = "Invalid day input";
+string const ERROR_END_TIME_IS_INVALID = "End time is invalid, set end time to start time";
+string const ERROR_START_TIME_IS_INVALID = "Start time is invalid, set Start time to end time";
+string const ERROR_INVALID_TIME = "Invalid time input";
 
 Parser::Parser(){}
 
@@ -40,20 +55,32 @@ void Parser::resetDateAndTime() {
 	_endTime.clear();
 }
 
-//take in full user input
+//Take in full  user input string, remove the extra space padding.
 string Parser::removeExtraSpacePadding(string input){
 	size_t start = input.find_first_not_of(" ");
 	size_t end = input.find_last_not_of(" ");
 
 	if (start != string::npos) {
 		return input.substr(start, (end - start + 1));
-	}else {
+	}else {		
 		return "";
 	}
 }
 
-//take in full user input
-//remove command from the user input string
+string Parser::removeQuotations(string input){
+	size_t start = input.find_first_not_of("\"");
+	size_t end = input.find_last_not_of("\"");
+
+	if (start != string::npos) {
+		return input.substr(start, (end - start + 1));
+	}
+	else {
+		return "";
+	}
+}
+
+//Take in full user input string.
+//Remove command from the user input string.
 void Parser::setCommand(string& input) {
 	size_t spacePos = input.find_first_of(" ");
 
@@ -64,17 +91,30 @@ void Parser::setCommand(string& input) {
 	else {
 		_userCommand = convertStringTolowerCase(input.substr(0, spacePos));
 		input = input.substr(spacePos + 1);
+		input = removeExtraSpacePadding(input);
 	}
 }
 
 
-//take in only the description
+//Take in the user input sting with command, date & time keywords and entry type & index removed.
+//Throw exception if date & time keywords is found incorrect after the latest quotation.
 void Parser::setDescription(string input){
-	string const MULTIPLE_KEYWORDS_DELIMITER = "|";
 	size_t delimiterPos;
+	string invalidDateTimeInput;
+	size_t quotationPos;
 
-	if (input != "") {
-		delimiterPos = input.find_first_of(MULTIPLE_KEYWORDS_DELIMITER);
+
+	if (!input.empty()) {
+		quotationPos = input.find_last_of("\"");
+		invalidDateTimeInput = input.substr(quotationPos + 1);
+
+		if (quotationPos != string::npos && !invalidDateTimeInput.empty()) {
+			throw std::out_of_range(ERROR_INVALID_DATE_TIME_INPUT);
+		}else {
+			input = input.substr(0, quotationPos);
+		}
+
+		delimiterPos = input.find_first_of(MULTIPLE_DESCRIPTION_KEYWORDS_DELIMITER);
 		if (delimiterPos != string::npos) {
 			while (delimiterPos != string::npos) {
 				string temp = input.substr(0, delimiterPos);
@@ -89,7 +129,7 @@ void Parser::setDescription(string input){
 				}
 
 				input = input.substr(delimiterPos + 1);
-				delimiterPos = input.find_first_of(MULTIPLE_KEYWORDS_DELIMITER);
+				delimiterPos = input.find_first_of(MULTIPLE_DESCRIPTION_KEYWORDS_DELIMITER);
 			}
 			if (!input.empty()) {
 				input = removeExtraSpacePadding(input);
@@ -101,8 +141,10 @@ void Parser::setDescription(string input){
 	}
 }
 
-//take in the user input with command removed by setCommand and date & time keywords removed by setDateAndTime
+//Take in the user input sting with command and date & time keywords removed.
+//Remove entry type and index from the user input string.
 void Parser::setIndex(string& input){
+	input = removeQuotations(input);
 	size_t spacePos = input.find_first_of(" ");
 
 	if (!input.empty()) {
@@ -115,6 +157,7 @@ void Parser::setIndex(string& input){
 				_entryType.push_back(entryType);
 				_index.push_back(indexInt);
 				input = input.substr(spacePos + 1);
+				input = removeExtraSpacePadding(input);
 			}
 		}else {
 			if (isIndexVaild(input)) {
@@ -144,8 +187,8 @@ bool Parser::isIndexVaild(string input){
 	}
 }
 
-//take in the user input with command removed by setCommand already
-//remove date and time keywords from the user input string
+//Take in the user input string with command removed.
+//Remove date & time keywords from the user input string.
 void Parser::setDateAndTime(string& input){
 	size_t delimiterPos;
 	string dateAndTime;
@@ -169,8 +212,6 @@ void Parser::setDateAndTime(string& input){
 		input = input.substr(0, delimiterPos);
 		input = removeExtraSpacePadding(input);
 
-//		removeStartOrEndKeyword(input);
-
 	}else if (input.find_first_of(" ") == string::npos) {
 		dateAndTime = input;
 		dateAndTime = convertStringTolowerCase(dateAndTime);
@@ -187,13 +228,14 @@ void Parser::setDateAndTime(string& input){
 	}
 }
 
-//take in fragment of date and time keywords
-void Parser::dateSetter(vector<string> input){
-	string const START_END_DATE_DELIMITER = "to";
+//Take in fragmentized string of date and time keywords
+//Find the date keywords and push to start date and end date accordingly
+void Parser::dateSetter(vector<string>& input){
 	int toPos=-1;
 	bool foundTo = false;
 	bool foundStartDate = false;
 	bool foundEndDate = false;
+	vector<int> markDatePos;
 
 	for (int i = 0; i < input.size(); i++) {
 		if (input[i] == START_END_DATE_DELIMITER) {
@@ -210,7 +252,7 @@ void Parser::dateSetter(vector<string> input){
 			startYearMonthDay = extractYearMonthDay(input[j]);
 			if (!startYearMonthDay.empty()) {
 				//copy day month and year
-				//erase vector[j]?
+				markDatePos.push_back(j);
 				_startYear.push_back(startYearMonthDay[0]);
 				_startMonth.push_back(startYearMonthDay[1]);
 				_startDay.push_back(startYearMonthDay[2]);
@@ -223,6 +265,7 @@ void Parser::dateSetter(vector<string> input){
 		for (int k = toPos + 1; k < input.size(); k++) {
 			endYearMonthDay = extractYearMonthDay(input[k]);
 			if (!endYearMonthDay.empty()) {
+				markDatePos.push_back(k);
 				_endYear.push_back(endYearMonthDay[0]);
 				_endMonth.push_back(endYearMonthDay[1]);
 				_endDay.push_back(endYearMonthDay[2]);
@@ -236,6 +279,8 @@ void Parser::dateSetter(vector<string> input){
 			_endYear.push_back(_startYear.back());
 			_endMonth.push_back(_startMonth.back());
 			_endDay.push_back(_startDay.back());
+
+			throw std::out_of_range(ERROR_END_DATE_IS_INVALID);
 		}
 
 		//if the start time is invalid but a end time is found, the start time will be set to end time
@@ -243,12 +288,13 @@ void Parser::dateSetter(vector<string> input){
 			_startYear.push_back(_endYear.back());
 			_startMonth.push_back(_endMonth.back());
 			_startDay.push_back(_endDay.back());
+
+			throw std::out_of_range(ERROR_START_DATE_IS_INVALID);
 		}
 
-//		if ((foundStartDate == false) && (foundEndDate == false)) {
-			//wrong user input, show message?
-//			return;
-//		}
+		for (int z = 0; z < markDatePos.size(); z++) {
+			input.erase(input.begin() + (markDatePos[z] - z));
+		}
 
 	}else {
 		//set end date only
@@ -257,12 +303,14 @@ void Parser::dateSetter(vector<string> input){
 			endYearMonthDay = extractYearMonthDay(input[z]);
 			if (!endYearMonthDay.empty()) {
 				if (_userDelimiter == "start" || _userDelimiter == "st") {
+					markDatePos.push_back(z);
 					_startYear.push_back(endYearMonthDay[0]);
 					_startMonth.push_back(endYearMonthDay[1]);
 					_startDay.push_back(endYearMonthDay[2]);
 					break;
 				}
 				else {
+					markDatePos.push_back(z);
 					_endYear.push_back(endYearMonthDay[0]);
 					_endMonth.push_back(endYearMonthDay[1]);
 					_endDay.push_back(endYearMonthDay[2]);
@@ -270,11 +318,16 @@ void Parser::dateSetter(vector<string> input){
 				}
 			}
 		}
+
+		for (int z = 0; z < markDatePos.size(); z++) {
+			input.erase(input.begin() + (markDatePos[z] - z));
+		}
 	}
 }
 
-//input type e.g. 17/10/2015 or 17.oct or fri
-//output type v[0]year v[1}month v[2]day
+//Input format 1. 17/10/2015 2. 17.oct 3. fri
+//Output format vector of year month and day, v[0]year v[1]month v[2]day
+//Throw exceptions if any of the year month and day is invalid
 vector<int> Parser::extractYearMonthDay(string input){
 	vector<int> output;
 	vector<string> yearMonthDay;
@@ -298,20 +351,23 @@ vector<int> Parser::extractYearMonthDay(string input){
 			temp = isMonthValid(yearMonthDay[1]);
 			if (temp != -1) {
 				output.push_back(temp);
-				temp = isDayValid(yearMonthDay[2]);
+				temp = isDayValid(output[0], output[1], yearMonthDay[2]);
 				if (temp != -1) {
 					output.push_back(temp);
 					return output;
 				}else {
 					output.clear();
+					throw std::out_of_range(ERROR_INVALID_DAY);
 					return output;
 				}
 			}else {
 				output.clear();
+				throw std::out_of_range(ERROR_INVALID_MONTH);
 				return output;
 			}
 		}else {
 			output.clear();
+			throw std::out_of_range(ERROR_INVALID_YEAR);
 			return output;
 		}
 	}else if (yearMonthDay.size() == 2) {
@@ -320,22 +376,24 @@ vector<int> Parser::extractYearMonthDay(string input){
 		temp = isMonthValid(yearMonthDay[0]);
 		if (temp != -1) {
 			vector<int> time = currentTime();
-			output.push_back(time[0]);		//get the year from system
+			output.push_back(time[0]);		//get the year from system, set the year as current year
 			output.push_back(temp);
-			temp = isDayValid(yearMonthDay[1]);
+			temp = isDayValid(output[0], output[1], yearMonthDay[1]);
 			if (temp != -1) {
 				output.push_back(temp);
 				return output;
 			}else {
 				output.clear();
+				throw std::out_of_range(ERROR_INVALID_DAY);
 				return output;
 			}
 		}else {
 			output.clear();
+			throw std::out_of_range(ERROR_INVALID_MONTH);
 			return output;
 		}
 	}else if (yearMonthDay.size() == 1) {
-		//v[0] such as fri, tmr, monday...
+		//v[0] such as fri, tmr, monday
 		if (convertStringWeekdayToInt(yearMonthDay[0]) != -1) {
 			output = calculateWeekdayToNearestDay(yearMonthDay[0]);
 			return output;
@@ -345,6 +403,7 @@ vector<int> Parser::extractYearMonthDay(string input){
 		}
 	}else {
 		output.clear();
+		throw std::out_of_range(ERROR_INVALID_DATE_TIME_INPUT);
 		return output;
 	}
 }
@@ -353,27 +412,33 @@ vector<int> Parser::extractYearMonthDay(string input){
 //output type v[0]year v[1}month v[2]day
 vector<int> Parser::calculateWeekdayToNearestDay(string input){
 	vector<int> output;
-	vector<int> tineNow = currentTime();
-	int currentYear = tineNow[0];
-	int currentMonth = tineNow[1];
-	int currentDay = tineNow[2];
-	int currentWeekday = tineNow[3];
+	vector<int> timeNow = currentTime();
+	int currentYear = timeNow[0];
+	int currentMonth = timeNow[1];
+	int currentDay = timeNow[2];
+	int currentWeekday = timeNow[3];
 	int userInputWeekday = convertStringWeekdayToInt(input);
 
 	if (userInputWeekday >= 1 && userInputWeekday <= 7) {
 		if (userInputWeekday >= currentWeekday) {
 			currentDay = currentDay + userInputWeekday - currentWeekday;
-		}else {
+		}
+		else {
 			currentDay = currentDay + userInputWeekday - currentWeekday + 7;
 		}
-	}else {
-		if (userInputWeekday == 8) {
-			currentDay = currentDay;
-		}else {
-			if (userInputWeekday == 9) {
-				currentDay = currentDay + 1;
-			}
-		}
+	}else if (userInputWeekday == 8) {
+		currentDay = currentDay;
+	}else if (userInputWeekday == 9) {
+		currentDay = currentDay + 1;
+	//for the nullify the date case
+	}else if (userInputWeekday == 11) {
+		currentYear = -1;
+		currentMonth = -1;
+		currentDay = -1;
+		output.push_back(currentYear);
+		output.push_back(currentMonth);
+		output.push_back(currentDay);
+		return output;
 	}
 
 	solveDayOverFlow(currentYear, currentMonth, currentDay);
@@ -469,11 +534,14 @@ int Parser::convertStringWeekdayToInt(string input){
 	case 40:
 		dateInNumber = 9;
 		break;
-	case 41:
-	case 42:
-		dateInNumber = 10;
-		break;
+//	case 41:
+//	case 42:
+//		dateInNumber = 10;
+//		break;
 	case 43:
+		dateInNumber = 11;
+		break;
+	case 44:
 		dateInNumber = -1;
 		break;
 	}
@@ -553,18 +621,19 @@ int Parser::convertStringMonthToInt(string input){
 	return monthInNumber;
 }
 
-int Parser::isDayValid(string input){
-	int day;
-
-	day = convertStringToInt(input);
-	if (day <= 31 && day >= 1) {
-		return day;
-	}
-	else {
-		return day = -1;
+//return the day in integer format, return -1 if the day is invalid
+int Parser::isDayValid(int year, int month, string day){
+	int intDay;
+	intDay = convertStringToInt(day);
+	
+	if ((intDay >= 1) && (intDay <= numberOfDaysInMonth(year, month))) {
+		return intDay;
+	}else {
+		return intDay = -1;
 	}
 }
 
+//return the month in integer format, return -1 if the month is invalid
 int Parser::isMonthValid(string input){
 	int month;
 
@@ -577,6 +646,7 @@ int Parser::isMonthValid(string input){
 	}
 }
 
+//return the year in integer format, return -1 if the year is invalid
 int Parser::isYearValid(string input){
 	int year;
 
@@ -589,12 +659,12 @@ int Parser::isYearValid(string input){
 }
 
 //take in fragment of date and time keywords
-void Parser::timeSetter(vector<string> input){
-	string const START_END_TIME_DELIMITER = "to";
+void Parser::timeSetter(vector<string>& input){
 	int toPos = -1;
 	bool foundTo = false;
 	bool foundStartTime = false;
 	bool foundEndTime = false;
+	vector<int> markTimePos;
 
 	for (int i = 0; i < input.size(); i++) {
 		if (input[i] == START_END_TIME_DELIMITER) {
@@ -610,6 +680,7 @@ void Parser::timeSetter(vector<string> input){
 		for (int j = 0; j < toPos; j++) {
 			startTime = extractTime(input[j]);
 			if (startTime != -1) {
+				markTimePos.push_back(j);
 				_startTime.push_back(startTime);
 				foundStartTime = true;
 				break;
@@ -620,6 +691,7 @@ void Parser::timeSetter(vector<string> input){
 		for (int k = toPos + 1; k < input.size(); k++) {
 			endTime = extractTime(input[k]);
 			if (endTime != -1) {
+				markTimePos.push_back(k);
 				_endTime.push_back(endTime);
 				foundEndTime = true;
 				break;
@@ -629,17 +701,20 @@ void Parser::timeSetter(vector<string> input){
 		if (foundStartTime && !foundEndTime) {
 			endTime = startTime;
 			_endTime.push_back(endTime);
+
+			throw std::out_of_range(ERROR_END_TIME_IS_INVALID);
 		}
 
 		if (!foundStartTime && foundEndTime) {
 			startTime = endTime;
 			_startTime.push_back(startTime);
+
+			throw std::out_of_range(ERROR_START_TIME_IS_INVALID);
 		}
 
-//		if (!foundStartTime && !foundEndTime) {
-//			how, what action will be done?
-//			return;
-//		}
+		for (int z = 0; z < markTimePos.size(); z++) {
+			input.erase(input.begin() + (markTimePos[z] - z));
+		}
 
 	}else {
 		//set end time only
@@ -648,20 +723,25 @@ void Parser::timeSetter(vector<string> input){
 			endTime = extractTime(input[z]);
 			if (endTime != -1) {
 				if (_userDelimiter == "start" || _userDelimiter == "st") {
+					markTimePos.push_back(z);
 					_startTime.push_back(endTime);
 					break;
-				}
-				else {
+				}else {
+					markTimePos.push_back(z);
 					_endTime.push_back(endTime);
 					break;
 				}
 			}
 		}
+
+		for (int z = 0; z < markTimePos.size(); z++) {
+			input.erase(input.begin() + (markTimePos[z] - z));
+		}
 	}
 }
 
-//input format 24hr, e.g. 0830.830,1240,2359
-//output 0 means 00:00, 1 means 00:01, 59 means 00:59, 100 means 01:00
+//Input format is 24hr, e.g. 0830.830,1240,2359
+//Output 0 means 00:00, 1 means 00:01, 59 means 00:59, 100 means 01:00
 int Parser::extractTime(string input){
 	string hour;
 	int hourInt;
@@ -681,6 +761,7 @@ int Parser::extractTime(string input){
 					timeInt = hourInt * 100 + minuteInt;
 					return timeInt;
 				}else {
+					throw std::out_of_range(ERROR_INVALID_TIME);
 					return timeInt = -1;
 				}
 			}
@@ -693,6 +774,7 @@ int Parser::extractTime(string input){
 					timeInt = hourInt * 100 + minuteInt;
 					return timeInt;
 				}else {
+					throw std::out_of_range(ERROR_INVALID_TIME);
 					return timeInt = -1;
 				}
 			}
@@ -704,6 +786,7 @@ int Parser::extractTime(string input){
 					timeInt = hourInt * 100 + minuteInt;
 					return timeInt;
 				}else {
+					throw std::out_of_range(ERROR_INVALID_TIME);
 					return timeInt = -1;
 				}
 			}else {
@@ -725,6 +808,7 @@ bool Parser::isTimeValid(int hour, int minute){
 	}
 }
 
+//Input a string and trim it to each single words, store them in a vector and return the vector.
 vector<string> Parser::fragmentizeString(string input){
 	vector<string> dateAndTime;
 	string fragment;
@@ -736,11 +820,12 @@ vector<string> Parser::fragmentizeString(string input){
 	return dateAndTime;
 }
 
-
-//take in full user input
+//Take in full user input.
+//Return the position if a effective date delimiter is found, return string::npos if not found.
 size_t Parser::findDateDelimiterPos(string input) {
 	string delimiter = "";
 	size_t foundDelimiter;
+	size_t finalDelimiter=0;
 	string lowerCaseInput;
 	string temp;
 
@@ -756,22 +841,31 @@ size_t Parser::findDateDelimiterPos(string input) {
 			//in case for on mon, fr fri, the date delimiter is found in the date keywords itself!
 			if (foundDelimiter - 1 == string::npos) {	
 				if (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i]) {
-					delimiter = DATE_DELIMITER[i];
-					break;
+					if (foundDelimiter > finalDelimiter) {
+						delimiter = DATE_DELIMITER[i];
+						finalDelimiter = foundDelimiter;
+					}
 				}
 			}
 			else {
 				if (temp.substr(foundDelimiter - 1, 1) == " ") {
 					if (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i]) {
-						delimiter = DATE_DELIMITER[i];
-						break;
-					}
-					else {
+						if (foundDelimiter > finalDelimiter) {
+							delimiter = DATE_DELIMITER[i];
+							finalDelimiter = foundDelimiter;
+						}
+					}else {
 						temp = temp.substr(0, foundDelimiter);
 						foundDelimiter = temp.rfind(DATE_DELIMITER[i]);
 						if (foundDelimiter != string::npos) {
 							i--;
 						}
+					}
+				}
+				else if (temp.substr(foundDelimiter, 1) == DATE_DELIMITER[i]) {
+					if (foundDelimiter > finalDelimiter) {
+						delimiter = DATE_DELIMITER[i];
+						finalDelimiter = foundDelimiter;
 					}
 				}else {
 					temp = temp.substr(0, foundDelimiter);
@@ -784,55 +878,20 @@ size_t Parser::findDateDelimiterPos(string input) {
 		}
 	}
 
-
-	if (foundDelimiter != string::npos && delimiter != "") {
-		if (!isDateDelimiterValid(lowerCaseInput, foundDelimiter)) {
+	if (finalDelimiter != string::npos && delimiter != "") {
+		if (!isDateDelimiterValid(lowerCaseInput, finalDelimiter)) {
 			return string::npos;
-		}
-		else {
+		}else {
 			_userDelimiter = delimiter;		//found which delimeter did the user use.
-			return foundDelimiter;
+			return finalDelimiter;
 		}
-	}
-	else {
+	}else {
 		return string::npos;
 	}
 }
 
-
-/*
-//take in full user input
-size_t Parser::findDateDelimiterPos(string input) {
-	string temp;
-	string delimiter = "";
-	size_t foundDelimiter;
-	string lowerCaseInput;
-
-	lowerCaseInput = convertStringTolowerCase(input);
-
-	for (int i = 0; i < DATE_DELIMITER_SIZE; i++) {
-		foundDelimiter = lowerCaseInput.rfind(DATE_DELIMITER[i]);
-		if (foundDelimiter != string::npos) {
-			delimiter = DATE_DELIMITER[i];
-			break;
-		}
-	}
-
-	if (foundDelimiter != string::npos && delimiter != "") {
-		if (!isDateDelimiterValid(lowerCaseInput, foundDelimiter)) {
-			return string::npos;
-		}
-		else {
-			_userDelimiter = delimiter;		//found which delimeter did the user use.
-			return foundDelimiter;
-		}
-	}
-	else {
-		return string::npos;
-	}
-}
-*/
-
+//Check every keywords after the date delimiter.
+//If all the keywords after date delimiter are date or time keywords, return true. Otherwise return false.
 bool Parser::isDateDelimiterValid(string input, size_t pos){
 	string temp;
 	string keyWord;
@@ -872,6 +931,7 @@ bool Parser::isDateOrTimeKeywordValid(string input){
 	return false;
 }
 
+//Return -1 if the string is not a number, otherwise return the number in integer format.
 int Parser::convertStringToInt(string input){
 	stringstream convetor;
 	int number;
@@ -880,10 +940,10 @@ int Parser::convertStringToInt(string input){
 	convetor >> number;
 
 	if (convetor.fail()) {
-		return number = -1;		//not a number
+		return number = -1;	
 	}
 	else {
-		return number;		//a number
+		return number;
 	}
 }
 
@@ -892,7 +952,8 @@ string Parser::convertStringTolowerCase(string input){
 	return input;
 }
 
-//v[0]year v[1]month v[2]day v[3]weekday in int
+//Return the current system time in a vector of integer format
+//v[0]year v[1]month v[2]day v[3]weekday in integer format
 vector<int> Parser::currentTime(){
 	string year;
 	string month;
@@ -923,30 +984,26 @@ vector<int> Parser::currentTime(){
 	return timeOutput;
 }
 
-/*
-string Parser::currentTime(){
-	string timeNow;
-	time_t rawtime;
-	time(&rawtime);
-	struct tm timeinfo;
-	localtime_s(&timeinfo, &rawtime);
-	char buffer[128];
-	strftime(buffer, 128, "%d/%m/%Y/%A", &timeinfo);
-	timeNow = buffer;
-	return timeNow;
-}
-*/
-
 ParserResult Parser::parse(string input){
 	vector<string> output;
 	ParserResult parserResult;
-	string userInput = input;
 
-	userInput = removeExtraSpacePadding(userInput);
-	setCommand(userInput);
-	setDateAndTime(userInput);
-	setIndex(userInput);
-	setDescription(userInput);
+	try {
+		string userInput = input;
+		if (userInput.empty()) {
+			throw std::out_of_range(ERROR_EMPTY_INPUT);
+		}
+
+		userInput = removeExtraSpacePadding(userInput);
+		setCommand(userInput);
+		setDateAndTime(userInput);
+		setIndex(userInput);
+		setDescription(userInput);
+	}
+
+	catch (const out_of_range& error) {
+		throw std::out_of_range(error.what());
+	}
 
 	parserResult.setUserCommand(_userCommand);
 	parserResult.setDescription(_description);

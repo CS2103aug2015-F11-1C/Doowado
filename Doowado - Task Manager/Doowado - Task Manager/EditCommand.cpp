@@ -19,7 +19,7 @@ void EditCommand::execute(Storage* data, Display *display)
 {
 	if (_entryType == event) {
 		Entry* eventEntry = display->retrieveEntry(_entryType, _taskID);
-		
+	
 		if (_newTitle != "") {
 			eventEntry->setTitle(_newTitle);
 		}
@@ -67,7 +67,7 @@ void EditCommand::execute(Storage* data, Display *display)
 			eventEntry->setEndTime(editEndTime);
 		}
 		
-	}
+	} 
 
 	else if (_entryType == task) {
 		Entry* taskEntry = display->retrieveEntry(_entryType, _taskID);
@@ -95,7 +95,7 @@ void EditCommand::execute(Storage* data, Display *display)
 			ptime editDueTime(dueDate, dueTime);
 			taskEntry->setEndTime(editDueTime);
 		}
-	}
-
+	} 
+	
 	return;
 }

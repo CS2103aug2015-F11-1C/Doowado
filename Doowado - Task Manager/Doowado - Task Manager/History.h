@@ -20,5 +20,6 @@ public:
 
 	static Command* getLastCommand();
 	static void pushCommand(Command* cmd);
+	static void empty();
 };
 

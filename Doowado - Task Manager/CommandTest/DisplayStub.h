@@ -8,6 +8,7 @@ public:
 	~DisplayStub();
 
 	vector<Entry*> getEventsList();
+	Entry* retrieveEntry(EntryType, int);
 };
 
 

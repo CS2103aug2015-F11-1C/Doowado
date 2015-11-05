@@ -14,6 +14,7 @@
 #include "ShowCommand.h"
 #include "EditCommand.h"
 #include "AddCommand.h"
+#include "DeleteCommand.h"
 #include "UndoCommand.h"
 #include "DisplayStub.h"
 #include "StorageStub.h"

@@ -15,14 +15,14 @@ string const START_END_DATE_DELIMITER = "to";
 string const START_END_TIME_DELIMITER = "to";
 
 string const ERROR_EMPTY_INPUT = "Empty input";
-string const ERROR_END_DATE_IS_INVALID = "End date is invalid, set end date to start date";
-string const ERROR_START_DATE_IS_INVALID = "Start date is invalid, set start date to end date";
+//string const ERROR_END_DATE_IS_INVALID = "End date is invalid, set end date to start date";
+//string const ERROR_START_DATE_IS_INVALID = "Start date is invalid, set start date to end date";
 string const ERROR_INVALID_DATE_TIME_INPUT = "Invalid date or time input";
 string const ERROR_INVALID_YEAR = "Invalid year input";
 string const ERROR_INVALID_MONTH = "Invalid month input";
 string const ERROR_INVALID_DAY = "Invalid day input";
-string const ERROR_END_TIME_IS_INVALID = "End time is invalid, set end time to start time";
-string const ERROR_START_TIME_IS_INVALID = "Start time is invalid, set Start time to end time";
+//string const ERROR_END_TIME_IS_INVALID = "End time is invalid, set end time to start time";
+//string const ERROR_START_TIME_IS_INVALID = "Start time is invalid, set Start time to end time";
 string const ERROR_INVALID_TIME = "Invalid time input";
 
 Parser::Parser(){}
@@ -279,10 +279,9 @@ void Parser::dateSetter(vector<string>& input){
 			_endYear.push_back(_startYear.back());
 			_endMonth.push_back(_startMonth.back());
 			_endDay.push_back(_startDay.back());
-
-			throw std::out_of_range(ERROR_END_DATE_IS_INVALID);
 		}
 
+/*
 		//if the start time is invalid but a end time is found, the start time will be set to end time
 		if ((startYearMonthDay.empty()) && (foundEndDate == true)) {
 			_startYear.push_back(_endYear.back());
@@ -291,6 +290,7 @@ void Parser::dateSetter(vector<string>& input){
 
 			throw std::out_of_range(ERROR_START_DATE_IS_INVALID);
 		}
+*/
 
 		for (int z = 0; z < markDatePos.size(); z++) {
 			input.erase(input.begin() + (markDatePos[z] - z));
@@ -697,7 +697,7 @@ void Parser::timeSetter(vector<string>& input){
 				break;
 			}
 		}
-
+/*
 		if (foundStartTime && !foundEndTime) {
 			endTime = startTime;
 			_endTime.push_back(endTime);
@@ -711,6 +711,7 @@ void Parser::timeSetter(vector<string>& input){
 
 			throw std::out_of_range(ERROR_START_TIME_IS_INVALID);
 		}
+*/
 
 		for (int z = 0; z < markTimePos.size(); z++) {
 			input.erase(input.begin() + (markTimePos[z] - z));

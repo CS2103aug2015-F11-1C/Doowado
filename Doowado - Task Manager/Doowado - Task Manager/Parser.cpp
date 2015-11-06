@@ -273,16 +273,15 @@ void Parser::dateSetter(vector<string>& input){
 				break;
 			}
 		}
-/*
+
 		//if the end time is not found or invaild, the end time will be set to start time!
 		if ((endYearMonthDay.empty()) && (foundStartDate==true)) {
 			_endYear.push_back(_startYear.back());
 			_endMonth.push_back(_startMonth.back());
 			_endDay.push_back(_startDay.back());
-
-			throw std::out_of_range(ERROR_END_DATE_IS_INVALID);
 		}
 
+/*
 		//if the start time is invalid but a end time is found, the start time will be set to end time
 		if ((startYearMonthDay.empty()) && (foundEndDate == true)) {
 			_startYear.push_back(_endYear.back());

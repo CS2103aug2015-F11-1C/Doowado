@@ -2,27 +2,12 @@
 
 const string AddCommand::MESSAGE_ADDED = "Added";
 
-AddCommand::AddCommand(string title) {
-	_entryTitle = title;
-}
 
-AddCommand::AddCommand(string title, ptime time1) {
-	_entryTitle = title;
-	_entryDueTime = time1;
-}
-
-AddCommand::AddCommand(string title, ptime time1, ptime time2) {
-	_entryTitle = title;
-	_entryStartTime = time1;
-	_entryEndTime = time2;
-}
-
-AddCommand::AddCommand(string entryTitle, ptime entryStartTime, ptime entryEndTime, ptime entryDueTime)
+AddCommand::AddCommand(string entryTitle, ptime entryStartTime, ptime entryEndTime)
 {
 	_entryTitle = entryTitle;
 	_entryStartTime = entryStartTime;
 	_entryEndTime = entryEndTime;
-	_entryDueTime = entryDueTime;
 }
 
 
@@ -32,17 +17,17 @@ AddCommand::~AddCommand()
 
 void AddCommand::execute(Storage* data, Display *display) {
 	checkValidTitle(_entryTitle);
-	\
+	
 	if (!_entryStartTime.is_not_a_date_time()) {
 		//cout << "Event" << endl;
 		entryType = type_event;
 		_newEntry = new Entry(_entryTitle, _entryStartTime, _entryEndTime);
 		data->addEvent(_newEntry);
 	}
-	else if (!_entryDueTime.is_not_a_date_time()) {
+	else if (!_entryEndTime.is_not_a_date_time()) {
 		//cout << "Task" << endl;
 		entryType = type_timed_task;
-		_newEntry = new Entry(_entryTitle, _entryDueTime);
+		_newEntry = new Entry(_entryTitle, _entryEndTime);
 		data->addTask(_newEntry);
 	}
 	else {
@@ -83,7 +68,7 @@ void AddCommand::generateFeedback() {
 		_feedback.push_back(to_simple_string(_entryStartTime));
 		_feedback.push_back(to_simple_string(_entryEndTime));
 	} else if (type_timed_task == entryType) {
-		_feedback.push_back(to_simple_string(_entryDueTime));
+		_feedback.push_back(to_simple_string(_entryEndTime));
 	} else if (type_floating_task == entryType) {
 
 	}
@@ -104,7 +89,7 @@ void AddCommand::updateDisplay(Display* display, Storage* data)
 		data->retrieveByDate(_entryStartTime, relevantEventList, relevantTaskList);
 	}
 	else if (type_timed_task == entryType) {
-		data->retrieveByDate(_entryDueTime, relevantEventList, relevantTaskList);
+		data->retrieveByDate(_entryEndTime, relevantEventList, relevantTaskList);
 	}
 	else if (type_floating_task == entryType) {
 		ptime currentTime(second_clock::local_time());

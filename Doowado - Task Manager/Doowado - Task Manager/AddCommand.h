@@ -10,7 +10,6 @@ private:
 	string _entryTitle;
 	ptime _entryStartTime;
 	ptime _entryEndTime;
-	ptime _entryDueTime;
 
 	vector<string> _feedback;
 
@@ -18,10 +17,7 @@ private:
 	Entry* _newEntry;
 
 public:
-	AddCommand(string title);
-	AddCommand(string title, ptime time1);
-	AddCommand(string title, ptime time1, ptime time2);
-	AddCommand(string, ptime, ptime, ptime);
+	AddCommand(string entryTitle, ptime entryStartTime, ptime entryEndTime);
 	~AddCommand();
 
 	void execute(Storage* data, Display *display);

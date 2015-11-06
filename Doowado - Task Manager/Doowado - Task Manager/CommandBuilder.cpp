@@ -46,49 +46,55 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 {
 	Command * addCommand;
 	string entryTitle;
-	ptime entryStartPtime;
-	ptime entryEndPtime;
-	ptime entryDuePtime;
+	
+	date entryStartDate;
+	time_duration entryStartTime;
+	date entryEndDate;
+	time_duration entryEndTime;
 
-	vector<string> description = parserResult.getDescription();
-	vector<string> startDate = parserResult.getStartDate();
-	vector<string> startTime = parserResult.getStartTime();
-	vector<string> endDate = parserResult.getEndDate();
-	vector<string> endTime = parserResult.getEndTime();
+	std::string stringStartDate;
+	std::string stringStartTime;
+	std::string stringEndDate;
+	std::string stringEndTime;
 
+	std::vector<std::string> description = parserResult.getDescription();
 	entryTitle = description[0];
+
+	std::vector<std::string> vStartDate = parserResult.getStartDate();
+	if (!vStartDate.empty()) {
+		stringStartDate = vStartDate[0];
+		date d(from_undelimited_string(stringStartDate));
+		entryStartDate = d;
+	}
+	
+	std::vector<std::string> vStartTime = parserResult.getStartTime();
+	if (!vStartTime.empty()) {
+		stringStartTime = vStartTime[0];
+		time_duration td(duration_from_string(stringStartTime));
+		entryStartTime = td;
+	}
+
+	std::vector<std::string> vEndDate = parserResult.getEndDate();
+	if (!vEndDate.empty()) {
+		stringEndDate = vEndDate[0];
+		date d(from_undelimited_string(stringEndDate));
+		entryEndDate = d;
+	}
+
+	std::vector<std::string> vEndTime = parserResult.getEndTime();
+	if (!vEndTime.empty()) {
+		stringEndTime = vEndTime[0];
+		time_duration td(duration_from_string(stringEndTime));
+		entryEndTime = td;
+	}
+
 
 	//assert(startDate.size() == startTime.size());
 	//assert(endDate.size() == endTime.size());
 
-	if (!startDate.empty() && !startTime.empty()) {
-		assert(!endDate.empty() && !endTime.empty());
-
-		string entryStartDate = startDate[0];
-		string entryStartTime = startTime[0];
-		date startDate(from_undelimited_string(entryStartDate));
-		time_duration startTime(duration_from_string(entryStartTime));
-		ptime s(startDate, startTime);
-		entryStartPtime = s;
-
-		string entryEndDate = endDate[0];
-		string entryEndTime = endTime[0];
-		date endDate(from_undelimited_string(entryEndDate));
-		time_duration endTime(duration_from_string(entryEndTime));
-		ptime e(endDate, endTime);
-		entryEndPtime = e;
-	}
-
-	else if (!endDate.empty() && !endTime.empty()) {
-		string entryEndDate = endDate[0];
-		string entryEndTime = endTime[0];
-		date endDate(from_undelimited_string(entryEndDate));
-		time_duration endTime(duration_from_string(entryEndTime));
-		ptime e(endDate, endTime);
-		entryEndPtime = e;
-	}
-
-	addCommand = new AddCommand(entryTitle, entryStartPtime, entryEndPtime, entryDuePtime);
+	ptime entryStartPtime(entryStartDate, entryStartTime);
+	ptime entryEndPtime(entryEndDate, entryEndTime);
+	addCommand = new AddCommand(entryTitle, entryStartPtime, entryEndPtime);
 
 	return addCommand;
 }

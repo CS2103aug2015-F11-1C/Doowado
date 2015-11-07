@@ -80,9 +80,18 @@ void DeleteCommand::execute(Storage* data, Display* display) {
 
 void DeleteCommand::undo(Storage * data, Display * display)
 {
-	data->addEvent(_eventDeleted);
+	restoreToStorage(data);
 	generateUndoFeedback();
-	display->updateCommandFeedback(_feedback);
+	updateDisplay(display, data);
+}
+
+void DeleteCommand::restoreToStorage(Storage* data) {
+	if (event == _entryType) {
+		data->addEvent(_eventDeleted);
+	}
+	else if (task == _entryType) {
+		data->addTask(_taskDeleted);
+	}
 }
 
 void DeleteCommand::generateUndoFeedback()
@@ -90,4 +99,37 @@ void DeleteCommand::generateUndoFeedback()
 	vector<string>::iterator front = _feedback.begin();
 
 	_feedback.insert(front, "Undone");
+}
+
+void DeleteCommand::updateDisplay(Display* display, Storage* data)
+{
+	vector<Entry*> relevantEventList;
+	vector<Entry*> relevantTaskList;
+	ptime relevantTime;
+
+	relevantTime = getRelevantTime(_entryType);
+	data->retrieveByDate(relevantTime, relevantEventList, relevantTaskList);
+	
+	display->updateDisplayEventList(relevantEventList);
+	display->updateDisplayTaskList(relevantTaskList);
+	display->updateCommandFeedback(_feedback);
+}
+
+ptime DeleteCommand::getRelevantTime(EntryType _entryType) {
+	
+	ptime relevantTime;
+	if (event == _entryType) {
+		relevantTime = _eventDeleted->getStartTime();
+	}
+	else if (task == _entryType) {
+
+		relevantTime = _taskDeleted->getEndTime();
+		
+		if (relevantTime.is_not_a_date_time()) {
+			ptime currentTime(second_clock::local_time());
+			relevantTime = currentTime;
+		}
+	}
+
+	return relevantTime;
 }

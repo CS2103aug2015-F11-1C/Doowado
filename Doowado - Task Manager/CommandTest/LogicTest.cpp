@@ -17,7 +17,6 @@ namespace LogicTest
 			date testDate = date(2015, Oct, 29);
 			ptime time1 = ptime(testDate, hours(5));
 			ptime time2 = ptime(testDate, hours(7));
-			ptime time3;
 
 			Entry newEntry = Entry(testName, time1, time2);
 
@@ -46,7 +45,7 @@ namespace LogicTest
 			vector<Entry*> actualDisplayTaskList;
 			vector<Entry*> idealDisplayTaskList;
 
-			AddCommand addCmd(testName, time1, time2, time3);
+			AddCommand addCmd(testName, time1, time2);
 
 			addCmd.execute(&testStorage, &displayList);
 

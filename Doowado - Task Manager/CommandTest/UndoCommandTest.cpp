@@ -193,45 +193,14 @@ namespace CommandTest
 			//Assert::AreEqual(History::getSize(), size_t(1));
 			
 		}*/
-		/*
-		TEST_METHOD(UndoDeleteCommandTest) {
-			EntryType entryType = event;
-			int taskID = 1;
-			DeleteCommand delCmd(entryType, taskID);
-
-			DisplayStub display;
-			Entry* testDeleteEntry;
-			string name = "Old Name";
-			ptime t1;
-			ptime t2;
-			vector<Entry*> testEventList;
-
-			testDeleteEntry = new Entry(name, t1, t2);
-			testEventList.push_back(testDeleteEntry);
-			display.updateDisplayEventList(testEventList);
+		
+		//test undo of deletion on an event
+		TEST_METHOD(UndoDeleteCommandTestEvent) {
 			
-
-			Assert::AreEqual(display.getEventList().size(), size_t(1));
-			Entry* actualDisplayEntry = (display.getEventList())[0];
-			Assert::AreEqual(actualDisplayEntry->getTitle(), name);
-			Entry* actualRetrievedEntry = display.retrieveEntry(entryType, taskID);
-			Assert::AreEqual(actualRetrievedEntry->getTitle(), name);
-
-			Storage testStorage;
-			testStorage.addEvent(testDeleteEntry);
-			
-			delCmd.execute(&testStorage, &display);
-			
-			size_t storageSize = (testStorage.getEventList()).size();
-			//Assert::AreEqual(storageSize, size_t(0));
-		}
-		*/
-
-		TEST_METHOD(UndoDeleteCommandTest2) {
+			//create event and single-event event list
 			EntryType entryType = event;
 			int taskID = 0;
 			DeleteCommand delCmd(entryType, taskID);
-
 			Display display;
 			Entry* testDeleteEntry;
 			string name = "Old Name";
@@ -299,7 +268,59 @@ namespace CommandTest
 			
 		}
 
-		TEST_METHOD(DisplayRetrieveEntryTest)
+		
+		//test undo on deletion of task
+		TEST_METHOD(UndoDeleteCommandTestTask) {
+
+			//create test task and single-task task list
+			Entry* testTask;
+			string name = "Name";
+			ptime t1;
+			vector<Entry*> testTaskList;
+			testTask = new Entry(name, t1);
+			testTaskList.push_back(testTask);
+			
+			//create command to delete test task at [0]
+			EntryType entryType = task;
+			int taskID = 0;
+			DeleteCommand delCmd(entryType, taskID);
+			
+			//create neceessary objects and parameters
+			Display display;
+			Storage testStorage;
+			size_t historySize;
+			vector<string> feedbackAfterExecute;
+			vector<string> feedbackAfterUndo;
+			vector<Entry*> taskListAfterUndo;
+			vector<Entry*> expectedDisplayTaskListAfterUndo;
+			vector<Entry*> expectedDisplayEventListAfterUndo;
+
+			//set up display, storage and history for deletion of test task
+			display.updateDisplayTaskList(testTaskList);
+			testStorage.addTask(testTask);
+			History::empty();
+			
+			delCmd.execute(&testStorage, &display);
+
+			assertStorageListSize(&testStorage, task, 0);
+			assertHistorySize(1);
+			getFeedback(&feedbackAfterExecute, &display);
+
+			UndoCommand undoCmd;
+			undoCmd.execute(&testStorage, &display);
+
+			assertHistorySize(0);
+			assertStorageListSize(&testStorage, task, 1);
+			getFeedback(&feedbackAfterUndo, &display);
+			getDisplayTaskList(&taskListAfterUndo, &display);
+
+			checkTaskRestored(&testStorage, testTask);
+			validateUndoFeedback(feedbackAfterExecute, feedbackAfterUndo);
+			validateDisplayLists(&display, expectedDisplayEventListAfterUndo, expectedDisplayTaskListAfterUndo);
+		}
+
+
+		TEST_METHOD(DisplayStubRetrieveEntryTest)
 		{
 			EntryType entryType = event;
 			int taskID = 1;
@@ -326,5 +347,64 @@ namespace CommandTest
 			
 		}
 
+		void getFeedback(vector<string>* feedback, Display* display) {
+			*feedback = display->getCommandFeedback();
+		}
+
+		void assertStorageListSize(Storage* storage, EntryType type, size_t expectedSize) {
+			
+			size_t listSize;
+			if (task == type) {
+				listSize = (storage->getTaskList()).size();
+			}
+			else if (event == listSize) {
+				listSize = (storage->getEventList()).size();
+			}
+			Assert::AreEqual(listSize, expectedSize);
+		}
+
+		void assertHistorySize(size_t expectedSize) {
+			size_t historySize = History::getSize();
+			Assert::AreEqual(historySize, expectedSize);
+		}
+
+		void checkTaskRestored(Storage* storage, Entry* taskToRestore) {
+			Entry* actualTaskStored = (storage->getTaskList())[0];
+			Assert::IsTrue(areEqual(actualTaskStored, taskToRestore, task));
+		}
+
+		void validateUndoFeedback(vector<string> feedbackAfterExecute, vector<string> feedbackAfterUndo) {
+			
+			vector<string>::iterator first = feedbackAfterExecute.begin();
+			feedbackAfterExecute.insert(first, "Undone");
+			
+			Assert::AreEqual(feedbackAfterUndo.size(), feedbackAfterExecute.size());
+
+			for (int i = 0; i < feedbackAfterUndo.size(); i++) {
+				Assert::AreEqual(feedbackAfterUndo[i], feedbackAfterUndo[i]);
+			}
+		}
+
+		void getDisplayTaskList(vector<Entry*>* taskListAfterUndo, Display* display) {
+			*taskListAfterUndo = display->getTaskList();
+		}
+
+		void validateDisplayLists(Display* display, vector<Entry*> expectedEntryList, vector<Entry*> expectedTaskList) {
+			
+		}
+
+		bool areEqual(Entry* entry1, Entry* entry2, EntryType entryType) {
+			if (entryType == event) {
+				return(entry1->getTitle() == entry2->getTitle()
+					&& entry1->getStartTime() == entry2->getStartTime()
+					&& entry1->getEndTime() == entry2->getEndTime());
+			}
+			if (entryType == task) {
+				return(entry1->getTitle() == entry2->getTitle()
+					&& entry1->getStartTime() == entry2->getStartTime());
+			}
+		}
+
 	};
+
 }

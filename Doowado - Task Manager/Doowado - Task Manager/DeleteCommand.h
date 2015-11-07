@@ -14,6 +14,10 @@ class DeleteCommand: public Command {
 		void generateFeedback();
 		void generateUndoFeedback();
 
+		void updateDisplay(Display *, Storage *);
+
+		ptime getRelevantTime(EntryType _entryType);
+
 	public:
 		DeleteCommand(EntryType, int);
 		~DeleteCommand();
@@ -22,5 +26,6 @@ class DeleteCommand: public Command {
 
 		void execute(Storage* data, Display* display);
 		void undo(Storage* data, Display* display);
+		void restoreToStorage(Storage *);
 };
 

@@ -343,7 +343,6 @@ namespace CommandTest
 			string entryName = actualOldEntry->getTitle();
 
 			Assert::AreEqual(actualOldEntry->getTitle(), oldName);
-
 			
 		}
 
@@ -389,8 +388,13 @@ namespace CommandTest
 			*taskListAfterUndo = display->getTaskList();
 		}
 
-		void validateDisplayLists(Display* display, vector<Entry*> expectedEntryList, vector<Entry*> expectedTaskList) {
+		void validateDisplayLists(Display* display, vector<Entry*> expectedEventList, vector<Entry*> expectedTaskList) {
 			
+			vector<Entry*> actualEventList = display->getEventList();
+			vector<Entry*> actualTaskList = display->getEventList();
+			Assert::IsTrue(areSameEntryList(actualEventList, expectedEventList, event));
+			Assert::IsTrue(areSameEntryList(actualEventList, expectedTaskList, task));
+
 		}
 
 		bool areEqual(Entry* entry1, Entry* entry2, EntryType entryType) {
@@ -405,6 +409,14 @@ namespace CommandTest
 			}
 		}
 
+		bool areSameEntryList(vector<Entry*> list1, vector<Entry*> list2, EntryType entryType) {
+			for (int i = 0; i < list2.size(); i++) {
+				if (!areEqual(list1[i], list2[i], entryType)) {
+					return false;
+				}
+			}
+			return true;
+		}
 	};
 
 }

@@ -10,7 +10,8 @@ void DeleteCommand::generateFeedback()
 	string endTimeString;
 	string title;
 
-	indexString = to_string(_taskID);
+	int displayIndex = _taskID + 1;
+	indexString = to_string(displayIndex);
 
 	if (_entryType == event) {
 		entryTypeString = "E";

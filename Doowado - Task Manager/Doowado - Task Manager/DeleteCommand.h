@@ -1,7 +1,7 @@
 #pragma once
 #include "Command.h"
 
-const string MESSAGE_SUCCESSFUL_DELETE = "Successfully deleted!";
+const string MESSAGE_SUCCESSFUL_DELETE = "Deleted: ";
 
 class DeleteCommand: public Command {
 	private:

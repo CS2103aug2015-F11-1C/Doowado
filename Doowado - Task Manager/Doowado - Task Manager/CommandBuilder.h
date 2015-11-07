@@ -16,24 +16,13 @@ const string COMMANDTYPE_SAVE = "save";
 const string COMMANDTYPE_MARK_DONE = "done";
 const string COMMANDTYPE_UNDO = "undo";
 
-//enum EntryType {event, task, floatingTask};
-enum TypeOfEdit {	editTitle,
-					editStartDate,
-					editStartTime,
-					editStartDateAndTime,
-					editEndDate,
-					editEndTime,
-					editEndDateAndTime,
-					editStartAndEndDate,
-					editStartAndEndTime,
-					editDueTime};
 
 class CommandBuilder {
 	
 	private:
 //		EntryType checkEntryType(ParserResult&);
 		ptime createPTimeObject(string, string);
-		TypeOfEdit checkEditType(vector<string>, vector<string> , vector<string>, vector<string>, vector<string>);
+//		TypeOfEdit checkEditType(vector<string>, vector<string> , vector<string>, vector<string>, vector<string>);
 	
 		Command* createAddCommand(ParserResult&);
 		Command* createEditCommand(ParserResult&);

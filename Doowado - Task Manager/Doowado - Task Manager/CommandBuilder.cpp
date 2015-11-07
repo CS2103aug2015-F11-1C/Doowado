@@ -107,10 +107,10 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 	EntryType entryType;
 	int taskID =0;
 	string newTitle = "";
-	date newStartDate;
-	time_duration newStartTime;
-	date newEndDate;
-	time_duration newEndTime;
+	date newStartDate(not_a_date_time);
+	time_duration newStartTime(not_a_date_time);
+	date newEndDate(not_a_date_time);
+	time_duration newEndTime(not_a_date_time);
 	 
 	vector<string> vEntryTypes = parserResult.getEntryType();
 	
@@ -181,6 +181,11 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 			newEndTime = td;
 		}
 	}
+
+	cout << "newStartDate: " << to_simple_string(newStartDate);
+	cout << "newStartTime: " << to_simple_string(newStartTime);
+	cout << "newEndDate: " << to_simple_string(newEndDate);
+	cout << "newEndTime: " << to_simple_string(newEndTime);
 
 	editCommand = new EditCommand(entryType, taskID, newTitle, newStartDate, newStartTime, newEndDate, newEndTime);
 	

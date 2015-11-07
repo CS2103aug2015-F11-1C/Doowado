@@ -98,7 +98,7 @@ namespace CommandTest
 
 			ptime time1;
 			ptime time2;
-			ptime time3;
+
 
 			DisplayStub displayList;
 			StorageStub testStorage;
@@ -107,7 +107,7 @@ namespace CommandTest
 			vector<Entry*> actualEventsList;
 			vector<Entry*> actualTasksList;
 
-			AddCommand addCmd(testName, time1, time2, time3);
+			AddCommand addCmd(testName, time1, time2);
 			addCmd.execute(&testStorage, &displayList);
 			
 			actualEventsList = testStorage.getEventsList();
@@ -133,7 +133,6 @@ namespace CommandTest
 
 			ptime time1;
 			ptime time2;
-			ptime time3;
 
 			DisplayStub displayList;
 			StorageStub testStorage;
@@ -149,7 +148,7 @@ namespace CommandTest
 			idealFeedback.push_back("Added");
 			idealFeedback.push_back(testName);
 
-			AddCommand addCmd(testName, time1, time2, time3);
+			AddCommand addCmd(testName, time1, time2);
 			addCmd.execute(&testStorage, &displayList);
 
 			UndoCommand undoCmd;

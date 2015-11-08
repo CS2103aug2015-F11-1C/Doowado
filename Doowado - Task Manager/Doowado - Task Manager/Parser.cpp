@@ -5,7 +5,7 @@ using namespace std;
 
 //CONSTANTS
 string const ERROR_EMPTY_USER_INPUT = "empty input";
-string const DATE_DELIMITER[] = { "\"", "on","from","by","at","fr","start","st","end","ed" };
+string const DATE_DELIMITER[] = { "\"", "by","at","start","end","from","ed","st","fr","on" };
 int const DATE_DELIMITER_SIZE = 10;
 string const DATE_SPLITER = "./";
 int const DATE_NOT_FOUND = 44;
@@ -826,6 +826,69 @@ vector<string> Parser::fragmentizeString(string input){
 size_t Parser::findDateDelimiterPos(string input) {
 	string delimiter = "";
 	size_t foundDelimiter;
+	size_t finalDelimiter = 0;
+	string lowerCaseInput;
+	string temp;
+	bool lastDelimiter;
+	size_t occurredInMiddleOfAWord = string::npos;
+
+	lowerCaseInput = convertStringTolowerCase(input);
+	temp = lowerCaseInput;
+
+	do {
+		for (int i = 0; i < DATE_DELIMITER_SIZE; i++) {
+			foundDelimiter = temp.rfind(DATE_DELIMITER[i]);
+			if (foundDelimiter != string::npos) {
+				if ((foundDelimiter == 0) && (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i])) {
+					occurredInMiddleOfAWord = string::npos;
+					delimiter = DATE_DELIMITER[i];
+					finalDelimiter = foundDelimiter;
+				}else if (foundDelimiter > finalDelimiter) {
+					if (temp.substr(foundDelimiter, 1) == DATE_DELIMITER[i]) {
+						occurredInMiddleOfAWord = string::npos;
+						delimiter = DATE_DELIMITER[i];
+						finalDelimiter = foundDelimiter;
+					}else if ((temp.substr(foundDelimiter - 1, 1) == " ") && (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i])) {
+						occurredInMiddleOfAWord = string::npos;
+						delimiter = DATE_DELIMITER[i];
+						finalDelimiter = foundDelimiter;
+					}else {
+						occurredInMiddleOfAWord = foundDelimiter;
+					}
+				}else {
+					occurredInMiddleOfAWord = string::npos;
+				}
+			}else {
+				occurredInMiddleOfAWord = string::npos;
+			}
+		}
+		if (occurredInMiddleOfAWord != string::npos) {
+			temp = temp.substr(0, occurredInMiddleOfAWord);
+			lastDelimiter = false;
+		}else {
+			lastDelimiter = true;
+		}
+	} while (!lastDelimiter);
+
+
+	if (finalDelimiter != string::npos && delimiter != "") {
+		if (!isDateDelimiterValid(lowerCaseInput, finalDelimiter)) {
+			return string::npos;
+		}else {
+			_userDelimiter = delimiter;		//found which delimeter did the user use.
+			return finalDelimiter;
+		}
+	}else {
+		return string::npos;
+	}
+}
+
+/*
+//Take in full user input.
+//Return the position if a effective date delimiter is found, return string::npos if not found.
+size_t Parser::findDateDelimiterPos(string input) {
+	string delimiter = "";
+	size_t foundDelimiter;
 	size_t finalDelimiter=0;
 	string lowerCaseInput;
 	string temp;
@@ -836,11 +899,18 @@ size_t Parser::findDateDelimiterPos(string input) {
 	for (int i = 0; i < DATE_DELIMITER_SIZE; i++) {
 		foundDelimiter = temp.rfind(DATE_DELIMITER[i]);
 
+		cout << "debug idx: " << i << "-" << foundDelimiter << endl;
+
 		if (foundDelimiter != string::npos) {
 			
+			cout << "debug 1:" << endl;
+
 			//it's foundDelimiter - 1 not temp[foundDelimiter - 1] !!! debug for 5 hrs!!!
 			//in case for on mon, fr fri, the date delimiter is found in the date keywords itself!
 			if (foundDelimiter - 1 == string::npos) {	
+
+				cout << "debug 2:" << endl;
+
 				if (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i]) {
 					if (foundDelimiter > finalDelimiter) {
 						delimiter = DATE_DELIMITER[i];
@@ -850,12 +920,16 @@ size_t Parser::findDateDelimiterPos(string input) {
 			}
 			else {
 				if (temp.substr(foundDelimiter - 1, 1) == " ") {
+
+					cout << "debug 3:" << endl;
+
 					if (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i]) {
 						if (foundDelimiter > finalDelimiter) {
 							delimiter = DATE_DELIMITER[i];
 							finalDelimiter = foundDelimiter;
 						}
 					}else {
+						cout << "debug 4:" << endl;
 						temp = temp.substr(0, foundDelimiter);
 						foundDelimiter = temp.rfind(DATE_DELIMITER[i]);
 						if (foundDelimiter != string::npos) {
@@ -864,6 +938,9 @@ size_t Parser::findDateDelimiterPos(string input) {
 					}
 				}
 				else if (temp.substr(foundDelimiter, 1) == DATE_DELIMITER[i]) {
+
+					cout << "debug 5:" << endl;
+
 					if (foundDelimiter > finalDelimiter) {
 						delimiter = DATE_DELIMITER[i];
 						finalDelimiter = foundDelimiter;
@@ -890,6 +967,7 @@ size_t Parser::findDateDelimiterPos(string input) {
 		return string::npos;
 	}
 }
+*/
 
 //Check every keywords after the date delimiter.
 //If all the keywords after date delimiter are date or time keywords, return true. Otherwise return false.

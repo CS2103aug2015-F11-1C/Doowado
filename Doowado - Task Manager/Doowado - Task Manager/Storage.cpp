@@ -411,7 +411,7 @@ vector<Entry*> Storage::retrieveTaskByOverdue(bool overdueStatus){
 	vector <Entry*> taskResult;
 
 	for (int i = 0; i < _taskList.size(); i++) {
-		if (_taskList[i]->isOverdue() == overdueStatus) {
+		if (_taskList[i]->isOverdue() == overdueStatus && !_taskList[i]->isDone()) {
 			taskResult.push_back(_taskList[i]);
 		}
 	}

@@ -16,8 +16,8 @@ protected:
 	ptime _startTime;
 	ptime _endTime;
 	bool _isDone;
-	bool _isConfirmed;
 	bool _isOverdue;
+	bool _isClash;
 
 public:
 	Entry();
@@ -28,14 +28,14 @@ public:
 	ptime getStartTime();
 	ptime getEndTime();
 	bool isDone();
-	bool isConfirmed();
+	bool isClash();
 	bool isOverdue();
 
 	void setTitle(string newTitle);
 	void setStartTime(ptime);
 	void setEndTime(ptime);
 	void setDone(bool);
-	void setConfirmed(bool);
+	void setClash(bool);
 	void setOverdue(bool);
 
 	void printEvent();

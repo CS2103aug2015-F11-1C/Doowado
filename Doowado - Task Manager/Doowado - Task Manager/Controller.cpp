@@ -14,7 +14,7 @@ int main() {
 	string input;
 	UserInterface UI;
 
-	logic->initialiseProgram();
+ 	logic->initialiseProgram();
 	Display* displayList = logic->getDisplay();
 	UI.updateDisplay(*displayList);
 

@@ -106,3 +106,23 @@ void Display::deleteEntry(EntryType entryType, int taskID)
 		_taskList.erase(_taskList.begin() + taskID);
 	}
 }
+
+void Display::deleteEntry(Entry * entryToDelete)
+{
+	assert(entryToDelete != NULL);
+
+	vector<Entry*>::iterator it = _eventList.begin();
+
+	while (*it != entryToDelete) {
+		it++;
+	}
+	_eventList.erase(it);
+
+	it = _taskList.begin();
+
+	while (*it != entryToDelete) {
+		it++;
+	}
+	_taskList.erase(it);
+
+}

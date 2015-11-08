@@ -17,6 +17,7 @@ private:
 	CommandBuilder* _cmdBuilder;
 	Parser* _parser;
 	Display* _display;
+	void updateOverdueTask();
 
 public:
 	Logic();

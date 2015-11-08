@@ -45,4 +45,7 @@ public:
 
 	void saveToFile();
 	void loadFromFile();
+
+	std::vector<Entry*> retrieveEventList();
+	std::vector<Entry*> retrieveTaskList();
 };

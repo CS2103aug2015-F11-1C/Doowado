@@ -265,6 +265,16 @@ void Storage::loadFromFile() {
 	input.close();
 }
 
+std::vector<Entry*> Storage::retrieveEventList()
+{
+	return _eventList;
+}
+
+std::vector<Entry*> Storage::retrieveTaskList()
+{
+	return _taskList;
+}
+
 void Storage::displayDefault(vector <Entry*> *eventDisplay, vector <Entry*> *taskDisplay) {
 	ptime currentTime(second_clock::local_time());
 

@@ -23,6 +23,12 @@ public:
 	vector<Entry*>  getTaskList() {
 		return _taskList;
 	}
+	void setEventList(vector<Entry*> hardcodedList) {
+		_eventList = hardcodedList;
+	}
+	void setTaskList(vector<Entry*> hardcodedList) {
+		_taskList = hardcodedList;
+	}
 #endif
 
 	void addEvent(Entry* newEvent);

@@ -55,6 +55,10 @@ namespace SystemTest
 
 		void initializeHardcodedStorage(Logic* logic) {
 			Storage* storage = logic->getStorage();
+			vector<Entry*> hardcodedEventList;
+			vector<Entry*> hardcodedTaskList;
+			storage->setEventList(hardcodedEventList);
+			storage->setTaskList(hardcodedTaskList);
 		}
 
 		void validateDisplay(Display actualDisplay, Display idealDisplay) {

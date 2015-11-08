@@ -13,6 +13,8 @@ using namespace std;
 using namespace boost::gregorian;
 using namespace boost::posix_time;
 
+const string MESSAGE_SUCCESSFUL_UNDO = "Undone";
+
 class Command
 {
 public:

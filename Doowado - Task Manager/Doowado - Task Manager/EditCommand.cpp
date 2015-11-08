@@ -20,6 +20,12 @@ void EditCommand::_generateFeedback(Entry * editedEntry)
 	}
 }
 
+void EditCommand::_generateUndoFeedBack(Entry * undoneEntry)
+{
+	_feedback.clear();
+	_feedback.push_back(MESSAGE_SUCCESSFUL_UNDO);
+}
+
 void EditCommand::_updateDisplay(Display * display, Storage * data, Entry * editedEntry)
 {
 	std::vector<Entry*> relevantEventList;
@@ -40,26 +46,40 @@ void EditCommand::_updateDisplay(Display * display, Storage * data, Entry * edit
 		display->updateDisplayEventList(relevantEventList);
 		display->updateDisplayTaskList(relevantTaskList);
 	}
-	else {
-		display->deleteEntry(_entryType, _taskID);
-		relevantTaskList = display->getTaskList();
-		relevantTaskList.push_back(editedEntry);
-		display->updateDisplayTaskList(relevantTaskList);
+	else if (editedEntry == _beforeEditEntry) {			//undo
+		if (!_editedEntry->getEndTime().is_not_a_date_time()) {
+			display->deleteEntry(_editedEntry);
+			relevantTaskList = display->getTaskList();
+			relevantTaskList.push_back(editedEntry);
+			display->updateDisplayTaskList(relevantTaskList);
+		}
 	}
-
+	else if (editedEntry == _editedEntry) {
+		if (!_beforeEditEntry->getEndTime().is_not_a_date_time()) {
+			display->deleteEntry(_beforeEditEntry);
+			relevantTaskList = display->getTaskList();
+			relevantTaskList.push_back(editedEntry);
+			display->updateDisplayTaskList(relevantTaskList);
+		}
+	}
 }
 
-void EditCommand::_setBeforeEditEntry(Entry * editEntry)
+void EditCommand::_setBeforeEditEntry(Entry * beforeEditEntry)
 {
-	string title = editEntry->getTitle();
-	ptime startTime = editEntry->getStartTime();
-	ptime endTime = editEntry->getEndTime();
-	bool isDone = editEntry->isDone();
-	bool isOverdue = editEntry->isOverdue();
+	string title = beforeEditEntry->getTitle();
+	ptime startTime = beforeEditEntry->getStartTime();
+	ptime endTime = beforeEditEntry->getEndTime();
+	bool isDone = beforeEditEntry->isDone();
+	bool isOverdue = beforeEditEntry->isOverdue();
 
 	_beforeEditEntry = new Entry(title, startTime, endTime);
 	_beforeEditEntry->setDone(isDone);
 	_beforeEditEntry->setOverdue(isOverdue);
+}
+
+void EditCommand::_setEditedEntry(Entry * editedEntry)
+{
+	_editedEntry = editedEntry;
 }
 
 TypeOfTimeEdit EditCommand::_checkTimeEditStart()
@@ -241,9 +261,40 @@ void EditCommand::execute(Storage* data, Display *display)
 		}
 	} 
 	
+	_setEditedEntry(editedEntry);
 	_generateFeedback(editedEntry);
 	display->updateCommandFeedback(_feedback);
-	_updateDisplay(display, data, editedEntry);
+	_updateDisplay(display, data, _editedEntry);
 	data->saveToFile();
+
+	History::pushCommand(this);
+
 	return;
+}
+
+void EditCommand::undo(Storage * data, Display * display)
+{
+	string prevTitle = _beforeEditEntry->getTitle();
+	ptime prevStartTime = _beforeEditEntry->getStartTime();
+	ptime prevEndTime = _beforeEditEntry->getEndTime();
+	bool prevIsCompleted = _beforeEditEntry->isDone();
+	bool prevIsOverdue = _beforeEditEntry->isOverdue();
+
+	if (_editedEntry->getTitle() != prevTitle) {
+		_editedEntry->setTitle(prevTitle);
+	}
+
+	if (!_editedEntry->getStartTime().is_not_a_date_time() && prevStartTime.is_not_a_date_time()) {
+		data->addTask(_beforeEditEntry);
+		data->deleteFromEventList(_editedEntry);
+	}
+	else if (_editedEntry->getStartTime().is_not_a_date_time() && !prevStartTime.is_not_a_date_time()) {
+		data->addEvent(_beforeEditEntry);
+		data->deleteFromTaskLIst(_editedEntry);
+	}
+
+	_generateUndoFeedBack(_beforeEditEntry);
+	display->updateCommandFeedback(_feedback);
+	_updateDisplay(display, data, _beforeEditEntry);
+	data->saveToFile();
 }

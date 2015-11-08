@@ -320,7 +320,7 @@ void Storage::retrieveByDate(ptime timeIndicator, vector <Entry*>& eventResult, 
 	taskResult.clear();
 
 	for (int i = 0; i < _eventList.size(); i++) {
-		if (_eventList[i]->getStartTime().date() == timeIndicator.date() || _eventList[i]->getEndTime().date() == timeIndicator.date()) {
+		if (_eventList[i]->getStartTime().date() <= timeIndicator.date() && _eventList[i]->getEndTime().date() >= timeIndicator.date()) {
 			eventResult.push_back(_eventList[i]);
 		}
 	}
@@ -374,7 +374,7 @@ vector<Entry*> Storage::retrieveTaskByDone(bool doneStatus)
 	return taskResult;
 }
 
-vector<Entry*> Storage::retrieveOverdueTasks(bool overdueStatus){
+vector<Entry*> Storage::retrieveTaskByOverdue(bool overdueStatus){
 	vector <Entry*> taskResult;
 
 	for (int i = 0; i < _taskList.size(); i++) {

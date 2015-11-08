@@ -229,40 +229,59 @@ Command * CommandBuilder::createSearchCommand(ParserResult& parserResult)
 Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 {
 	//create ShowCommand;
-	Command * showCommand;
+	Command * showCommand = NULL;
+	showType showType;
+
 	date dateRequirement;
-	time_duration timeRequirement;
+	std::string stringEntryStatus;
 
-	string stringDate;
-	string stringTime;
+	std::string stringStartDate;
+	std::string stringEndDate;
 	
-	vector<string> vDateRequirement = parserResult.getEndDate();
-	vector<string> vTimeRequirement = parserResult.getEndTime();
-	
-	assert(!vDateRequirement.empty() || !vTimeRequirement.empty());
+	std::vector<std::string> vDateRequirement = parserResult.getEndDate();
+	std::vector<std::string> vEntryStatus = parserResult.getDescription();
 
-	if (vDateRequirement.empty()) {
-		//throw exception
+	if (!vEntryStatus.empty()) {
+		showType = showByStatus;
 	}
-	else {
-		stringDate = vDateRequirement[0];
-		date d(from_undelimited_string(stringDate));
-		dateRequirement = d;
+	else if (vDateRequirement.size() == 1) {
+		showType = showByDate;
 	}
-	/*
-	if (vTimeRequirement.empty()) {
-		time_duration td(not_a_date_time);
-		timeRequirement =
-	}
-	else {
-		time = vTimeRequirement[0];
+	else if (vDateRequirement.size() == 2) {
+		showType = showByRangeOfDate;
 	}
 
-	dateRequirement= createPTimeObject(date, time);
-	*/
-	ptime ptimeRequirement(dateRequirement, timeRequirement);
-	showCommand = new ShowCommand(ptimeRequirement);
+	if (showType == showByStatus) {
+		stringEntryStatus = vEntryStatus[0];
+
+		if (stringEntryStatus == ENTRY_STATUS_COMPLETED) {
+			showCommand = new ShowCommand(completed);
+		}
+		else if (stringEntryStatus == ENTRY_STATUS_INCOMPLETE) {
+			showCommand = new ShowCommand(incomplete);
+		}
+		else if (stringEntryStatus == ENTRY_STATUS_OVERDUE) {
+			showCommand = new ShowCommand(overdue);
+		}
+		else if (stringEntryStatus == ENTRY_STATUS_INTIME) {
+			showCommand = new ShowCommand(intime);
+		}
+	}
 	
+	else if (showType == showByDate) {
+		stringEndDate = vDateRequirement[0];
+		date endDate(from_undelimited_string(stringEndDate));
+		showCommand = new ShowCommand(endDate);
+	}
+
+	else if (showType == showByRangeOfDate) {
+		stringStartDate = vDateRequirement[0];
+		stringEndDate = vDateRequirement[2];
+		date startDate(from_undelimited_string(stringStartDate));
+		date endDate(from_undelimited_string(stringEndDate));
+		showCommand = new ShowCommand(startDate, endDate);
+	}
+
 	return showCommand;
 }
 /*
@@ -301,9 +320,9 @@ Command * CommandBuilder::createMarkDoneCommand(ParserResult &parserResult)
 		entryType = task;
 	}
 
-	int displayIndex = vIndices[0];
+	int taskIndex = vIndices[0] - 1;
 
-	markDoneCommand = new MarkDoneCommand(entryType, displayIndex);
+	markDoneCommand = new MarkDoneCommand(entryType, taskIndex);
 	return markDoneCommand;
 }
 

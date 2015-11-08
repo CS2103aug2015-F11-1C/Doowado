@@ -7,7 +7,7 @@ CmdBuilderException::CmdBuilderException(std::string message)
 	_message = message;
 }
 
-std::string CmdBuilderException::getMessage()
+inline std::string CmdBuilderException::getMessage()
 {
 	return _message;
 }

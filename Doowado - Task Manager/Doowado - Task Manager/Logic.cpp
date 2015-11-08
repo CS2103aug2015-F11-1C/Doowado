@@ -8,7 +8,7 @@ void Logic::updateOverdueTask()
 	for (int i = 0; i < taskList.size(); i++) {
 		ptime currTime(second_clock::local_time());
 
-		if (currentTime > taskList[i]->getEndTime()) {
+		if (currTime > taskList[i]->getEndTime() && !taskList[i]->isDone()) {
 			taskList[i]->setOverdue(true);
 		}
 	}
@@ -79,16 +79,25 @@ Logic::~Logic()
 
 void Logic::processCommand(string userInput)
 {
-	ParserResult parserResult;
-	parserResult = _parser->parse(userInput);
+	
+		ParserResult parserResult;
+		parserResult = _parser->parse(userInput);
 
-	Command* cmd;
-	cmd = _cmdBuilder->buildCommand(parserResult);
-	cmd->execute(_storage, _display);
-	updateOverdueTask();
-	updateDoneEvent();
-	updateClashEvent();
-	_storage->saveToFile();
+		Command* cmd;
+		try {
+			cmd = _cmdBuilder->buildCommand(parserResult);
+			cmd->execute(_storage, _display);
+		}
+		catch (CmdBuilderException &e) {
+			cout << "catch exception in logic: " << e.getMessage() << endl;
+			throw;
+		}
+
+		updateOverdueTask();
+		updateDoneEvent();
+		updateClashEvent();
+		_storage->saveToFile();
+	
 }
 
 void Logic::initialiseProgram()

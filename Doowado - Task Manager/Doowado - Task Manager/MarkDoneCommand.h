@@ -2,6 +2,7 @@
 #include "Command.h"
 
 const string MESSAGE_SUCCESSFUL_MARK_DONE = "Marked as done: ";
+
 class MarkDoneCommand : public Command
 {
 private:

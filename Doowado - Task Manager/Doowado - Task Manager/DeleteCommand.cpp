@@ -74,7 +74,7 @@ void DeleteCommand::execute(Storage* data, Display* display) {
 
 	generateFeedback();
 	display->updateCommandFeedback(_feedback);
-
+	display->setLatestUpdatedEntry(NULL);
 	History::pushCommand(this);
 }
 
@@ -113,6 +113,13 @@ void DeleteCommand::updateDisplay(Display* display, Storage* data)
 	display->updateDisplayEventList(relevantEventList);
 	display->updateDisplayTaskList(relevantTaskList);
 	display->updateCommandFeedback(_feedback);
+	if (_entryType == event) {
+		display->setLatestUpdatedEntry(_eventDeleted);
+	}
+	else {
+		display->setLatestUpdatedEntry(_taskDeleted);
+	}
+
 }
 
 ptime DeleteCommand::getRelevantTime(EntryType _entryType) {

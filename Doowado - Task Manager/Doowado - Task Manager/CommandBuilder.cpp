@@ -9,39 +9,6 @@
 #include "MarkDoneCommand.h"
 #include "UndoCommand.h"
 
-/*
-EntryType CommandBuilder::checkEntryType(ParserResult &parserResult)
-{
-	if (parserResult.getEndDate.empty() && parserResult.getEndTime.empty()) {
-		//can replace with exception because with no end date and time, there shouldn't be any start date 
-		if (parserResult.getStartDate.empty() && parserResult.getStartTime.empty()) {
-			return floatingTask;
-		}
-		//else throw exceptions
-	}
-	else {
-		if (parserResult.getStartDate.empty() && parserResult.getStartTime.empty()) {
-			return task;
-		}
-		else {
-			return event;
-		}
-	}
-}
-*/
-
-ptime CommandBuilder::createPTimeObject(string date, string time)
-{
-	string isoString;
-	ptime dateTime;
-
-	isoString = date + "T" + time;
-	dateTime = from_iso_string(isoString);
-
-	return dateTime;
-}
-
-
 Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 {
 	Command * addCommand;
@@ -58,42 +25,53 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 	std::string stringEndTime;
 
 	std::vector<std::string> description = parserResult.getDescription();
-	entryTitle = description[0];
-
 	std::vector<std::string> vStartDate = parserResult.getStartDate();
+	std::vector<std::string> vStartTime = parserResult.getStartTime();
+	std::vector<std::string> vEndDate = parserResult.getEndDate();
+	std::vector<std::string> vEndTime = parserResult.getEndTime();
+
+	if (description.empty()) {
+		throw CmdBuilderException(EXCEPTION_NO_TITLE);
+	}
+	if (vStartDate.empty() && !vStartDate.empty()) {
+		throw CmdBuilderException(EXCEPTION_TIME_NO_DATE);
+	}
+	if (vEndDate.empty() && !vEndDate.empty()) {
+		throw CmdBuilderException(EXCEPTION_TIME_NO_DATE);
+	}
+
+	entryTitle = description[0];
+	
 	if (!vStartDate.empty()) {
 		stringStartDate = vStartDate[0];
 		date d(from_undelimited_string(stringStartDate));
 		entryStartDate = d;
 	}
-	
-	std::vector<std::string> vStartTime = parserResult.getStartTime();
+
 	if (!vStartTime.empty()) {
 		stringStartTime = vStartTime[0];
 		time_duration td(duration_from_string(stringStartTime));
 		entryStartTime = td;
 	}
 
-	std::vector<std::string> vEndDate = parserResult.getEndDate();
 	if (!vEndDate.empty()) {
 		stringEndDate = vEndDate[0];
 		date d(from_undelimited_string(stringEndDate));
 		entryEndDate = d;
 	}
 
-	std::vector<std::string> vEndTime = parserResult.getEndTime();
 	if (!vEndTime.empty()) {
 		stringEndTime = vEndTime[0];
 		time_duration td(duration_from_string(stringEndTime));
 		entryEndTime = td;
 	}
 
-
-	//assert(startDate.size() == startTime.size());
-	//assert(endDate.size() == endTime.size());
-
 	ptime entryStartPtime(entryStartDate, entryStartTime);
 	ptime entryEndPtime(entryEndDate, entryEndTime);
+
+	if (entryStartPtime > entryEndPtime) {
+		throw CmdBuilderException(EXCEPTION_START_TIME_GREATER_END_TIME);
+	}
 	addCommand = new AddCommand(entryTitle, entryStartPtime, entryEndPtime);
 
 	return addCommand;
@@ -106,13 +84,13 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 	
 	EntryType entryType;
 	int taskID =0;
-	string newTitle = "";
+	std::string newTitle = "";
 	date newStartDate(not_a_date_time);
 	time_duration newStartTime(not_a_date_time);
 	date newEndDate(not_a_date_time);
 	time_duration newEndTime(not_a_date_time);
 	 
-	vector<string> vEntryTypes = parserResult.getEntryType();
+	std::vector<std::string> vEntryTypes = parserResult.getEntryType();
 	
 	if (vEntryTypes[0] == "e") {
 		entryType = event;
@@ -121,19 +99,19 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 		entryType = task;
 	}
 	//exception if it is not "e" or "t"
-	vector<int> vTaskIDs = parserResult.getIndex();
+	std::vector<int> vTaskIDs = parserResult.getIndex();
 	taskID = vTaskIDs[0] - 1;
 
-	vector<string> vNewTitles = parserResult.getDescription();
+	std::vector<std::string> vNewTitles = parserResult.getDescription();
 	
 	if(!vNewTitles.empty()) {
 		newTitle = vNewTitles[0];
 	}
 	
-	vector<string> vNewStartDates = parserResult.getStartDate();
+	std::vector<std::string> vNewStartDates = parserResult.getStartDate();
 	
 	if (!vNewStartDates.empty()) {
-		string stringStartDate = vNewStartDates[0];
+		std::string stringStartDate = vNewStartDates[0];
 		if (stringStartDate == "null") {
 			date d(neg_infin);
 			newStartDate = d;
@@ -144,9 +122,9 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 		}
 	}
 
-	vector<string> vNewStartTimes = parserResult.getStartTime();
+	std::vector<std::string> vNewStartTimes = parserResult.getStartTime();
 	if (!vNewStartTimes.empty()) {
-		string stringStartTime = vNewStartTimes[0];
+		std::string stringStartTime = vNewStartTimes[0];
 		if (stringStartTime == "null") {
 			time_duration td(neg_infin);
 			newStartTime = td;
@@ -156,9 +134,9 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 			newStartTime = td;
 		}
 	}
-	vector<string> vNewEndDates = parserResult.getEndDate();
+	std::vector<std::string> vNewEndDates = parserResult.getEndDate();
 	if (!vNewEndDates.empty()) {
-		string stringEndDate = vNewEndDates[0];
+		std::string stringEndDate = vNewEndDates[0];
 		if (stringEndDate == "null") {
 			date d(neg_infin);
 			newEndDate = d;
@@ -168,9 +146,9 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 			newEndDate = d;
 		}
 	}
-	vector<string> vNewEndTimes = parserResult.getEndTime();
+	std::vector<std::string> vNewEndTimes = parserResult.getEndTime();
 	if (!vNewEndTimes.empty()) {
-		string stringEndTime = vNewEndTimes[0];
+		std::string stringEndTime = vNewEndTimes[0];
 		if (stringEndTime == "null") {
 			time_duration td(neg_infin);
 			newEndTime = td;
@@ -195,8 +173,12 @@ Command * CommandBuilder::createDeleteCommand(ParserResult& parserResult)
 {
 	Command* deleteCommand;
 
-	vector<string> vEntryTypes = parserResult.getEntryType();
-	vector<int> vIndices = parserResult.getIndex();
+	std::vector<std::string> vEntryTypes = parserResult.getEntryType();
+	std::vector<int> vIndices = parserResult.getIndex();
+
+	if (vEntryTypes.empty() || vIndices.empty()) {
+		throw CmdBuilderException(EXCEPTION_INVALID_DELETE);
+	}
 
 	EntryType entryType;
 
@@ -207,10 +189,16 @@ Command * CommandBuilder::createDeleteCommand(ParserResult& parserResult)
 	else if (vEntryTypes[0] == "t") {
 		entryType = task;
 	}
+	
+	else {
+		throw CmdBuilderException(EXCEPTION_INVALID_ENTRY_TYPE_AT_INDEX);
+	}
 
-	int displayIndex = vIndices[0] - 1;
+	int displayIndex = vIndices[0];
 
-	deleteCommand = new DeleteCommand(entryType, displayIndex);
+	int taskID = displayIndex - 1;
+
+	deleteCommand = new DeleteCommand(entryType, taskID);
 	return deleteCommand;
 }
 
@@ -219,7 +207,11 @@ Command * CommandBuilder::createSearchCommand(ParserResult& parserResult)
 	//create SearchCommand;
 	Command* searchCommand;
 	
-	vector<string> keywords = parserResult.getDescription();
+	std::vector<std::string> keywords = parserResult.getDescription();
+
+	if (keywords.empty()) {
+		throw CmdBuilderException(EXCEPTION_INVALID_SEARCH);
+	}
 	searchCommand = new SearchCommand(keywords);
 	return searchCommand;
 		
@@ -241,6 +233,7 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 	std::vector<std::string> vEndDateRequirement = parserResult.getEndDate();
 	std::vector<std::string> vEntryStatus = parserResult.getDescription();
 
+
 	if (!vEntryStatus.empty()) {
 		showType = showByStatus;
 	}
@@ -248,8 +241,12 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 		showType = showByRangeOfDate;
 	}
 	else if (!vEndDateRequirement.empty()) {
-		showType = showByRangeOfDate;
+		showType = showByDate;
 	}
+	else {
+		throw CmdBuilderException(EXCEPTION_INVALID_SHOW);
+	}
+	
 
 	if (showType == showByStatus) {
 		stringEntryStatus = vEntryStatus[0];
@@ -266,11 +263,17 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 		else if (stringEntryStatus == ENTRY_STATUS_INTIME) {
 			showCommand = new ShowCommand(intime);
 		}
+		else {
+			throw CmdBuilderException(EXCEPTION_INVALID_SHOW_STATUS);
+		}
 	}
 	
 	else if (showType == showByDate) {
 		stringEndDate = vEndDateRequirement[0];
 		date endDate(from_undelimited_string(stringEndDate));
+		if (endDate.is_not_a_date()) {
+			throw CmdBuilderException(EXCEPTION_INVALID_TIME);
+		}
 		showCommand = new ShowCommand(endDate);
 	}
 
@@ -279,6 +282,10 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 		stringEndDate = vEndDateRequirement[0];
 		date startDate(from_undelimited_string(stringStartDate));
 		date endDate(from_undelimited_string(stringEndDate));
+		
+		if (startDate.is_not_a_date() || endDate.is_not_a_date()) {
+			throw CmdBuilderException(EXCEPTION_INVALID_TIME);
+		}
 		showCommand = new ShowCommand(startDate, endDate);
 	}
 
@@ -288,10 +295,13 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 Command * CommandBuilder::createSaveCommand(ParserResult& parserResult)
 {
 	Command * saveCommand;
-	vector<string> vSaveDirs;
+	std::vector<std::string> vSaveDirs;
 	vSaveDirs = parserResult.getDescription();
 
-	string saveDir = vSaveDirs[0];
+	if (vSaveDirs.empty()) {
+		throw CmdBuilderException(EXCEPTION_INVALID_SAVE);
+	}
+	std::string saveDir = vSaveDirs[0];
 	saveCommand = new SaveCommand(saveDir);
 
 	return saveCommand;
@@ -301,9 +311,12 @@ Command * CommandBuilder::createMarkDoneCommand(ParserResult &parserResult)
 {
 	Command* markDoneCommand;
 
-	vector<string> vEntryTypes = parserResult.getEntryType();
-	vector<int> vIndices = parserResult.getIndex();
+	std::vector<std::string> vEntryTypes = parserResult.getEntryType();
+	std::vector<int> vIndices = parserResult.getIndex();
 
+	if (vEntryTypes.empty() || vIndices.empty()) {
+		throw CmdBuilderException(EXCEPTION_INVALID_MARKDONE);
+	}
 	EntryType entryType;
 
 	if (vEntryTypes[0] == "e") {
@@ -313,14 +326,18 @@ Command * CommandBuilder::createMarkDoneCommand(ParserResult &parserResult)
 	else if (vEntryTypes[0] == "t") {
 		entryType = task;
 	}
+	else {
+		throw CmdBuilderException(EXCEPTION_INVALID_ENTRY_TYPE_AT_INDEX);
+	}
 
-	int taskIndex = vIndices[0] - 1;
+	int displayIndex = vIndices[0];
+	int taskID = displayIndex - 1;
 
-	markDoneCommand = new MarkDoneCommand(entryType, taskIndex);
+	markDoneCommand = new MarkDoneCommand(entryType, taskID);
 	return markDoneCommand;
 }
 
-Command * CommandBuilder::createUndoCommand(ParserResult &)
+Command * CommandBuilder::createUndoCommand(ParserResult & parserResult)
 {
 	Command * undoCommand;
 	undoCommand = new UndoCommand();
@@ -334,7 +351,7 @@ CommandBuilder::CommandBuilder() {
 Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 	Command *cmd = nullptr;
 
-	string commandType = parserResult.getUserCommand();
+	std::string commandType = parserResult.getUserCommand();
 
 	if (commandType == COMMANDTYPE_ADD) {
 		cmd = createAddCommand(parserResult);
@@ -365,6 +382,9 @@ Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 
 	else if (commandType == COMMANDTYPE_MARK_DONE) {
 		cmd = createMarkDoneCommand(parserResult);
+	}
+	else {
+		throw CmdBuilderException(EXCEPTION_INVALID_COMMANDTYPE);
 	}
 	return cmd;
 }

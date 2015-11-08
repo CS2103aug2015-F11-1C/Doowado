@@ -101,13 +101,7 @@ void AddCommand::updateDisplay(Display* display, Storage* data)
 
 	display->updateCommandFeedback(_feedback);
 	display->setLatestUpdatedEntry(_newEntry);
-	if (_newEntry != NULL) {
-		cout << "latestEntry: " << _newEntry->getTitle() << endl
-			;
-	}
-	else {
-		cout << "latestEntry is NULL" << endl;
-	}
+
 	
 }
 

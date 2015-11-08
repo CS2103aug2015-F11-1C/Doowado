@@ -79,6 +79,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files\boost_1_59_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -123,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddCommand.cpp" />
+    <ClCompile Include="CmdBuilderException.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandBuilder.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -144,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddCommand.h" />
+    <ClInclude Include="CmdBuilderException.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandBuilder.h" />
     <ClInclude Include="DeleteCommand.h" />

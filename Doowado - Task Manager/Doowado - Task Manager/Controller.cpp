@@ -21,10 +21,14 @@ int main() {
 	getline(cin, input);
 
 	while (input != "exit") {
-		logic->processCommand(input);
-		displayList = logic->getDisplay();
-		UI.updateDisplay(*displayList);
-
+		try {
+			logic->processCommand(input);
+			displayList = logic->getDisplay();
+			UI.updateDisplay(*displayList);
+		}
+		catch (CmdBuilderException & e) {
+			cout << "catch exception in controller: " << e.getMessage() << endl;
+		}
 		getline(cin, input);
 	}
 	return 0;

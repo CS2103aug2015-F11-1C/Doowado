@@ -3,6 +3,8 @@
 const string EVENT_ENTRY = "Event";
 const string TASK_ENTRY = "Task";
 const string FTASK_ENTRY = "FTask";
+const string EVENT_CLASHING = "Clashing";
+const string EVENT_NOT_CLASHING = "Not Clashing";
 const string TASK_COMPLETED = "Completed";
 const string TASK_NOT_COMPLETED = "Not Completed";
 const string TASK_OVERDUE = "Overdue";
@@ -156,6 +158,11 @@ void Storage::saveToFile() {
 		output << _eventList[i]->getTitle() << endl;
 		output << to_iso_string(_eventList[i]->getStartTime()) << endl;
 		output << to_iso_string(_eventList[i]->getEndTime()) << endl;
+		if (_eventList[i]->isClash()) {
+			output << EVENT_CLASHING << endl;
+		} else {
+			output << EVENT_NOT_CLASHING << endl;
+		}
 	}
 
 	for (int i = 0; i < _taskList.size(); i++) {
@@ -211,6 +218,12 @@ void Storage::loadFromFile() {
 
 			Entry *newEvent;
 			newEvent = new Entry(title, startTime, endTime);
+
+			string clashing;
+			getline(input, clashing);
+			if (clashing == EVENT_CLASHING) {
+				newEvent->setClash(true);
+			}
 
 			_eventList.push_back(newEvent);
 		}

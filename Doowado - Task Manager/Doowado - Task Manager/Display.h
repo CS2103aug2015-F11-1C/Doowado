@@ -13,6 +13,8 @@ protected:
 	string _eventDisplayState;
 	string _taskDisplayState;
 
+	Entry* _lastUpdatedEntry;
+
 public:
 	Display();
 	~Display();
@@ -36,5 +38,6 @@ public:
 
 	void deleteEntry(EntryType, int);
 	void deleteEntry(Entry * entryToDelete);
+	void setLatestUpdatedEntry(Entry * latestEntry);
 };
 

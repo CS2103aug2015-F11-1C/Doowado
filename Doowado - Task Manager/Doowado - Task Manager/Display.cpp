@@ -126,3 +126,8 @@ void Display::deleteEntry(Entry * entryToDelete)
 	_taskList.erase(it);
 
 }
+
+void Display::setLatestUpdatedEntry(Entry * latestEntry)
+{
+	_lastUpdatedEntry = latestEntry;
+}

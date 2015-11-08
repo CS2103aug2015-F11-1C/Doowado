@@ -23,6 +23,7 @@ public:
 	Entry* getTaskMarkedDone();
 
 	void execute(Storage*, Display*);
+	//void undo(Storage * data, Display * display);
 
 };
 

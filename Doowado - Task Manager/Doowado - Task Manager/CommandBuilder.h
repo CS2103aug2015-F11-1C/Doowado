@@ -29,7 +29,6 @@ class CommandBuilder {
 		Command* createDeleteCommand(ParserResult&);
 		Command* createSearchCommand(ParserResult&);
 		Command* createShowCommand(ParserResult&);
-//		Command* createHelpCommand(ParserResult&);
 		Command* createSaveCommand(ParserResult&);
 		Command* createMarkDoneCommand(ParserResult&);
 		Command* createUndoCommand(ParserResult&);

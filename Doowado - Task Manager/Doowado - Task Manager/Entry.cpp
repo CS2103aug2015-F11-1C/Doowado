@@ -9,7 +9,7 @@ Entry::Entry(string title, ptime endTime)
 	_title = title;
 	_endTime = endTime;
 	_isDone = false;
-	_isConfirmed = true;
+	_isClash = false;
 	_isOverdue = false;
 }
 
@@ -19,14 +19,14 @@ Entry::Entry(string title, ptime startTime, ptime endTime)
 	_startTime = startTime;
 	_endTime = endTime;
 	_isDone = false;
-	_isConfirmed = true;
+	_isClash = false;
 	_isOverdue = false;
 }
 
 Entry::Entry(string title){
 	_title = title;
 	_isDone = false;
-	_isConfirmed = true;
+	_isClash = false;
 	_isOverdue = false;
 }
 
@@ -49,9 +49,9 @@ bool Entry::isDone()
 	return _isDone;
 }
 
-bool Entry::isConfirmed()
+bool Entry::isClash()
 {
-	return _isConfirmed;
+	return _isClash;
 }
 
 bool Entry::isOverdue()
@@ -79,9 +79,9 @@ void Entry::setDone(bool doneStatus)
 	_isDone = doneStatus;
 }
 
-void Entry::setConfirmed(bool confirmStatus)
+void Entry::setClash(bool clashStatus)
 {
-	_isConfirmed = confirmStatus;
+	_isClash = clashStatus;
 }
 
 void Entry::setOverdue(bool overdueStatus)

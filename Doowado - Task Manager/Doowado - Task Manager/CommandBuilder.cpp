@@ -284,13 +284,7 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 
 	return showCommand;
 }
-/*
-Command * CommandBuilder::createHelpCommand(ParserResult& parserResult)
-{
-	//create HelpCommand;
-	return nullptr;
-}
-*/
+
 Command * CommandBuilder::createSaveCommand(ParserResult& parserResult)
 {
 	Command * saveCommand;

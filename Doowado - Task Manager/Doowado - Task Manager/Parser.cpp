@@ -707,7 +707,7 @@ int Parser::extractTime(string input){
 					timeInt = hourInt * 100 + minuteInt;
 					return timeInt;
 				}else {
-					throw std::out_of_range(ERROR_INVALID_TIME);
+					throw std::out_of_range(ERROR_INVALID_TIME_INPUT);
 					return timeInt = -1;
 				}
 			}
@@ -720,7 +720,7 @@ int Parser::extractTime(string input){
 					timeInt = hourInt * 100 + minuteInt;
 					return timeInt;
 				}else {
-					throw std::out_of_range(ERROR_INVALID_TIME);
+					throw std::out_of_range(ERROR_INVALID_TIME_INPUT);
 					return timeInt = -1;
 				}
 			}
@@ -732,7 +732,7 @@ int Parser::extractTime(string input){
 					timeInt = hourInt * 100 + minuteInt;
 					return timeInt;
 				}else {
-					throw std::out_of_range(ERROR_INVALID_TIME);
+					throw std::out_of_range(ERROR_INVALID_TIME_INPUT);
 					return timeInt = -1;
 				}
 			}else {

@@ -38,7 +38,7 @@ string const ERROR_INVALID_DATE_TIME_INPUT = "Invalid date or time input";
 string const ERROR_INVALID_YEAR = "Invalid year input";
 string const ERROR_INVALID_MONTH = "Invalid month input";
 string const ERROR_INVALID_DAY = "Invalid day input";
-string const ERROR_INVALID_TIME = "Invalid time input";
+string const ERROR_INVALID_TIME_INPUT = "Invalid time input";
 
 class Parser {
 

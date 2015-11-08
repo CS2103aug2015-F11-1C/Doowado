@@ -238,16 +238,17 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 	std::string stringStartDate;
 	std::string stringEndDate;
 	
-	std::vector<std::string> vDateRequirement = parserResult.getEndDate();
+	std::vector<std::string> vStartDateRequirement = parserResult.getStartDate();
+	std::vector<std::string> vEndDateRequirement = parserResult.getEndDate();
 	std::vector<std::string> vEntryStatus = parserResult.getDescription();
 
 	if (!vEntryStatus.empty()) {
 		showType = showByStatus;
 	}
-	else if (vDateRequirement.size() == 1) {
-		showType = showByDate;
+	else if (!vStartDateRequirement.empty() && !vEndDateRequirement.empty()) {
+		showType = showByRangeOfDate;
 	}
-	else if (vDateRequirement.size() == 2) {
+	else if (!vEndDateRequirement.empty()) {
 		showType = showByRangeOfDate;
 	}
 
@@ -269,14 +270,14 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 	}
 	
 	else if (showType == showByDate) {
-		stringEndDate = vDateRequirement[0];
+		stringEndDate = vEndDateRequirement[0];
 		date endDate(from_undelimited_string(stringEndDate));
 		showCommand = new ShowCommand(endDate);
 	}
 
 	else if (showType == showByRangeOfDate) {
-		stringStartDate = vDateRequirement[0];
-		stringEndDate = vDateRequirement[2];
+		stringStartDate = vStartDateRequirement[0];
+		stringEndDate = vEndDateRequirement[0];
 		date startDate(from_undelimited_string(stringStartDate));
 		date endDate(from_undelimited_string(stringEndDate));
 		showCommand = new ShowCommand(startDate, endDate);

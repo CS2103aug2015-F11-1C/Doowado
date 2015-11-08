@@ -9,5 +9,6 @@
 
 // Headers for CppUnitTest
 #include "CppUnitTest.h"
+#include "Logic.h"
 
 // TODO: reference additional headers your program requires here

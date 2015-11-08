@@ -81,6 +81,74 @@ namespace LogicTest
 			Assert::IsTrue(areSameList(actualDisplayTaskList, idealDisplayTaskList));
 		}
 
+		/*TEST_METHOD(AddTaskToEmptyStorage)
+		{
+			//hard-coded task on 29 Oct 2015 due 5
+			string testName = "Timed task";
+
+			date testDate = date(2015, Oct, 29);
+			ptime time1 = ptime(testDate, hours(5));
+			ptime time2;
+
+			Entry newEntry = Entry(testName, time1, time2);
+
+			Display displayList;
+			Storage testStorage;
+			History history;
+
+			vector<Entry*> actualStorageEventList;
+			vector<Entry*> actualStorageTaskList;
+
+			vector<Entry*> IdealStorageEventList;
+			vector<Entry*> IdealStorageTaskList;
+			IdealStorageTaskList.push_back(&newEntry);
+
+			vector<string> actualFeedback;
+			vector<string> idealFeedback;
+			idealFeedback.push_back("Added");
+			idealFeedback.push_back(testName);
+			idealFeedback.push_back(to_simple_string(time1));
+
+			vector<Entry*> actualDisplayEventList;
+			vector<Entry*> idealDisplayEventList;
+
+			vector<Entry*> actualDisplayTaskList;
+			vector<Entry*> idealDisplayTaskList;
+			idealDisplayTaskList.push_back(&newEntry);
+
+			AddCommand addCmd(testName, time1, time2);
+
+			addCmd.execute(&testStorage, &displayList);
+
+			// Check storage
+			actualStorageEventList = testStorage.getEventList();
+			actualStorageTaskList = testStorage.getTaskList();
+
+			//Assert::AreEqual(actualStorageEventList.size(), IdealStorageEventList.size());
+			Assert::AreEqual(actualStorageTaskList.size(), size_t(1));
+
+
+			Assert::IsTrue(areSameList(actualStorageEventList, IdealStorageEventList));
+			Assert::IsTrue(areSameList(actualStorageTaskList, IdealStorageTaskList));
+
+			//Check history
+			Assert::AreEqual(History::getSize(), size_t(1));
+
+			//Check display
+			actualFeedback = displayList.getCommandFeedback();
+			Assert::IsTrue(areSameFeedback(actualFeedback, idealFeedback));
+
+			actualDisplayEventList = displayList.getEventList();
+			actualDisplayTaskList = displayList.getTaskList();
+
+			Assert::AreEqual(actualDisplayEventList.size(), idealDisplayEventList.size());
+			Assert::AreEqual(actualDisplayTaskList.size(), idealDisplayTaskList.size());
+
+			Assert::IsTrue(areSameList(actualDisplayEventList, idealDisplayEventList));
+			Assert::IsTrue(areSameList(actualDisplayTaskList, idealDisplayTaskList));
+		}
+		*/
+
 		bool areEqual(Entry* entry1, Entry* entry2) {
 			return(entry1->getTitle() == entry2->getTitle() 
 				&&	entry1->getStartTime() == entry2->getStartTime() 

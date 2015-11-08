@@ -1,17 +1,17 @@
 #include "ShowCommand.h"
 
-string ShowCommand::generateDisplayState(date startDate, date endDate)
-{
-	string displayState;
+std::string ShowCommand::_generateDateDisplayState()
+{ 
+	std::string displayState;
 
-	if (startDate.is_not_a_date()) {
-		int endDay = endDate.day();
-		int endMonth = endDate.month();
-		int endYear = endDate.year();
-		int intEndDayOfWeek = endDate.day_of_week();
-		string endDayOfWeek;
-		switch (intEndDayOfWeek)
-		{
+	int endDay = _requestedEndDate.day();
+	int endMonth = _requestedEndDate.month();
+	int endYear = _requestedEndDate.year();
+	int intEndDayOfWeek = _requestedEndDate.day_of_week();
+	std::string endDayOfWeek;
+	
+	switch (intEndDayOfWeek)
+	{
 		case 0:
 			endDayOfWeek = "Sunday";
 			break;
@@ -35,17 +35,18 @@ string ShowCommand::generateDisplayState(date startDate, date endDate)
 			break;
 		default:
 			break;
-		}
-		displayState = endDayOfWeek + ", " + to_string(endDay) + "/" + to_string(endMonth) + "/" + to_string(endYear);
 	}
 
-	else
-	{
-		int startDay = startDate.day();
-		int startMonth = startDate.month();
-		int startYear = startDate.year();
-		int intStartDayOfWeek = startDate.day_of_week();
-		string startDayOfWeek;
+	displayState = endDayOfWeek + ", " + to_string(endDay) + "/" + to_string(endMonth) + "/" + to_string(endYear);
+
+	if (!_requestedStartDate.is_not_a_date()) {
+		int startDay = _requestedStartDate.day();
+		int startMonth = _requestedStartDate.month();
+		int startYear = _requestedStartDate.year();
+		int intStartDayOfWeek = _requestedStartDate.day_of_week();
+		
+		std::string startDayOfWeek;
+		
 		switch (intStartDayOfWeek)
 		{
 		case 0:
@@ -79,11 +80,72 @@ string ShowCommand::generateDisplayState(date startDate, date endDate)
 	return displayState;
 }
 
-ShowCommand::ShowCommand(ptime requestedDate)
+std::string ShowCommand::_generateStatusDisplayState()
 {
-	_requestedDate = requestedDate;
+	std::string taskDisplayState;
+
+	if (_entryStatus == completed) {
+		taskDisplayState = ENTRY_STATUS_COMPLETED;
+	}
+	else if (_entryStatus == incomplete) {
+		taskDisplayState = ENTRY_STATUS_INCOMPLETE;
+	}
+	else if (_entryStatus == overdue) {
+		taskDisplayState = ENTRY_STATUS_OVERDUE;
+	}
+	else if (_entryStatus == intime) {
+		taskDisplayState = ENTRY_STATUS_INTIME;
+	}
+
+	return taskDisplayState;
+
 }
 
+void ShowCommand::_generateDateFeedback()
+{
+	_feedback.push_back(MESSAGE_SUCCESSFUL_SHOW);
+	if (!_requestedStartDate.is_not_a_date()) {
+		_feedback.push_back(to_simple_string(_requestedStartDate));
+	}
+	_feedback.push_back(to_simple_string(_requestedEndDate));
+}
+
+void ShowCommand::_generateStatusFeedback()
+{
+	_feedback.push_back(MESSAGE_SUCCESSFUL_SHOW);
+
+	if (_entryStatus == completed) {
+		_feedback.push_back(ENTRY_STATUS_COMPLETED);
+	}
+	else if (_entryStatus == incomplete) {
+		_feedback.push_back(ENTRY_STATUS_INCOMPLETE);
+	}
+	else if (_entryStatus == overdue) {
+		_feedback.push_back(ENTRY_STATUS_OVERDUE);
+	}
+	else if (_entryStatus == intime) {
+		_feedback.push_back(ENTRY_STATUS_INTIME);
+	}
+}
+
+ShowCommand::ShowCommand(date endDate)
+{
+	_requestedEndDate = endDate;
+	_showType = showByDate;
+}
+
+ShowCommand::ShowCommand(date startDate, date endDate)
+{
+	_requestedStartDate = startDate;
+	_requestedEndDate = endDate;
+	_showType = showByRangeOfDate;
+}
+
+ShowCommand::ShowCommand(entryStatus status)
+{
+	_entryStatus = status;
+	_showType = showByStatus;
+}
 
 ShowCommand::~ShowCommand()
 {
@@ -91,23 +153,47 @@ ShowCommand::~ShowCommand()
 
 void ShowCommand::execute(Storage * data, Display * display)
 {
-	data->retrieveByDate(_requestedDate, _requestedEventList, _requestedTaskList);
+	std::string displayEventState;
+	std::string displayTaskState;
 
-	display->updateDisplayEventList(_requestedEventList);
-	display->updateDisplayTaskList(_requestedTaskList);
-
-	generateFeedback();
-	date startDate(not_a_date_time);
-	date endDate = _requestedDate.date();
-	string displayState = generateDisplayState(startDate, endDate);
+	if (_showType == showByDate) {
+		ptime ptimeEndDate(_requestedEndDate);
+		data->retrieveByDate(ptimeEndDate, _requestedEventList, _requestedTaskList);
+		display->updateDisplayEventList(_requestedEventList);
+		display->updateDisplayTaskList(_requestedTaskList);
+		_generateDateFeedback();
+		displayEventState = _generateDateDisplayState();
+		displayTaskState = _generateDateDisplayState();
+	}
+	else if (_showType == showByRangeOfDate) {
+		ptime ptimeStartDate(_requestedStartDate);
+		ptime ptimeEndDate(_requestedEndDate);
+		data->retrieveByDate(ptimeStartDate, ptimeEndDate, _requestedEventList, _requestedTaskList);
+		display->updateDisplayEventList(_requestedEventList);
+		display->updateDisplayTaskList(_requestedTaskList);
+		_generateDateFeedback();
+		displayEventState = _generateDateDisplayState();
+		displayTaskState = _generateDateDisplayState();
+	}
+	else if (_showType == showByStatus) {
+		if (_entryStatus == completed) {
+			_requestedTaskList = data->retrieveTaskByDone(true);
+		}
+		else if (_entryStatus == incomplete) {
+			_requestedTaskList = data->retrieveTaskByDone(false);
+		}
+		else if (_entryStatus == overdue) {
+			_requestedTaskList = data->retrieveTaskByOverdue(true);
+		}
+		else if (_entryStatus == intime) {
+			_requestedTaskList = data->retrieveTaskByOverdue(false);
+		}
+		_generateStatusFeedback();
+		displayTaskState = _generateStatusDisplayState();
+		display->updateDisplayTaskList(_requestedTaskList);
+	}
 
 	display->updateCommandFeedback(_feedback);
-	display->setEventDisplayState(displayState);
-	display->setTaskDisplayState(displayState);
-}
-
-void ShowCommand::generateFeedback()
-{
-	_feedback.push_back("Showing");
-	_feedback.push_back(to_simple_string(_requestedDate));
+	display->setEventDisplayState(displayEventState);
+	display->setTaskDisplayState(displayTaskState);
 }

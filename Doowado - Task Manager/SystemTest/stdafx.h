@@ -4,7 +4,7 @@
 //
 
 #pragma once
-
+#define TESTMODE
 #include "targetver.h"
 
 // Headers for CppUnitTest

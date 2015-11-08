@@ -19,6 +19,13 @@ private:
 	Display* _display;
 
 public:
+
+#ifdef TESTMODE
+	Storage* getStorage() {
+		return _storage;
+	}
+#endif
+
 	Logic();
 	~Logic();
 	void processCommand(string);

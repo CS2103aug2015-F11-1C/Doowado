@@ -54,7 +54,7 @@ namespace SystemTest
 		}
 
 		void initializeHardcodedStorage(Logic* logic) {
-
+			Storage* storage = logic->getStorage();
 		}
 
 		void validateDisplay(Display actualDisplay, Display idealDisplay) {

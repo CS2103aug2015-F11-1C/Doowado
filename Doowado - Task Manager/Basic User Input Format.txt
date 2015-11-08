@@ -45,6 +45,8 @@ Show
 1. show <date>
 	E.g. show tmr
 	E.g. show 15/10/2015
+2. show from <date> to <date>
+	E.g. show from 12/11/2015 to 15/11/2015
 
 Search
 1. search <keywords>
@@ -62,3 +64,4 @@ Undo
 
 Help
 1.help
+

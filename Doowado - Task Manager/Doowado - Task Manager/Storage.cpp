@@ -101,7 +101,12 @@ vector <Entry*> Storage::searchEventsByTitle(vector <string> keywords) {
 
 	for (int i = 0; i < keywords.size(); i++) {
 		string keyword = keywords[i];
+		std::transform(keyword.begin(), keyword.end(), keyword.begin(), tolower);
+
 		for (int j = 0; j < _eventList.size(); j++) {
+			string currentName = _eventList[j]->getTitle();
+			std::transform(currentName.begin(), currentName.end(), currentName.begin(), tolower);
+
 			size_t found = _eventList[j]->getTitle().find(keyword);
 			if (found != string::npos) {
 				result.push_back(_eventList[j]);
@@ -118,7 +123,12 @@ vector <Entry*> Storage::searchTasksByTitle(vector <string> keywords) {
 
 	for (int i = 0; i < keywords.size(); i++) {
 		string keyword = keywords[i];
+		std::transform(keyword.begin(), keyword.end(), keyword.begin(), tolower);
+
 		for (int j = 0; j < _taskList.size(); j++) {
+			string currentName = _taskList[j]->getTitle();
+			std::transform(currentName.begin(), currentName.end(), currentName.begin(), tolower);
+
 			size_t found = _taskList[j]->getTitle().find(keyword);
 			if (found != string::npos) {
 				result.push_back(_taskList[j]);

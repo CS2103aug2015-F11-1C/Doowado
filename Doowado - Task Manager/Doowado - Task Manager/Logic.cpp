@@ -14,6 +14,56 @@ void Logic::updateOverdueTask()
 	}
 }
 
+void Logic::updateDoneEvent()
+{
+	std::vector<Entry*> eventList;
+	eventList = _storage->retrieveEventList();
+
+	for (int i = 0; i < eventList.size(); i++) {
+		ptime currTime(second_clock::local_time());
+
+		if (currentTime > eventList[i]->getEndTime()) {
+			eventList[i]->setDone(true);
+		}
+	}
+}
+
+void Logic::updateClashEvent()
+{
+	std::vector<Entry*> eventList;
+	eventList = _storage->retrieveEventList();
+
+	for (int i = 0; i < eventList.size()-1; i++) {
+		ptime eventStartTime1 = eventList[i]->getStartTime();
+		ptime eventEndTime1 = eventList[i]->getEndTime();
+
+		for (int j = i+1; j < eventList.size(); j++) {
+			ptime eventStartTime2 = eventList[j]->getStartTime();
+			ptime eventEndTime2 = eventList[j]->getEndTime();
+			if (isOverlapTime(eventStartTime1, eventEndTime1, eventStartTime2, eventEndTime2)) {
+				eventList[i]->setClash(true);
+				eventList[j]->setClash(true);
+			}
+		}
+	}
+}
+
+bool Logic::isOverlapTime(ptime startTime1, ptime endTime1, ptime startTime2, ptime endTime2)
+{
+	bool isOverlap;
+
+	if (startTime2 >= startTime1 && startTime2 <= endTime1) {
+		isOverlap = true;
+	}
+	else if (endTime2 >= startTime1 && endTime2 <= endTime1) {
+		isOverlap = true;
+	}
+	else {
+		isOverlap = false;
+	}
+	return isOverlap;
+}
+
 Logic::Logic()
 {
 	_storage = new Storage();
@@ -36,6 +86,8 @@ void Logic::processCommand(string userInput)
 	cmd = _cmdBuilder->buildCommand(parserResult);
 	cmd->execute(_storage, _display);
 	updateOverdueTask();
+	updateDoneEvent();
+	updateClashEvent();
 	_storage->saveToFile();
 }
 
@@ -43,6 +95,8 @@ void Logic::initialiseProgram()
 {
 	_storage->loadFromFile();
 	updateOverdueTask();
+	updateDoneEvent();
+	updateClashEvent();
 	vector<Entry*> eventDefaultList;
 	vector<Entry*> taskDefaultList;
 

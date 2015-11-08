@@ -153,7 +153,6 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 		}
 		else {
 			time_duration td(duration_from_string(stringStartTime));
-			//time_duration td(duration_from_string("01:01"));
 			newStartTime = td;
 		}
 	}
@@ -363,11 +362,7 @@ Command* CommandBuilder::buildCommand(ParserResult& parserResult) {
 	else if (commandType == COMMANDTYPE_UNDO) {
 		cmd = createUndoCommand(parserResult);
 	}
-/*
-	else if (commandType == COMMANDTYPE_HELP) {
-		cmd = createHelpCommand(parserResult);
-	}
-*/
+
 	else if (commandType == COMMANDTYPE_MARK_DONE) {
 		cmd = createMarkDoneCommand(parserResult);
 	}

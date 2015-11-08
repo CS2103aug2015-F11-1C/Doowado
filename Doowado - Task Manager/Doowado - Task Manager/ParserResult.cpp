@@ -1,7 +1,6 @@
 #include "ParserResult.h"
 
-ParserResult::ParserResult()
-{
+ParserResult::ParserResult(){
 	//command & description
 	_userCommand = "";
 	_description.clear();
@@ -45,15 +44,13 @@ void ParserResult::setStartDate(vector<int> startYear, vector<int> startMonth, v
 				out << startYear[i];
 				if (startMonth[i] < 10) {
 					out << "0" << startMonth[i];
-				}
-				else {
+				}else {
 					out << startMonth[i];
 				}
 
 				if (startDay[i] < 10) {
 					out << "0" << startDay[i];
-				}
-				else {
+				}else {
 					out << startDay[i];
 				}
 				_startDate.push_back(out.str());
@@ -74,15 +71,13 @@ void ParserResult::setEndDate(vector<int> endYear, vector<int> endMonth, vector<
 				out << endYear[i];
 				if (endMonth[i] < 10) {
 					out << "0" << endMonth[i];
-				}
-				else {
+				}else {
 					out << endMonth[i];
 				}
 
 				if (endDay[i] < 10) {
 					out << "0" << endDay[i];
-				}
-				else {
+				}else {
 					out << endDay[i];
 				}
 				_endDate.push_back(out.str());

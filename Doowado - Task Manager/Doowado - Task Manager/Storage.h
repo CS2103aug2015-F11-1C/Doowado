@@ -43,7 +43,7 @@ public:
 	
 	vector<Entry*> retrieveEventByDone(bool doneStatus);
 	vector<Entry*> retrieveTaskByDone(bool doneStatus);
-	vector<Entry*> retrieveOverdueTasks(bool overdueStatus);
+	vector<Entry*> retrieveTaskByOverdue(bool overdueStatus);
 	void deleteFromEventList(Entry* eventPointer);
 	void deleteFromTaskLIst(Entry* taskPointer);
 
@@ -51,4 +51,7 @@ public:
 
 	void saveToFile();
 	void loadFromFile();
+
+	std::vector<Entry*> retrieveEventList();
+	std::vector<Entry*> retrieveTaskList();
 };

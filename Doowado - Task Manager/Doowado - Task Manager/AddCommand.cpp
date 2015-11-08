@@ -55,7 +55,7 @@ void AddCommand::undo(Storage * data, Display * display)
 	else if (type_floating_task == entryType) {
 		data->deleteFromTaskLIst(_newEntry);
 	}
-
+	_newEntry = NULL;
 	generateUndoFeedback();
 	updateDisplay(display, data);
 }
@@ -100,6 +100,9 @@ void AddCommand::updateDisplay(Display* display, Storage* data)
 	display->updateDisplayTaskList(relevantTaskList);
 
 	display->updateCommandFeedback(_feedback);
+	display->setLatestUpdatedEntry(_newEntry);
+
+	
 }
 
 void AddCommand::generateUndoFeedback()

@@ -3,6 +3,8 @@
 const string EVENT_ENTRY = "Event";
 const string TASK_ENTRY = "Task";
 const string FTASK_ENTRY = "FTask";
+const string EVENT_CLASHING = "Clashing";
+const string EVENT_NOT_CLASHING = "Not Clashing";
 const string TASK_COMPLETED = "Completed";
 const string TASK_NOT_COMPLETED = "Not Completed";
 const string TASK_OVERDUE = "Overdue";
@@ -101,8 +103,13 @@ vector <Entry*> Storage::searchEventsByTitle(vector <string> keywords) {
 
 	for (int i = 0; i < keywords.size(); i++) {
 		string keyword = keywords[i];
+		std::transform(keyword.begin(), keyword.end(), keyword.begin(), tolower);
+
 		for (int j = 0; j < _eventList.size(); j++) {
-			size_t found = _eventList[j]->getTitle().find(keyword);
+			string currentName = _eventList[j]->getTitle();
+			std::transform(currentName.begin(), currentName.end(), currentName.begin(), tolower);
+
+			size_t found = currentName.find(keyword);
 			if (found != string::npos) {
 				result.push_back(_eventList[j]);
 			}
@@ -118,8 +125,13 @@ vector <Entry*> Storage::searchTasksByTitle(vector <string> keywords) {
 
 	for (int i = 0; i < keywords.size(); i++) {
 		string keyword = keywords[i];
+		std::transform(keyword.begin(), keyword.end(), keyword.begin(), tolower);
+
 		for (int j = 0; j < _taskList.size(); j++) {
-			size_t found = _taskList[j]->getTitle().find(keyword);
+			string currentName = _taskList[j]->getTitle();
+			std::transform(currentName.begin(), currentName.end(), currentName.begin(), tolower);
+
+			size_t found = currentName.find(keyword);
 			if (found != string::npos) {
 				result.push_back(_taskList[j]);
 			}
@@ -146,6 +158,11 @@ void Storage::saveToFile() {
 		output << _eventList[i]->getTitle() << endl;
 		output << to_iso_string(_eventList[i]->getStartTime()) << endl;
 		output << to_iso_string(_eventList[i]->getEndTime()) << endl;
+		if (_eventList[i]->isClash()) {
+			output << EVENT_CLASHING << endl;
+		} else {
+			output << EVENT_NOT_CLASHING << endl;
+		}
 	}
 
 	for (int i = 0; i < _taskList.size(); i++) {
@@ -201,6 +218,12 @@ void Storage::loadFromFile() {
 
 			Entry *newEvent;
 			newEvent = new Entry(title, startTime, endTime);
+
+			string clashing;
+			getline(input, clashing);
+			if (clashing == EVENT_CLASHING) {
+				newEvent->setClash(true);
+			}
 
 			_eventList.push_back(newEvent);
 		}
@@ -265,6 +288,16 @@ void Storage::loadFromFile() {
 	input.close();
 }
 
+std::vector<Entry*> Storage::retrieveEventList()
+{
+	return _eventList;
+}
+
+std::vector<Entry*> Storage::retrieveTaskList()
+{
+	return _taskList;
+}
+
 void Storage::displayDefault(vector <Entry*> *eventDisplay, vector <Entry*> *taskDisplay) {
 	ptime currentTime(second_clock::local_time());
 
@@ -320,7 +353,7 @@ void Storage::retrieveByDate(ptime timeIndicator, vector <Entry*>& eventResult, 
 	taskResult.clear();
 
 	for (int i = 0; i < _eventList.size(); i++) {
-		if (_eventList[i]->getStartTime().date() == timeIndicator.date() || _eventList[i]->getEndTime().date() == timeIndicator.date()) {
+		if (_eventList[i]->getStartTime().date() <= timeIndicator.date() && _eventList[i]->getEndTime().date() >= timeIndicator.date()) {
 			eventResult.push_back(_eventList[i]);
 		}
 	}
@@ -374,11 +407,11 @@ vector<Entry*> Storage::retrieveTaskByDone(bool doneStatus)
 	return taskResult;
 }
 
-vector<Entry*> Storage::retrieveOverdueTasks(bool overdueStatus){
+vector<Entry*> Storage::retrieveTaskByOverdue(bool overdueStatus){
 	vector <Entry*> taskResult;
 
 	for (int i = 0; i < _taskList.size(); i++) {
-		if (_taskList[i]->isOverdue() == overdueStatus) {
+		if (_taskList[i]->isOverdue() == overdueStatus && !_taskList[i]->isDone()) {
 			taskResult.push_back(_taskList[i]);
 		}
 	}

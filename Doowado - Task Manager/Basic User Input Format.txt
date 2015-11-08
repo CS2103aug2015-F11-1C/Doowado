@@ -1,57 +1,67 @@
-Upper case or lower case input is allowed
 Time input format
-Use "." or "/" to delimite date month and year
-e.g. 31/10/2015 31.10.2015
+1. Use "." or "/" to delimit day month and year
+	E.g. 31/10/2015; 31.10.2015; 31.october; 31/oct
+2. Month and day keywords are supported
+	E.g. December; Friday; tomorrow
+3. Short forms are also supported
+	E.g. dec; fri; tmr
 
-Month and day keywords are supported
-e.g december fridy tomorrow
-Short forms are also supported
-e.g. dec fri tmr
+Add
+1. add <floating task description>
+	E.g. add watch movie
+2. add <deadline event description> by <ending date followed by time>
+	E.g. add complete homework by 25.oct 13
+3. add <new task description> from <starting date followed by time> to <ending date followed by time>
+	E.g. add basketball camp from Friday 1230 to Sunday 13
+4. add ¡°<new task description>¡±
+In this case Doowado will take all information inside the quotation marks as description without checking date and time keywords.
+	E.g. add ¡°complete homework by today 12¡±
+Doowado also supports other date & time delimiter and short forms such as ¡°on¡±, ¡°at¡±, ¡°from¡±, ¡°fr¡±, ¡°start¡±, ¡°st¡±, ¡°end¡±, ¡°ed¡±.
 
-For add
-add (new event/task description)
-e.g. add watch movie
+Delete
+1. delete <entry index>
+	E.g. delete t1
 
-add (new event/task description) from/on (starting date/time) to (ending date/time)
-e.g. add basketball camp from friday 1200 to sunday 1200
+Edit
+For edit event/task description 
+1. edit <entry index> <new event/task description>
+	E.g. edit t2 complete ie3110 lab
+For edit starting time only
+2. edit <entry index> start <new starting date or time>
+	E.g. edit t3 start 15
+	E.g. edit t3 st fri 15
+For edit ending time only 
+3. edit <entry index> end <new ending date or time>
+	E.g. edit t4 end 15
+	E.g. edit t4 ed fri 1500
+For edit both starting and ending time
+4. edit <entry index> from <new starting date or time> to <new ending date or time>
+	E.g. edit t4 from today 12 to tmr 9
+To delete starting or ending date.
+5. edit <entry index> start null
+	E.g. edit t4 start null
 
-add (new event/task description) by (ending date/time)
-e.g add complete homework by 25.oct
+Show
+1. show <date>
+	E.g. show tmr
+	E.g. show 15/10/2015
+2. show from <date> to <date>
+	E.g. show from 12/11/2015 to 15/11/2015
 
-For delete
-delete (entry index)
-e.g. delete t1
+Search
+1. search <keywords>
+	E.g. search ie3101
+Search for multiple keywords
+2. search <1.keywords>|<2.keywords>|<3.keywords>
+	E.g. search ie3101 | homework | lecture
 
-For edit
-edit (entry index) (new event/task description)
-e.g. edit t2 complete ie3110 lab
+Save
+1. save <new directory>
+	E.g. save C:\Program Files
 
-edit (entry index) start (new starting time)
-e.g. edit t3 start at 1500
-edit t3 -s 1500
+Undo
+1.undo
 
-edit (entry index) end (new ending time)
-e.g. edit t4 end at 1500
-edit t4 -e 1500
+Help
+1.help
 
-For show
-show (date)
-e.g. show tmr
-e.g. show 15/10/2015
-
-For search
-search (event or task description)
-e.g. search ie3101
-
-search (1st keyword) | (2nd keyword) | (3rd keyword)
-e.g search ie3101 | homework | lecture
-
-For save
-save (new directory)
-e.g. save C:\Program Files
-
-For undo
-undo
-
-For help
-help

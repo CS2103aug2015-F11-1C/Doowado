@@ -1,5 +1,6 @@
 #pragma once
 #include "Command.h"
+#include "CommandException.h"
 
 const string MESSAGE_SUCCESSFUL_EDIT = "Edited";
 const string eventType = "e";
@@ -31,10 +32,13 @@ private:
 
 	std::vector<std::string> _feedback;
 	Entry * _beforeEditEntry;
+	Entry * _editedEntry;
 
 	void _generateFeedback(Entry * editedEntry);
+	void _generateUndoFeedBack(Entry * undoneEntry);
 	void _updateDisplay(Display * display, Storage * storage, Entry * editedEntry);
-	void _setBeforeEditEntry(Entry * editEntry);
+	void _setBeforeEditEntry(Entry * beforeEditEntry);
+	void _setEditedEntry(Entry * editedEntry);
 	TypeOfTimeEdit _checkTimeEditStart();
 	TypeOfTimeEdit _checkTimeEditEnd();
 
@@ -49,5 +53,6 @@ public:
 
 	~EditCommand();
 	void execute(Storage* data, Display* display);
+	void undo(Storage* data, Display* display);
 };
 

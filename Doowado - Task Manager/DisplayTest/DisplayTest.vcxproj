@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C577B683-B5CF-4D5D-88D5-10A1B39AEA48}</ProjectGuid>
+    <ProjectGuid>{AFE16313-564B-4C10-8679-9BC7E24F95D6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>CommandTest</RootNamespace>
+    <RootNamespace>DisplayTest</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -90,7 +90,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Program Files\boost_1_59_0;C:\Users\aspire\Desktop\CS2103-ProjectFolder\Doowado - Task Manager\Doowado - Task Manager;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\aspire\Desktop\CS2103-ProjectFolder\Doowado - Task Manager\Doowado - Task Manager;C:\Program Files\boost_1_59_0;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -105,14 +105,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\Doowado - Task Manager;C:\local\boost_1_59_0;C:\Users\A0102794\Documents\Visual Studio 2015\Projects\Doowado V0.1\Doowado - Task Manager\Doowado - Task Manager;C:\Program Files\boost_1_59_0;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\local\boost_1_59_0\lib64-msvc-14.0;$(VCInstallDir)UnitTest\lib;C:\Program Files\boost_1_59_0\lib64-msvc-14.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,29 +154,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DisplayStub.h" />
-    <ClInclude Include="HistoryStub.h" />
-    <ClInclude Include="ReversibleCommandStub.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="StorageStub.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DeleteCommandTest.cpp" />
-    <ClCompile Include="DisplayStub.cpp" />
-    <ClCompile Include="HistoryStub.cpp" />
-    <ClCompile Include="LogicTest.cpp" />
-    <ClCompile Include="ReversibleCommandStub.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ShowCommandTest.cpp" />
-    <ClCompile Include="StorageStub.cpp" />
-    <ClCompile Include="StubTests.cpp" />
-    <ClCompile Include="UndoCommandTest.cpp" />
+    <ClCompile Include="unittest1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Doowado - Task Manager\Doowado - Task Manager.vcxproj">

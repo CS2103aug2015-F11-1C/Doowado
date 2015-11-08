@@ -17,6 +17,10 @@ private:
 	CommandBuilder* _cmdBuilder;
 	Parser* _parser;
 	Display* _display;
+	void updateOverdueTask();
+	void updateDoneEvent();
+	void updateClashEvent();
+	bool isOverlapTime(ptime startTime1, ptime endTime1, ptime startTime2, ptime endTime2);
 
 public:
 

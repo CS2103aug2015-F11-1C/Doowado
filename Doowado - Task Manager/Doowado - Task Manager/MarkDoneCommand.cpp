@@ -1,5 +1,21 @@
 #include "MarkDoneCommand.h"
 
+void MarkDoneCommand::_generateFeedback()
+{
+	_feedback.push_back(MESSAGE_SUCCESSFUL_MARK_DONE);
+	
+	std::string stringIndex;
+	if (_entryType = event) {
+		stringIndex += "E";
+	}
+	else if (_entryType = task) {
+		stringIndex += "T";
+	}
+	
+	stringIndex += to_string(_taskID + 1);
+	_feedback.push_back(stringIndex);
+}
+
 MarkDoneCommand::MarkDoneCommand(EntryType entryType, int displayIdx)
 {
 	_entryType = entryType;
@@ -32,6 +48,17 @@ Entry * MarkDoneCommand::getTaskMarkedDone()
 
 void MarkDoneCommand::execute(Storage * date, Display * display)
 {
+	if (_entryType == event) {
+		if (_taskID < 0 || _taskID >= display->getEventList().size()) {
+			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
+		}
+	}
+	else if (_entryType == task) {
+		if (_taskID < 0 || _taskID >= display->getTaskList().size()) {
+			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
+		}
+	}
+
 	Entry* entryToMarkDone = display->retrieveEntry(_entryType, _taskID);
 	entryToMarkDone->setDone(true);
 
@@ -42,5 +69,6 @@ void MarkDoneCommand::execute(Storage * date, Display * display)
 		_taskMarkedDone = entryToMarkDone;
 	}
 
-	//update display list
+	_generateFeedback();
+	display->updateCommandFeedback(_feedback);
 }

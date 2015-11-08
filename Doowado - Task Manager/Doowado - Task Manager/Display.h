@@ -1,5 +1,8 @@
 #pragma once
 #include "Storage.h"
+
+enum entryStatus { completed, incomplete, overdue, intime };
+
 class Display
 {
 protected:
@@ -9,6 +12,8 @@ protected:
 	
 	string _eventDisplayState;
 	string _taskDisplayState;
+
+	Entry* _lastUpdatedEntry;
 
 public:
 	Display();
@@ -32,5 +37,7 @@ public:
 	string getTaskDisplayState();
 
 	void deleteEntry(EntryType, int);
+	void deleteEntry(Entry * entryToDelete);
+	void setLatestUpdatedEntry(Entry * latestEntry);
 };
 

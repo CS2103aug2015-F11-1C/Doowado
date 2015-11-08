@@ -58,6 +58,16 @@ int DeleteCommand::getIndex()
 
 void DeleteCommand::execute(Storage* data, Display* display) {
 	//delete command
+	if (_entryType == event) {
+		if (_taskID < 0 || _taskID >= display->getEventList().size()) {
+			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
+		}
+	}
+	else if (_entryType == task) {
+		if (_taskID < 0 || _taskID >= display->getTaskList().size()) {
+			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
+		}
+	}
 
 	Entry* entryToDelete = display->retrieveEntry(_entryType, _taskID);
 
@@ -74,7 +84,7 @@ void DeleteCommand::execute(Storage* data, Display* display) {
 
 	generateFeedback();
 	display->updateCommandFeedback(_feedback);
-
+	display->setLatestUpdatedEntry(NULL);
 	History::pushCommand(this);
 }
 
@@ -113,6 +123,13 @@ void DeleteCommand::updateDisplay(Display* display, Storage* data)
 	display->updateDisplayEventList(relevantEventList);
 	display->updateDisplayTaskList(relevantTaskList);
 	display->updateCommandFeedback(_feedback);
+	if (_entryType == event) {
+		display->setLatestUpdatedEntry(_eventDeleted);
+	}
+	else {
+		display->setLatestUpdatedEntry(_taskDeleted);
+	}
+
 }
 
 ptime DeleteCommand::getRelevantTime(EntryType _entryType) {

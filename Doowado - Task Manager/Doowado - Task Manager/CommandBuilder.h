@@ -1,8 +1,10 @@
 #pragma once
 #include<vector>
 #include<assert.h>
+#include<exception>
 #include"Command.h"
 #include"ParserResult.h"
+#include"CmdBuilderException.h"
 
 using namespace std;
 
@@ -19,17 +21,12 @@ const string COMMANDTYPE_UNDO = "undo";
 
 class CommandBuilder {
 	
-	private:
-//		EntryType checkEntryType(ParserResult&);
-		ptime createPTimeObject(string, string);
-//		TypeOfEdit checkEditType(vector<string>, vector<string> , vector<string>, vector<string>, vector<string>);
-	
+	private:	
 		Command* createAddCommand(ParserResult&);
 		Command* createEditCommand(ParserResult&);
 		Command* createDeleteCommand(ParserResult&);
 		Command* createSearchCommand(ParserResult&);
 		Command* createShowCommand(ParserResult&);
-//		Command* createHelpCommand(ParserResult&);
 		Command* createSaveCommand(ParserResult&);
 		Command* createMarkDoneCommand(ParserResult&);
 		Command* createUndoCommand(ParserResult&);

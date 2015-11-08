@@ -10,9 +10,21 @@ void SearchCommand::_generateFeedback()
 	}
 }
 
+string SearchCommand::_generateDisplayState()
+{
+	string displayState;
+
+	for (int i = 0; i < _keywords.size(); i++) {
+		displayState += "\"" + _keywords[i] + "\"; ";
+	}
+
+	return displayState;
+}
+
 SearchCommand::SearchCommand(vector<string>& keywords)
 {
 	_keywords = keywords;
+	int size = _keywords.size();
 }
 
 
@@ -32,4 +44,8 @@ void SearchCommand::execute(Storage * data, Display * display)
 
 	_generateFeedback();
 	display->updateCommandFeedback(_feedback);
+
+	string displayState = _generateDisplayState();
+	display->setEventDisplayState(displayState);
+	display->setTaskDisplayState(displayState);
 }

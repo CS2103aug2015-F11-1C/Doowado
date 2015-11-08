@@ -105,6 +105,8 @@ void Logic::initialiseProgram()
 	vector<Entry*> taskDefaultList;
 
 	_storage->retrieveByDate(currentTime, eventDefaultList, taskDefaultList);
+
+	taskDefaultList = _storage->retrieveTaskByDone(false);
 	_display->updateDisplayEventList(eventDefaultList);
 	_display->updateDisplayTaskList(taskDefaultList);
 }

@@ -26,23 +26,38 @@ private:
 	vector<string> _endTime;
 
 public:
-	ParserResult();
+	ParserResult::ParserResult();
+
 	void setUserCommand(string userCommand);
+
 	void setDescription(vector<string> description);
+
 	void setIndex(vector<int> index);
+
 	void setEntryType(vector<string> entryType);
+
 	void setStartDate(vector<int> startYear, vector<int> startMonth, vector<int> startDay);
+
 	void setEndDate(vector<int> endYear, vector<int> endMonth, vector<int> endDay);
+
 	void setStartTime(vector<int> startTime);
+
 	void setEndTime(vector<int> endTime);
 
 	string& getUserCommand();
+
 	vector<string>& getDescription();
+
 	vector<int>& getIndex();
+
 	vector<string>& getEntryType();
+
 	vector<string>& getStartDate();
+
 	vector<string>& getEndDate();
+
 	vector<string>& getStartTime();
+
 	vector<string>& getEndTime();
 	
 	~ParserResult();

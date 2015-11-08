@@ -5,6 +5,8 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace LogicTest
 {
+	//Tests the overall function of logic with storage, starting with an add command
+	// and validating history, storage and display
 	TEST_CLASS(LogicTest)
 	{
 	public:

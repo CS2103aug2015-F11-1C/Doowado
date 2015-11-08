@@ -5,11 +5,12 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace SystemTest
 {		
-	TEST_CLASS(AddTaskTest)
+	TEST_CLASS(AddSingleTaskTest)
 	{
+		
 	public:
 		
-		string taskName = "spring cleaning";
+		string taskName = "house cleaning";
 		date d1 = date(2015, Nov, 10);
 		ptime t1;
 		ptime t2 = ptime(d1, hours(7));
@@ -17,7 +18,7 @@ namespace SystemTest
 
 		TEST_METHOD(AddTask)
 		{
-			string userCommand = "add spring cleaning on 10/11/2015 7";
+			string userCommand = "add house cleaning on 10/11/2015 7";
 			
 			Logic logic;
 			Display actualDisplay;
@@ -31,6 +32,29 @@ namespace SystemTest
 			actualDisplay = *(logic.getDisplay());
 
 			validateDisplay(actualDisplay, idealDisplay);
+		}
+
+		TEST_METHOD(AddTasktoNonEmptyStorageTest)
+		{			
+			Logic logic;
+			Display actualDisplay;
+			Display idealDisplay;
+
+			string userCommand = "add house cleaning on 10/11/2015 7";
+			initializeHardcodedStorage(&logic);
+
+			generateHardcodedDisplay(&idealDisplay);
+
+			logic.initialiseProgram();
+			logic.processCommand(userCommand);
+
+			actualDisplay = *(logic.getDisplay());
+
+			validateDisplay(actualDisplay, idealDisplay);
+		}
+
+		void initializeHardcodedStorage(Logic* logic) {
+
 		}
 
 		void validateDisplay(Display actualDisplay, Display idealDisplay) {
@@ -112,5 +136,6 @@ namespace SystemTest
 			}
 			return true;
 		}
+
 	};
 }

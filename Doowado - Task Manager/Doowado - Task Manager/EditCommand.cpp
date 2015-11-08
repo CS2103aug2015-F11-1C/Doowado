@@ -152,6 +152,17 @@ EditCommand::~EditCommand()
 
 void EditCommand::execute(Storage* data, Display *display)
 {
+	if (_entryType == event) {
+		if (_taskID < 0 || _taskID >= display->getEventList().size()) {
+			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
+		}
+	}
+	else if (_entryType == task) {
+		if (_taskID < 0 || _taskID >= display->getTaskList().size()) {
+			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
+		}
+	}
+
 	Entry* editedEntry = display->retrieveEntry(_entryType, _taskID);
 	_setBeforeEditEntry(editedEntry);
 

@@ -1,7 +1,5 @@
 #include "CmdBuilderException.h"
 
-
-
 CmdBuilderException::CmdBuilderException(std::string message)
 {
 	_message = message;

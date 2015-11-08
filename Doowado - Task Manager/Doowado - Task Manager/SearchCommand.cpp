@@ -24,6 +24,7 @@ string SearchCommand::_generateDisplayState()
 SearchCommand::SearchCommand(vector<string>& keywords)
 {
 	_keywords = keywords;
+	int size = _keywords.size();
 }
 
 

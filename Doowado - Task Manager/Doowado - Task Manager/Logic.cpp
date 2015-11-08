@@ -84,14 +84,9 @@ void Logic::processCommand(string userInput)
 		parserResult = _parser->parse(userInput);
 
 		Command* cmd;
-		try {
-			cmd = _cmdBuilder->buildCommand(parserResult);
-			cmd->execute(_storage, _display);
-		}
-		catch (CmdBuilderException &e) {
-			cout << "catch exception in logic: " << e.getMessage() << endl;
-			throw;
-		}
+
+		cmd = _cmdBuilder->buildCommand(parserResult);
+		cmd->execute(_storage, _display);
 
 		updateOverdueTask();
 		updateDoneEvent();

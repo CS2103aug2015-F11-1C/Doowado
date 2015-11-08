@@ -2,19 +2,12 @@ Event
 event
 20151108T100000
 20151110T140000
-Event
-latest
-20151109T120000
-20151109T140000
+Clashing
 Event
 event
 20151109T170000
 20151109T190000
-Task
-test time
-20151106T000000
-Not Completed
-Overdue
+Clashing
 Task
 task
 20151106T000000
@@ -48,9 +41,5 @@ Overdue
 Task
 task12345
 20151109T150000
-Not Completed
-Not Overdue
-FTask
-from monday to friday
 Not Completed
 Not Overdue

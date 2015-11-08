@@ -29,6 +29,9 @@ int main() {
 		catch (CmdBuilderException & e) {
 			cout << "catch exception in controller: " << e.getMessage() << endl;
 		}
+		catch (CommandException & e) {
+			cout << "cathc command exception in controller: " << e.getMessage() << endl;
+		}
 		getline(cin, input);
 	}
 	return 0;

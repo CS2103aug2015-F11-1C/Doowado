@@ -48,6 +48,17 @@ Entry * MarkDoneCommand::getTaskMarkedDone()
 
 void MarkDoneCommand::execute(Storage * date, Display * display)
 {
+	if (_entryType == event) {
+		if (_taskID < 0 || _taskID >= display->getEventList().size()) {
+			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
+		}
+	}
+	else if (_entryType == task) {
+		if (_taskID < 0 || _taskID >= display->getTaskList().size()) {
+			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
+		}
+	}
+
 	Entry* entryToMarkDone = display->retrieveEntry(_entryType, _taskID);
 	entryToMarkDone->setDone(true);
 

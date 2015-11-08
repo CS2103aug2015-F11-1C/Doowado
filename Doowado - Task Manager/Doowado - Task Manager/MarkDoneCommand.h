@@ -1,5 +1,6 @@
 #pragma once
 #include "Command.h"
+#include "CommandException.h"
 
 const string MESSAGE_SUCCESSFUL_MARK_DONE = "Marked as done: ";
 

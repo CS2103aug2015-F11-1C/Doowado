@@ -1,5 +1,7 @@
 #pragma once
 #include "Command.h"
+
+const string MESSAGE_SUCCESSFUL_MARK_DONE = "Marked as done: ";
 class MarkDoneCommand : public Command
 {
 private:
@@ -8,6 +10,8 @@ private:
 	Entry* _eventMarkedDone;
 	Entry* _taskMarkedDone;
 	vector<string> _feedback;
+
+	void _generateFeedback();
 
 public:
 	MarkDoneCommand(EntryType, int);

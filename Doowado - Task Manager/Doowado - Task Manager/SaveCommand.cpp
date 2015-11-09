@@ -31,5 +31,6 @@ void SaveCommand::execute(Storage * data, Display * display)
 	generateFeedback(isSuccessful);
 
 	display->updateCommandFeedback(_feedback);
+	display->setLatestUpdatedEntry(NULL);
 	data->saveToFile();
 }

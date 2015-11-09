@@ -1,3 +1,4 @@
+//@@author A0114519J
 #ifndef PARSER_RESULT_H
 #define PARSER_RESULT_H
 

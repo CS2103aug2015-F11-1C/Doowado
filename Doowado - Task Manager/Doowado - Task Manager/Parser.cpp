@@ -182,7 +182,8 @@ void Parser::setDateAndTime(string& input){
 	}else if (input.find_first_of(" ") == string::npos) {
 		dateAndTime = input;
 		dateAndTime = convertStringTolowerCase(dateAndTime);
-		if (convertStringToInt(dateAndTime) == -1 && isDateOrTimeKeywordValid(dateAndTime)) {
+
+		if ((dateAndTime.find_first_not_of("0123456789") != string::npos) && (isDateOrTimeKeywordValid(dateAndTime))) {
 			dateAndTimeFragment = fragmentizeString(dateAndTime);
 
 			dateSetter(dateAndTimeFragment);
@@ -920,18 +921,24 @@ ParserResult Parser::parse(string input){
 
 	try {
 		string userInput = input;
+		LOG(INFO) << "Parser-Initial input:" << userInput;
 		if (userInput.empty()) {
 			throw std::out_of_range(ERROR_EMPTY_INPUT);
 		}
 
 		userInput = removeExtraSpacePadding(userInput);
 		setCommand(userInput);
+		LOG(INFO) << "Parser-After setCommand:" << userInput;
 		setDateAndTime(userInput);
+		LOG(INFO) << "Parser-After setDateAndTime:" << userInput;
 		setIndex(userInput);
+		LOG(INFO) << "Parser-After setIndex:" << userInput;
 		setDescription(userInput);
+		LOG(INFO) << "Parser-After setDescription:" << userInput;
 	}
 
 	catch (const out_of_range& error) {
+		LOG(INFO) << "Parser-Exception:" << error.what();
 		throw std::out_of_range(error.what());
 	}
 

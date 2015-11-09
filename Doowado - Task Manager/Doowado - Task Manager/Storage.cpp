@@ -31,7 +31,10 @@ void removeDuplicateEvents(vector<Entry*> Result) {
 	for (it1 = Result.begin(); it1 != Result.end(); it1++) {
 		for (it2 = it1 + 1; it2 != Result.end(); it2++) {
 			if ((*it1) == (*it2)) {
-				Result.erase(it2);
+				it2 = Result.erase(it2);
+				if (it2 == Result.end()) {
+					break;
+				}
 			}
 		}
 	}
@@ -44,7 +47,10 @@ void removeDuplicateTasks(vector<Entry*> Result) {
 	for (it1 = Result.begin(); it1 != Result.end(); it1++) {
 		for (it2 = it1 + 1; it2 != Result.end(); it2++) {
 			if ((*it1) == (*it2)) {
-				Result.erase(it2);
+				it2 = Result.erase(it2);
+				if (it2 == Result.end()) {
+					break;
+				}
 			}
 		}
 	}
@@ -370,25 +376,13 @@ void Storage::retrieveByDate(ptime timeIndicator1, ptime timeIndicator2, vector<
 	eventResult.clear();
 	taskResult.clear();
 
-	bool endsWithinRange;
-	bool startsWithinRange;
-	bool containsRange;
-
 	for (int i = 0; i < _eventList.size(); i++) {
-		endsWithinRange = _eventList[i]->getEndTime().date() >= timeIndicator1.date() && _eventList[i]->getEndTime().date() <= timeIndicator2.date();
-		startsWithinRange = _eventList[i]->getStartTime().date() >= timeIndicator1.date() && _eventList[i]->getStartTime().date() <= timeIndicator2.date();
-		containsRange = _eventList[i]->getStartTime().date() < timeIndicator1.date() && _eventList[i]->getEndTime().date() > timeIndicator2.date();
-		
-		//if (_eventList[i]->getEndTime().date() >= timeIndicator1.date() || _eventList[i]->getStartTime().date() >= timeIndicator2.date()) {
-		//	eventResult.push_back(_eventList[i]);
-		//}
-
-		if (endsWithinRange || startsWithinRange || containsRange) {
+		if ((_eventList[i]->getEndTime().date() >= timeIndicator1.date() && _eventList[i]->getEndTime().date() <= timeIndicator2.date()) || (_eventList[i]->getStartTime().date() <= timeIndicator2.date() && _eventList[i]->getStartTime().date() >= timeIndicator1.date())) {
 			eventResult.push_back(_eventList[i]);
 		}
 	}
 	for (int i = 0; i < _taskList.size(); i++) {
-		if ((_taskList[i]->getEndTime().date() >= timeIndicator1.date() && _taskList[i]->getEndTime().date() <= timeIndicator2.date()) || _taskList[i]->getEndTime().is_not_a_date_time()) {
+		if (_taskList[i]->getEndTime().date() >= timeIndicator1.date() && _taskList[i]->getEndTime().date() <= timeIndicator2.date()) {
 			taskResult.push_back(_taskList[i]);
 		}
 	}

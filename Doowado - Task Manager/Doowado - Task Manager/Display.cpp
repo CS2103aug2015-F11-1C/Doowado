@@ -1,9 +1,17 @@
 #include "Display.h"
 #include "Assert.h"
+#include "easylogging++.h"
 
+INITIALIZE_EASYLOGGINGPP;
 
-Display::Display()
-{
+Display::Display(void){
+	// Load configuration from file
+	el::Configurations conf("Log.conf");
+	// Reconfigure single logger
+	el::Loggers::reconfigureLogger("default", conf);
+	// Actually reconfigure all loggers instead
+	el::Loggers::reconfigureAllLoggers(conf);
+	// Now all the loggers will use configuration from file
 }
 
 
@@ -130,4 +138,8 @@ void Display::deleteEntry(Entry * entryToDelete)
 void Display::setLatestUpdatedEntry(Entry * latestEntry)
 {
 	_lastUpdatedEntry = latestEntry;
+}
+
+Entry * Display::retrieveLastUpdatedEntry(){
+	return _lastUpdatedEntry;
 }

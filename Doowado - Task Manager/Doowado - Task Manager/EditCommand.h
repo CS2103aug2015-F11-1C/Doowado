@@ -2,6 +2,7 @@
 #include "Command.h"
 #include "CommandException.h"
 
+const int INDEX_LOWER_LIMIT = 0;
 const string MESSAGE_SUCCESSFUL_EDIT = "Edited";
 const string eventType = "e";
 const string taskType = "t";
@@ -34,13 +35,16 @@ private:
 	Entry * _beforeEditEntry;
 	Entry * _editedEntry;
 
-	void _generateFeedback(Entry * editedEntry);
-	void _generateUndoFeedBack(Entry * undoneEntry);
-	void _updateDisplay(Display * display, Storage * storage, Entry * editedEntry);
-	void _setBeforeEditEntry(Entry * beforeEditEntry);
-	void _setEditedEntry(Entry * editedEntry);
-	TypeOfTimeEdit _checkTimeEditStart();
-	TypeOfTimeEdit _checkTimeEditEnd();
+	void generateFeedback(Entry * editedEntry);
+	void generateUndoFeedBack(Entry * undoneEntry);
+	void updateDisplay(Display * display, Storage * storage, Entry * editedEntry);
+	void setBeforeEditEntry(Entry * beforeEditEntry);
+	void setEditedEntry(Entry * editedEntry);
+	TypeOfTimeEdit checkTimeEditStart();
+	TypeOfTimeEdit checkTimeEditEnd();
+	bool isOutOfRangeIndex(EntryType entryType, Display * display);
+	void processEditTimeEvent(Storage * data, Display * display, Entry * editedEntry, TypeOfTimeEdit typeEditStart, TypeOfTimeEdit typeEditEnd);
+	void processEditTimeTask(Storage * data, Entry * editedEntry, TypeOfTimeEdit typeEditStart, TypeOfTimeEdit typeEditEnd);
 
 public:
 	EditCommand(EntryType entryType,

@@ -35,6 +35,10 @@ void EditCommand::updateDisplay(Display * display, Storage * data, Entry * edite
 	ptime startTime = editedEntry->getStartTime();
 	ptime endTime = editedEntry->getEndTime();
 	
+	LOG(INFO) << "EditedEntry title:" << editedEntry->getTitle();
+	LOG(INFO) << "EditedEntry startTime:" << startTime;
+	LOG(INFO) << "EditedEntry endTime:" << endTime;
+
 	if (!startTime.is_not_a_date_time()) {
 		showTime = startTime;
 		data->retrieveByDate(showTime, relevantEventList, relevantTaskList);
@@ -188,7 +192,7 @@ void EditCommand::processEditTimeEvent(Storage * data, Display * display, Entry 
 		date originalStartDate = _beforeEditEntry->getStartTime().date();
 
 		if (originalStartDate.is_not_a_date()) {
-			//exception
+			throw CommandException(EXCEPTION_TIME_WITH_NO_DATE);
 		}
 		else {
 			ptime editedStartTime(originalStartDate, newStartTime);
@@ -217,6 +221,7 @@ void EditCommand::processEditTimeEvent(Storage * data, Display * display, Entry 
 		time_duration originalEndTime = _beforeEditEntry->getEndTime().time_of_day();
 
 		if (originalEndTime.is_not_a_date_time()) {
+			time_duration newEndTime(duration_from_string(STRING_END_TIME_INITIALISE));
 			ptime editedEndTime(newEndDate);
 			editedEntry->setEndTime(editedEndTime);
 		}
@@ -231,7 +236,7 @@ void EditCommand::processEditTimeEvent(Storage * data, Display * display, Entry 
 		date originalEndDate = _beforeEditEntry->getEndTime().date();
 
 		if (originalEndDate.is_not_a_date()) {
-			//exception
+			throw CommandException(EXCEPTION_TIME_WITH_NO_DATE);
 		}
 		else {
 			ptime editedEndTime(originalEndDate, newEndTime);
@@ -274,7 +279,7 @@ void EditCommand::processEditTimeTask(Storage * data, Entry * editedEntry, TypeO
 	}
 
 	else if (typeEditStart == editStartTime) {
-		//exception
+		throw CommandException(EXCEPTION_TIME_WITH_NO_DATE);
 	}
 	else if (typeEditStart == noChangeinStart) {
 
@@ -297,7 +302,8 @@ void EditCommand::processEditTimeTask(Storage * data, Entry * editedEntry, TypeO
 		ptime editedEndTime;
 
 		if (originalEndTime.is_not_a_date_time()) {
-			ptime editedEndTime(newEndDate);
+			time_duration newEndTime(duration_from_string(STRING_END_TIME_INITIALISE));
+			ptime editedEndTime(newEndDate, newEndTime);
 			editedEntry->setEndTime(editedEndTime);
 		}
 		else {
@@ -311,7 +317,7 @@ void EditCommand::processEditTimeTask(Storage * data, Entry * editedEntry, TypeO
 		date originalEndDate = _beforeEditEntry->getEndTime().date();
 
 		if (originalEndDate.is_not_a_date()) {
-			//throw exception;
+			throw CommandException(EXCEPTION_TIME_WITH_NO_DATE);
 		}
 		else {
 			ptime editedEndTime(originalEndDate, newEndTime);

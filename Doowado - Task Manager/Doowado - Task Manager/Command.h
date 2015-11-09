@@ -14,6 +14,7 @@ using namespace boost::gregorian;
 using namespace boost::posix_time;
 
 const string MESSAGE_SUCCESSFUL_UNDO = "Undone";
+const string STRING_END_TIME_INITIALISE = "23:59";
 
 class Command
 {

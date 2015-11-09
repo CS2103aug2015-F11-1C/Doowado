@@ -1,23 +1,20 @@
-Event
-event
-20151108T100000
-20151110T140000
-Clashing
-Event
-event
-20151109T170000
-20151109T190000
-Clashing
 Task
+eventADD
+20151110T030000
+Not Completed
+Not Overdue
+FTask
+event
+Not Completed
+Not Overdue
+FTask
 task
-20151106T000000
 Not Completed
-Overdue
-Task
+Not Overdue
+FTask
 overduetask
-20151107T183000
 Not Completed
-Overdue
+Not Overdue
 Task
 change2
 20151109T100000
@@ -41,6 +38,11 @@ Overdue
 Task
 task12345
 20151109T150000
+Not Completed
+Overdue
+Task
+event
+20151110T140000
 Not Completed
 Not Overdue
 FTask

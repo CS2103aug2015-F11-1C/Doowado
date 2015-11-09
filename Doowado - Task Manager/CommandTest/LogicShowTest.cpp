@@ -152,6 +152,14 @@ namespace LogicShowTest
 			idealDisplayEventList.push_back(entryOnDate2);
 			idealDisplayEventList.push_back(entryOnDate3);
 
+			idealDisplayTaskList.push_back(earlierTimedTaskOnDate1);
+			idealDisplayTaskList.push_back(laterTimedTaskOnDate1);
+			idealDisplayTaskList.push_back(timedTaskOnDate2);
+			idealDisplayTaskList.push_back(timedTaskOnDate3);
+			idealDisplayTaskList.push_back(floatingTask1);
+			idealDisplayTaskList.push_back(floatingTask2);
+
+
 			idealDisplay->updateCommandFeedback(idealCmdFeedback);
 			idealDisplay->updateDisplayEventList(idealDisplayEventList);
 			idealDisplay->updateDisplayTaskList(idealDisplayTaskList);
@@ -161,7 +169,7 @@ namespace LogicShowTest
 		void validateDisplay(Display actualDisplay, Display idealDisplay) {
 			validateCmdFeedback(actualDisplay, idealDisplay);
 			validateEventList(actualDisplay, idealDisplay);
-			//validateTaskList(actualDisplay, idealDisplay);
+			validateTaskList(actualDisplay, idealDisplay);
 		}
 
 		void validateCmdFeedback(Display actualDisplay, Display idealDisplay) {

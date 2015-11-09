@@ -4,19 +4,9 @@ event
 20151110T140000
 Clashing
 Event
-event with date only
-20151109T000000
-20151110T235900
-Clashing
-Event
 event
 20151109T170000
 20151109T190000
-Clashing
-Event
-event trial
-20151110T100000
-20151110T140000
 Clashing
 Task
 task
@@ -53,21 +43,7 @@ task12345
 20151109T150000
 Not Completed
 Overdue
-Task
-timed task
-20151110T150000
-Not Completed
-Not Overdue
-Task
+FTask
 12345
-20151110T235900
-Not Completed
-Not Overdue
-FTask
-null to null event
-Not Completed
-Not Overdue
-FTask
-float task
 Not Completed
 Not Overdue

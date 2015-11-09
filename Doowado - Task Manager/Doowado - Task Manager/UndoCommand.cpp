@@ -1,5 +1,7 @@
 #include "UndoCommand.h"
 
+//@@author A0102794E
+
 const string UndoCommand::MSG_NOTHING_TO_UNDO = "Nothing to undo";
 
 UndoCommand::UndoCommand()

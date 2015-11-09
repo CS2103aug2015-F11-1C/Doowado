@@ -1,6 +1,8 @@
 #include "Display.h"
 #include "Assert.h"
 
+//@@author A0102794E
+
 Display::Display(){}
 
 
@@ -21,6 +23,8 @@ void Display::updateDisplayTaskList(vector<Entry*>& updatedTaskList)
 {
 	_taskList = updatedTaskList;
 }
+
+//@@author 
 
 Entry * Display::retrieveEntry(EntryType entryType, int taskID)
 {
@@ -52,6 +56,8 @@ Entry * Display::retrieveTask(int taskID)
 	return taskToRetrieve;
 }
 */
+
+//@@author A0102794E
 void Display::checkValidFeedback(vector<string>& feedback)
 {
 	assert(feedback.size() != 0);
@@ -71,6 +77,9 @@ vector<string>& Display::getCommandFeedback()
 {
 	return _commandFeedback;
 }
+
+
+//@@author 
 
 void Display::setEventDisplayState(string eventDisplayState)
 {

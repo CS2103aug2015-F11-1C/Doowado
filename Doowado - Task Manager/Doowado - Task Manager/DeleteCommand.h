@@ -27,6 +27,6 @@ class DeleteCommand: public Command {
 
 		void execute(Storage* data, Display* display);
 		void undo(Storage* data, Display* display);
-		void restoreToStorage(Storage *);
+		void restoreToStorage(Storage * storage, Display* display);
 };
 

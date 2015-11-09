@@ -90,17 +90,19 @@ void DeleteCommand::execute(Storage* data, Display* display) {
 
 void DeleteCommand::undo(Storage * data, Display * display)
 {
-	restoreToStorage(data);
+	restoreToStorage(data, display);
 	generateUndoFeedback();
 	updateDisplay(display, data);
 }
 
-void DeleteCommand::restoreToStorage(Storage* data) {
+void DeleteCommand::restoreToStorage(Storage* data, Display* display) {
 	if (event == _entryType) {
 		data->addEvent(_eventDeleted);
+		display->setLatestUpdatedEntry(_eventDeleted);
 	}
 	else if (task == _entryType) {
 		data->addTask(_taskDeleted);
+		display->setLatestUpdatedEntry(_taskDeleted);
 	}
 }
 
@@ -147,6 +149,5 @@ ptime DeleteCommand::getRelevantTime(EntryType _entryType) {
 			relevantTime = currentTime;
 		}
 	}
-
 	return relevantTime;
 }

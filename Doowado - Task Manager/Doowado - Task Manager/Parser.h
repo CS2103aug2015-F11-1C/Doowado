@@ -9,6 +9,7 @@
 #include <sstream>
 #include <time.h> 
 #include <exception>
+#include "easylogging++.h"
 
 using namespace std;
 

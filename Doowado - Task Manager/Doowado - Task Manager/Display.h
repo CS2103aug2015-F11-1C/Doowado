@@ -1,5 +1,6 @@
 #pragma once
 #include "Storage.h"
+#include "easylogging++.h"
 
 enum entryStatus { completed, incomplete, overdue, intime };
 
@@ -16,7 +17,7 @@ protected:
 	Entry* _lastUpdatedEntry;
 
 public:
-	Display();
+	Display(void);
 	~Display();
 	
 	//updateDefault

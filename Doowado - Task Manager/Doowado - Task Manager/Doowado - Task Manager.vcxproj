@@ -153,6 +153,7 @@
     <ClInclude Include="CommandException.h" />
     <ClInclude Include="DeleteCommand.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="easylogging++.h" />
     <ClInclude Include="EditCommand.h" />
     <ClInclude Include="Entry.h" />
     <ClInclude Include="History.h" />

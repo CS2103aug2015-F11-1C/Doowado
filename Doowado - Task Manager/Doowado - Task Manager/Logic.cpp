@@ -2,7 +2,6 @@
 #include "easylogging++.h"
 
 INITIALIZE_EASYLOGGINGPP;
-//@@author A0114137R
 
 void Logic::updateOverdueTask()
 {
@@ -52,6 +51,36 @@ void Logic::updateClashEvent()
 	}
 }
 
+void Logic::updateNotClashingAnymore(){
+	std::vector<Entry*> eventList;
+	eventList = _storage->retrieveEventList();
+	
+	for (int i = 0; i < eventList.size(); i++) {
+		if (eventList[i]->isClash()) {
+			bool clashing = false;
+			ptime eventStartTime1 = eventList[i]->getStartTime();
+			ptime eventEndTime1 = eventList[i]->getEndTime();
+
+			int j;
+
+			for (j = 0; j < eventList.size() && !clashing; j++) {
+				if (i != j) {
+					ptime eventStartTime2 = eventList[j]->getStartTime();
+					ptime eventEndTime2 = eventList[j]->getEndTime();
+
+					if (isOverlapTime(eventStartTime1, eventEndTime1, eventStartTime2, eventEndTime2)) {
+						clashing = true;
+					}
+				}
+			}
+
+			if (j == eventList.size()) {
+				eventList[i]->setClash(clashing);
+			}
+		}
+	}
+}
+
 bool Logic::isOverlapTime(ptime startTime1, ptime endTime1, ptime startTime2, ptime endTime2)
 {
 	bool isOverlap;
@@ -79,7 +108,7 @@ Logic::Logic()
 	el::Loggers::reconfigureAllLoggers(conf);
 	// Now all the loggers will use configuration from file
 
-	//@@author A0114137R
+	//@@author
 	_storage = new Storage();
 	_cmdBuilder = new CommandBuilder();
 	_parser = new Parser();
@@ -95,16 +124,24 @@ void Logic::processCommand(string userInput)
 {
 	
 		ParserResult parserResult;
-		parserResult = _parser->parse(userInput);
+
+		try {
+			parserResult = _parser->parse(userInput);
+		}
+		catch (std::exception &e) {
+			parserResult.resetAll();
+			throw e;
+		}
 
 		Command* cmd;
-
+		
 		cmd = _cmdBuilder->buildCommand(parserResult);
 		cmd->execute(_storage, _display);
 
 		updateOverdueTask();
 		updateDoneEvent();
 		updateClashEvent();
+		updateNotClashingAnymore();
 		_storage->saveToFile();	
 }
 

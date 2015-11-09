@@ -13,7 +13,11 @@ const string TODAY_INDICATOR = "today";
 const string TOMORROW_INDICATOR = "tomorrow";
 const string HELP_DIRECTORY = "Help.txt";
 const string SAVE_PATH_FILE_DIRECTORY = "SaveDir.txt";
+const string DEFAULT_SAVE_PATH = "SaveFile.txt";
 const string SEARCH_QUERY_NOT_FOUND = "Phrase not found in database";
+const string EMPTY_STRING = "";
+
+const string INVALID_SAVE_PATH_ERROR = "Save Path Invalid";
 
 void checkEmptyVector(vector<Entry*> Result) {
 	if (Result.empty()) {
@@ -157,7 +161,15 @@ vector <Entry*> Storage::searchTasksByTitle(vector <string> keywords) {
 // Attribute 4 of that Entry type (if any)
 // Attribute 5 of that Entry type (if any)
 void Storage::saveToFile() {
-	ofstream output(_saveDir);
+	ofstream output;
+
+	output.open(_saveDir);
+
+	if (!output.is_open()) {
+		StorageException errorMessage(SAVE_PATH_FILE_DIRECTORY);
+
+		throw (errorMessage);
+	}
 
 	for (int i = 0; i < _eventList.size(); i++) {
 		output << EVENT_ENTRY << endl;
@@ -207,7 +219,15 @@ void Storage::saveToFile() {
 }
 
 void Storage::loadFromFile() {
-	ifstream input(_saveDir);
+	ifstream input;
+
+	input.open(_saveDir);
+
+	if (!input.is_open()) {
+		StorageException errorMessage(SAVE_PATH_FILE_DIRECTORY);
+
+		throw (errorMessage);
+	}
 
 	string entryType;
 

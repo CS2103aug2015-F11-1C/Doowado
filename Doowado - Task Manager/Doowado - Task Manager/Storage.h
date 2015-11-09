@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entry.h"
+#include "StorageException.h"
 #include <vector>
 #include <fstream>
 

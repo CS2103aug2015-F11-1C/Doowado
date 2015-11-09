@@ -1,6 +1,6 @@
 #include "MarkDoneCommand.h"
 
-void MarkDoneCommand::_generateFeedback()
+void MarkDoneCommand::generateFeedback()
 {
 	_feedback.push_back(MESSAGE_SUCCESSFUL_MARK_DONE);
 	
@@ -36,11 +36,6 @@ int MarkDoneCommand::getIndex()
 	return _taskID;
 }
 
-Entry * MarkDoneCommand::getEventMarkedDone()
-{
-	return _eventMarkedDone;
-}
-
 Entry * MarkDoneCommand::getTaskMarkedDone()
 {
 	return _taskMarkedDone;
@@ -63,12 +58,13 @@ void MarkDoneCommand::execute(Storage * date, Display * display)
 	entryToMarkDone->setDone(true);
 
 	if (_entryType == event) {
-		//throw exception, not allowed - marked done is only for task
+		throw CommandException(EXCEPTION_INVALID_MARK_EVENT);
 	}
 	else if (_entryType == task) {
 		_taskMarkedDone = entryToMarkDone;
 	}
 
-	_generateFeedback();
+	generateFeedback();
 	display->updateCommandFeedback(_feedback);
+	display->setLatestUpdatedEntry(_taskMarkedDone);
 }

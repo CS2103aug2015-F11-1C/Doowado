@@ -921,20 +921,20 @@ ParserResult Parser::parse(string input){
 
 	try {
 		string userInput = input;
-		//LOG(INFO) << "Parser-Initial input:" << userInput;
+		LOG(INFO) << "Parser-Initial input:" << userInput;
 		if (userInput.empty()) {
 			throw std::out_of_range(ERROR_EMPTY_INPUT);
 		}
 
 		userInput = removeExtraSpacePadding(userInput);
 		setCommand(userInput);
-		//LOG(INFO) << "Parser-After setCommand:" << userInput;
+		LOG(INFO) << "Parser-After setCommand:" << userInput;
 		setDateAndTime(userInput);
-		//LOG(INFO) << "Parser-After setDateAndTime:" << userInput;
+		LOG(INFO) << "Parser-After setDateAndTime:" << userInput;
 		setIndex(userInput);
-		//LOG(INFO) << "Parser-After setIndex:" << userInput;
+		LOG(INFO) << "Parser-After setIndex:" << userInput;
 		setDescription(userInput);
-		//LOG(INFO) << "Parser-After setDescription:" << userInput;
+		LOG(INFO) << "Parser-After setDescription:" << userInput;
 	}
 
 	catch (const out_of_range& error) {

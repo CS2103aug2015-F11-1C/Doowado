@@ -17,6 +17,17 @@ ParserResult::ParserResult(){
 	_endTime.clear();
 }
 
+void ParserResult::resetAll(){
+	_userCommand = "";
+	_description.clear();
+	_index.clear();
+	_entryType.clear();
+	_startDate.clear();
+	_endDate.clear();
+	_startTime.clear();
+	_endTime.clear();
+}
+
 void ParserResult::setUserCommand(string userCommand){
 	_userCommand = userCommand;
 }

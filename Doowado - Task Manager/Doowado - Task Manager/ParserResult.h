@@ -29,6 +29,8 @@ private:
 public:
 	ParserResult::ParserResult();
 
+	void resetAll();
+
 	void setUserCommand(string userCommand);
 
 	void setDescription(vector<string> description);

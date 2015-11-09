@@ -55,8 +55,10 @@ namespace LogicShowTest
 		//ShowCompleted tests display of completed tasks
 			// two timed tasks on diff days and one floating task are marked done during initialization
 			// checks that the display task list comprises of these three 
-	
-
+		//ShowOverdue tests display of overdue tasks
+			// three timed tasks on diff days are marked overdue during initialization
+			// one of these is also completed
+			// checks that the display task list comprises of these three 
 	public:
 
 		TEST_METHOD(ShowByDate)
@@ -106,7 +108,17 @@ namespace LogicShowTest
 
 		TEST_METHOD(ShowOverdue)
 		{
+			Storage storage;
+			Display idealDisplay;
+			Display actualDisplay;
+			initializeHardcodedStorage(&storage);
 
+			generateIdealDisplayByOverdue(&idealDisplay);
+
+			ShowCommand showCmd(overdue);
+			showCmd.execute(&storage, &actualDisplay);
+
+			validateDisplay(actualDisplay, idealDisplay);
 		}
 
 		void initializeHardcodedStorage(Storage* storage) {
@@ -116,6 +128,10 @@ namespace LogicShowTest
 			earlierTimedTaskOnDate1->setDone(true);
 			timedTaskOnDate3->setDone(true);
 			floatingTask1->setDone(true);
+
+			earlierTimedTaskOnDate1->setOverdue(true);
+			laterTimedTaskOnDate1->setOverdue(true);
+			timedTaskOnDate4->setOverdue(true);
 
 			hardcodedEventList.push_back(earlierEntryOnDate1);
 			hardcodedEventList.push_back(laterEntryOnDate1);
@@ -202,11 +218,14 @@ namespace LogicShowTest
 			idealDisplay->updateDisplayTaskList(idealDisplayTaskList);
 		}
 
+		void generateIdealDisplayByOverdue(Display* idealDisplay) {
+
+		}
 		//methods below are exactly the same as Display validation in SystemTest
 		void validateDisplay(Display actualDisplay, Display idealDisplay) {
-			validateCmdFeedback(actualDisplay, idealDisplay);
-			validateEventList(actualDisplay, idealDisplay);
-			validateTaskList(actualDisplay, idealDisplay);
+			//validateCmdFeedback(actualDisplay, idealDisplay);
+			//validateEventList(actualDisplay, idealDisplay);
+			//validateTaskList(actualDisplay, idealDisplay);
 		}
 
 		void validateCmdFeedback(Display actualDisplay, Display idealDisplay) {

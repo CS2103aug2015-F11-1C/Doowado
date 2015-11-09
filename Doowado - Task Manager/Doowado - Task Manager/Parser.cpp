@@ -82,6 +82,7 @@ void Parser::setDescription(string input){
 		invalidDateTimeInput = input.substr(quotationPos + 1);
 
 		if (quotationPos != string::npos && !invalidDateTimeInput.empty()) {
+			resetAll();
 			throw std::out_of_range(ERROR_INVALID_DATE_TIME_INPUT);
 		}else {
 			input = input.substr(0, quotationPos);
@@ -311,16 +312,19 @@ vector<int> Parser::extractYearMonthDay(string input){
 					return output;
 				}else {
 					output.clear();
+					resetAll();
 					throw std::out_of_range(ERROR_INVALID_DAY);
 					return output;
 				}
 			}else {
 				output.clear();
+				resetAll();
 				throw std::out_of_range(ERROR_INVALID_MONTH);
 				return output;
 			}
 		}else {
 			output.clear();
+			resetAll();
 			throw std::out_of_range(ERROR_INVALID_YEAR);
 			return output;
 		}
@@ -339,11 +343,13 @@ vector<int> Parser::extractYearMonthDay(string input){
 				return output;
 			}else {
 				output.clear();
+				resetAll();
 				throw std::out_of_range(ERROR_INVALID_DAY);
 				return output;
 			}
 		}else {
 			output.clear();
+			resetAll();
 			throw std::out_of_range(ERROR_INVALID_MONTH);
 			return output;
 		}
@@ -358,6 +364,7 @@ vector<int> Parser::extractYearMonthDay(string input){
 		}
 	}else {
 		output.clear();
+		resetAll();
 		throw std::out_of_range(ERROR_INVALID_DATE_TIME_INPUT);
 		return output;
 	}
@@ -690,6 +697,7 @@ int Parser::extractTime(string input){
 					timeInt = hourInt * 100 + minuteInt;
 					return timeInt;
 				}else {
+					resetAll();
 					throw std::out_of_range(ERROR_INVALID_TIME_INPUT);
 					return timeInt = -1;
 				}
@@ -703,6 +711,7 @@ int Parser::extractTime(string input){
 					timeInt = hourInt * 100 + minuteInt;
 					return timeInt;
 				}else {
+					resetAll();
 					throw std::out_of_range(ERROR_INVALID_TIME_INPUT);
 					return timeInt = -1;
 				}
@@ -715,6 +724,7 @@ int Parser::extractTime(string input){
 					timeInt = hourInt * 100 + minuteInt;
 					return timeInt;
 				}else {
+					resetAll();
 					throw std::out_of_range(ERROR_INVALID_TIME_INPUT);
 					return timeInt = -1;
 				}
@@ -905,6 +915,7 @@ ParserResult Parser::parse(string input){
 		string userInput = input;
 		LOG(INFO) << "Parser-Initial input:" << userInput;
 		if (userInput.empty()) {
+			resetAll();
 			throw std::out_of_range(ERROR_EMPTY_INPUT);
 		}
 
@@ -920,7 +931,8 @@ ParserResult Parser::parse(string input){
 	}
 
 	catch (const out_of_range& error) {
-		//LOG(INFO) << "Parser-Exception:" << error.what();
+		LOG(INFO) << "Parser-Exception:" << error.what();
+		resetAll();
 		throw std::out_of_range(error.what());
 	}
 

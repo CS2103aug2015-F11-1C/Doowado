@@ -1,5 +1,5 @@
 # generated
-###### Doowado - Task Manager\CommandTest\HistoryStub.cpp
+###### CommandTest\HistoryStub.cpp
 ``` cpp
 
 HistoryStub::HistoryStub()
@@ -11,7 +11,7 @@ HistoryStub::~HistoryStub()
 {
 }
 ```
-###### Doowado - Task Manager\CommandTest\HistoryStub.h
+###### CommandTest\HistoryStub.h
 ``` h
 
 class HistoryStub: public History

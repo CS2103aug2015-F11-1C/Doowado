@@ -5,6 +5,7 @@
 #include "Command.h"
 #include "Parser.h"
 #include "Display.h"
+#include "easylogging++.h"
 
 static ptime currentTime(second_clock::local_time());
 

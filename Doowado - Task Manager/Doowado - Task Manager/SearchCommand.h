@@ -8,8 +8,8 @@ class SearchCommand : public Command
 private:
 	std::vector<std::string> _keywords;
 	std::vector<std::string> _feedback;
-	void _generateFeedback();
-	std::string _generateDisplayState();
+	void generateFeedback();
+	std::string generateDisplayState();
 
 public:
 	SearchCommand(std::vector<std::string>&);

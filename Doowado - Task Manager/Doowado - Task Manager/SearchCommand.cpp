@@ -1,6 +1,6 @@
 #include "SearchCommand.h"
 
-void SearchCommand::_generateFeedback()
+void SearchCommand::generateFeedback()
 {
 	_feedback.push_back(MESSAGE_SUCCESSFUL_SEARCH_KEYWORDS);
 	for (int i = 0; i < _keywords.size(); i++) {
@@ -8,7 +8,7 @@ void SearchCommand::_generateFeedback()
 	}
 }
 
-string SearchCommand::_generateDisplayState()
+string SearchCommand::generateDisplayState()
 {
 	string displayState;
 
@@ -40,10 +40,11 @@ void SearchCommand::execute(Storage * data, Display * display)
 	display->updateDisplayEventList(eventSearchResult);
 	display->updateDisplayTaskList(taskSearchResult);
 
-	_generateFeedback();
+	generateFeedback();
 	display->updateCommandFeedback(_feedback);
 
-	string displayState = _generateDisplayState();
+	string displayState = generateDisplayState();
 	display->setEventDisplayState(displayState);
 	display->setTaskDisplayState(displayState);
+	display->setLatestUpdatedEntry(NULL);
 }

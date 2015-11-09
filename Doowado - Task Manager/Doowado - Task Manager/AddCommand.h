@@ -1,5 +1,6 @@
 #pragma once
 #include "Command.h"
+#include "CommandException.h"
 
 //@@author A0102794E
 

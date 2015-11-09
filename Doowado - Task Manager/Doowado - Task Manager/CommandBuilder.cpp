@@ -74,7 +74,7 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 
 	ptime entryStartPtime(entryStartDate, entryStartTime);
 	ptime entryEndPtime(entryEndDate, entryEndTime);
-
+/*
 	if (!entryStartPtime.is_not_a_date_time() && !entryEndPtime.is_not_a_date_time()) {
 		if (entryStartPtime > entryEndPtime) {
 			LOG(INFO) << "CmdBuilderException startTime > endTime";
@@ -83,7 +83,7 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 			throw CmdBuilderException(EXCEPTION_START_TIME_GREATER_END_TIME);
 		}
 	}
-
+*/
 	addCommand = new AddCommand(entryTitle, entryStartPtime, entryEndPtime);
 
 	return addCommand;
@@ -293,7 +293,7 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 	}
 	
 	else if (showType == showByDate) {
-		stringEndDate = vEndDateRequirement[ZERO_INDEX]];
+		stringEndDate = vEndDateRequirement[ZERO_INDEX];
 		date endDate(from_undelimited_string(stringEndDate));
 		if (endDate.is_not_a_date()) {
 			throw CmdBuilderException(EXCEPTION_INVALID_TIME);

@@ -397,6 +397,8 @@ void EditCommand::execute(Storage* data, Display *display)
 	} 
 
 	if (isInvalidTime(editedEntry)) {
+		editedEntry->setStartTime(_beforeEditEntry->getStartTime());
+		editedEntry->setEndTime(_beforeEditEntry->getEndTime());
 		throw CommandException(EXCEPTION_START_TIME_GREATER_END_TIME);
 	}
 	

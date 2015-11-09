@@ -142,6 +142,7 @@
     <ClCompile Include="SearchCommand.cpp" />
     <ClCompile Include="ShowCommand.cpp" />
     <ClCompile Include="Storage.cpp" />
+    <ClCompile Include="StorageException.cpp" />
     <ClCompile Include="UndoCommand.cpp" />
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
@@ -165,6 +166,7 @@
     <ClInclude Include="SearchCommand.h" />
     <ClInclude Include="ShowCommand.h" />
     <ClInclude Include="Storage.h" />
+    <ClInclude Include="StorageException.h" />
     <ClInclude Include="UndoCommand.h" />
     <ClInclude Include="UserInterface.h" />
   </ItemGroup>

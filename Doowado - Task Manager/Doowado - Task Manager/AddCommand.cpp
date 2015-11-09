@@ -7,6 +7,12 @@ const string AddCommand::MESSAGE_ADDED = "Added";
 
 AddCommand::AddCommand(string entryTitle, ptime entryStartTime, ptime entryEndTime)
 {
+	if (!entryStartTime.is_not_a_date_time() && !entryEndTime.is_not_a_date_time()) {
+		if (entryStartTime > entryEndTime) {
+			throw CommandException(EXCEPTION_START_TIME_GREATER_END_TIME);
+		}
+	}
+
 	_entryTitle = entryTitle;
 	_entryStartTime = entryStartTime;
 	_entryEndTime = entryEndTime;

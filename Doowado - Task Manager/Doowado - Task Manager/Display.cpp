@@ -113,18 +113,23 @@ void Display::deleteEntry(Entry * entryToDelete)
 
 	vector<Entry*>::iterator it = _eventList.begin();
 
-	while (*it != entryToDelete) {
+	while (it != _eventList.end()) {
+		if (*it == entryToDelete) {
+			_eventList.erase(it);
+			break;
+		}
 		it++;
 	}
-	_eventList.erase(it);
 
 	it = _taskList.begin();
 
-	while (*it != entryToDelete) {
+	while (it != _taskList.end()) {
+		if (*it == entryToDelete) {
+			_taskList.erase(it);
+			break;
+		}
 		it++;
 	}
-	_taskList.erase(it);
-
 }
 
 void Display::setLatestUpdatedEntry(Entry * latestEntry)

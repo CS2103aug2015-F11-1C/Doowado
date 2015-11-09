@@ -1,6 +1,6 @@
 #include "EditCommand.h"
 
-void EditCommand::_generateFeedback(Entry * editedEntry)
+void EditCommand::generateFeedback(Entry * editedEntry)
 {
 	_feedback.push_back(MESSAGE_SUCCESSFUL_EDIT);
 	_feedback.push_back(editedEntry->getTitle());
@@ -20,13 +20,13 @@ void EditCommand::_generateFeedback(Entry * editedEntry)
 	}
 }
 
-void EditCommand::_generateUndoFeedBack(Entry * undoneEntry)
+void EditCommand::generateUndoFeedBack(Entry * undoneEntry)
 {
 	_feedback.clear();
 	_feedback.push_back(MESSAGE_SUCCESSFUL_UNDO);
 }
 
-void EditCommand::_updateDisplay(Display * display, Storage * data, Entry * editedEntry)
+void EditCommand::updateDisplay(Display * display, Storage * data, Entry * editedEntry)
 {
 	std::vector<Entry*> relevantEventList;
 	std::vector<Entry*> relevantTaskList;
@@ -50,25 +50,25 @@ void EditCommand::_updateDisplay(Display * display, Storage * data, Entry * edit
 	}
 
 	else if (editedEntry == _beforeEditEntry) {			//undo
-		if (!_editedEntry->getEndTime().is_not_a_date_time()) {
+//		if (!_editedEntry->getEndTime().is_not_a_date_time()) {
 			display->deleteEntry(_editedEntry);
 			relevantTaskList = display->getTaskList();
 			relevantTaskList.push_back(editedEntry);
 			display->updateDisplayTaskList(relevantTaskList);
-		}
+//		}
 	}
 
 	else if (editedEntry == _editedEntry) {
-		if (!_beforeEditEntry->getEndTime().is_not_a_date_time()) {
+//		if (!_beforeEditEntry->getEndTime().is_not_a_date_time()) {
 			display->deleteEntry(editedEntry);
 			relevantTaskList = display->getTaskList();
 			relevantTaskList.push_back(editedEntry);
 			display->updateDisplayTaskList(relevantTaskList);
-		}
+//		}
 	}
 }
 
-void EditCommand::_setBeforeEditEntry(Entry * beforeEditEntry)
+void EditCommand::setBeforeEditEntry(Entry * beforeEditEntry)
 {
 	string title = beforeEditEntry->getTitle();
 	ptime startTime = beforeEditEntry->getStartTime();
@@ -81,12 +81,12 @@ void EditCommand::_setBeforeEditEntry(Entry * beforeEditEntry)
 	_beforeEditEntry->setOverdue(isOverdue);
 }
 
-void EditCommand::_setEditedEntry(Entry * editedEntry)
+void EditCommand::setEditedEntry(Entry * editedEntry)
 {
 	_editedEntry = editedEntry;
 }
 
-TypeOfTimeEdit EditCommand::_checkTimeEditStart()
+TypeOfTimeEdit EditCommand::checkTimeEditStart()
 {
 	TypeOfTimeEdit editType;
 
@@ -110,7 +110,7 @@ TypeOfTimeEdit EditCommand::_checkTimeEditStart()
 	return editType;
 }
 
-TypeOfTimeEdit EditCommand::_checkTimeEditEnd()
+TypeOfTimeEdit EditCommand::checkTimeEditEnd()
 {
 	TypeOfTimeEdit editType;
 
@@ -134,6 +134,195 @@ TypeOfTimeEdit EditCommand::_checkTimeEditEnd()
 	return editType;
 }
 
+bool EditCommand::isOutOfRangeIndex(EntryType entryType, Display * display)
+{
+	if (_entryType == event) {
+		if (_taskID < INDEX_LOWER_LIMIT || _taskID >= display->getEventList().size()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else if (_entryType == task) {
+		if (_taskID < INDEX_LOWER_LIMIT || _taskID >= display->getTaskList().size()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
+void EditCommand::processEditTimeEvent(Storage * data, Display * display, Entry * editedEntry, TypeOfTimeEdit typeEditStart, TypeOfTimeEdit typeEditEnd)
+{
+	//start time processing
+	if (typeEditStart == editNullStart) {
+		ptime editedStartTime(not_a_date_time);
+		editedEntry->setStartTime(editedStartTime);
+		data->addTask(editedEntry);
+		data->deleteFromEventList(editedEntry); 
+	}
+	else if (typeEditStart == editStartDateTime) {
+		date newStartDate(_newStartDate);
+		time_duration newStartTime(_newStartTime);
+		ptime editedStartTime(newStartDate, newStartTime);
+		editedEntry->setStartTime(editedStartTime);
+	}
+	else if (typeEditStart == editStartDate) {
+		date newStartDate(_newStartDate);
+		time_duration originalStartTime = _beforeEditEntry->getStartTime().time_of_day();
+
+		if (originalStartTime.is_not_a_date_time()) {
+			ptime editedStartTime(newStartDate);
+			editedEntry->setStartTime(editedStartTime);
+		}
+		else {
+			ptime editedStartTime(newStartDate, originalStartTime);
+			editedEntry->setStartTime(editedStartTime);
+		}
+	}
+
+	else if (typeEditStart == editStartTime) {
+		time_duration newStartTime(_newStartTime);
+		date originalStartDate = _beforeEditEntry->getStartTime().date();
+
+		if (originalStartDate.is_not_a_date()) {
+			//exception
+		}
+		else {
+			ptime editedStartTime(originalStartDate, newStartTime);
+			editedEntry->setStartTime(editedStartTime);
+		}
+	}
+
+	else if (typeEditStart == noChangeinStart) {
+
+	}
+
+
+	//end time processing
+	if (typeEditEnd == editNullEnd) {
+		ptime editedEndTime(not_a_date_time);
+		editedEntry->setEndTime(editedEndTime);
+	}
+	else if (typeEditEnd == editEndDateTime) {
+		date newEndDate(_newEndDate);
+		time_duration newEndTime(_newEndTime);
+		ptime editedEndTime(newEndDate, newEndTime);
+		editedEntry->setEndTime(editedEndTime);
+	}
+	else if (typeEditEnd == editEndDate) {
+		date newEndDate(_newEndDate);
+		time_duration originalEndTime = _beforeEditEntry->getEndTime().time_of_day();
+
+		if (originalEndTime.is_not_a_date_time()) {
+			ptime editedEndTime(newEndDate);
+			editedEntry->setEndTime(editedEndTime);
+		}
+		else {
+			ptime editedEndTime(newEndDate, originalEndTime);
+			editedEntry->setEndTime(editedEndTime);
+		}
+	}
+
+	else if (typeEditEnd == editEndTime) {
+		time_duration newEndTime(_newEndTime);
+		date originalEndDate = _beforeEditEntry->getEndTime().date();
+
+		if (originalEndDate.is_not_a_date()) {
+			//exception
+		}
+		else {
+			ptime editedEndTime(originalEndDate, newEndTime);
+			editedEntry->setEndTime(editedEndTime);
+		}
+	}
+
+	else if (typeEditEnd == noChangeinEnd) {
+
+	}
+
+}
+
+void EditCommand::processEditTimeTask(Storage * data, Entry * editedEntry, TypeOfTimeEdit typeEditStart, TypeOfTimeEdit typeEditEnd)
+{
+	if (typeEditStart == editNullStart) {
+
+	}
+
+	else if (typeEditStart == editStartDateTime) {
+		date newStartDate(_newStartDate);
+		time_duration newStartTime(_newStartTime);
+		ptime editedStartTime(newStartDate, newStartTime);
+		editedEntry->setStartTime(editedStartTime);
+		data->deleteFromTaskLIst(editedEntry);
+		data->addEvent(editedEntry);
+	}
+	else if (typeEditStart == editStartDate) {
+		date newStartDate(_newStartDate);
+		time_duration originalStartTime = _beforeEditEntry->getStartTime().time_of_day();
+
+		if (originalStartTime.is_not_a_date_time()) {
+			ptime editedStartTime(newStartDate);
+			editedEntry->setStartTime(editedStartTime);
+		}
+		else {
+			ptime editedStartTime(newStartDate, originalStartTime);
+			editedEntry->setStartTime(editedStartTime);
+		}
+	}
+
+	else if (typeEditStart == editStartTime) {
+		//exception
+	}
+	else if (typeEditStart == noChangeinStart) {
+
+	}
+
+	//EndTime edit
+	if (typeEditEnd == editNullEnd) {
+		ptime editedEndTime(not_a_date_time);
+		editedEntry->setEndTime(editedEndTime);
+	}
+	else if (typeEditEnd == editEndDateTime) {
+		date newEndDate(_newEndDate);
+		time_duration newEndTime(_newEndTime);
+		ptime editedEndTime(newEndDate, newEndTime);
+		editedEntry->setEndTime(editedEndTime);
+	}
+	else if (typeEditEnd == editEndDate) {
+		date newEndDate(_newEndDate);
+		time_duration originalEndTime = _beforeEditEntry->getEndTime().time_of_day();
+		ptime editedEndTime;
+
+		if (originalEndTime.is_not_a_date_time()) {
+			ptime editedEndTime(newEndDate);
+			editedEntry->setEndTime(editedEndTime);
+		}
+		else {
+			ptime editedEndTime(newEndDate, originalEndTime);
+			editedEntry->setEndTime(editedEndTime);
+		}
+	}
+
+	else if (typeEditEnd == editEndTime) {
+		time_duration newEndTime(_newEndTime);
+		date originalEndDate = _beforeEditEntry->getEndTime().date();
+
+		if (originalEndDate.is_not_a_date()) {
+			//throw exception;
+		}
+		else {
+			ptime editedEndTime(originalEndDate, newEndTime);
+			editedEntry->setEndTime(editedEndTime);
+		}
+	}
+	else if (typeEditEnd == noChangeinEnd) {
+
+	}
+}
+
 EditCommand::EditCommand(EntryType entryType, int taskID, string newTitle, date newStartDate, time_duration newStartTime, date newEndDate, time_duration newEndTime)
 {
 	_entryType = entryType;
@@ -152,199 +341,35 @@ EditCommand::~EditCommand()
 
 void EditCommand::execute(Storage* data, Display *display)
 {
-	if (_entryType == event) {
-		if (_taskID < 0 || _taskID >= display->getEventList().size()) {
-			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
-		}
-	}
-	else if (_entryType == task) {
-		if (_taskID < 0 || _taskID >= display->getTaskList().size()) {
-			throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
-		}
+	if (isOutOfRangeIndex(_entryType, display)) {
+		throw CommandException(EXCEPTION_INDEX_OUT_OF_RANGE);
 	}
 
 	Entry* editedEntry = display->retrieveEntry(_entryType, _taskID);
-	_setBeforeEditEntry(editedEntry);
+	setBeforeEditEntry(editedEntry);
 
 	if (_newTitle != "") {
 		editedEntry->setTitle(_newTitle);
 	}
+
 	if (_entryType == event) {
-		TypeOfTimeEdit typeEditStart = _checkTimeEditStart();
-		TypeOfTimeEdit typeEditEnd = _checkTimeEditEnd();
+		TypeOfTimeEdit typeEditStart = checkTimeEditStart();
+		TypeOfTimeEdit typeEditEnd = checkTimeEditEnd();
 
-		//startTime edit
-		if (typeEditStart == editNullStart) {
-			ptime editedStartTime(not_a_date_time);
-			editedEntry->setStartTime(editedStartTime);
-			data->addTask(editedEntry);
-			data->deleteFromEventList(editedEntry);
-		}
-		else if (typeEditStart == editStartDateTime) {
-			date newStartDate(_newStartDate);
-			time_duration newStartTime(_newStartTime);
-			ptime editedStartTime(newStartDate, newStartTime);
-			editedEntry->setStartTime(editedStartTime);
-		}
-		else if (typeEditStart == editStartDate) {
-			date newStartDate(_newStartDate);
-			time_duration originalStartTime = _beforeEditEntry->getStartTime().time_of_day();
-			
-			if (originalStartTime.is_not_a_date_time()) {
-				ptime editedStartTime(newStartDate);
-				editedEntry->setStartTime(editedStartTime);
-			}
-			else {
-				ptime editedStartTime(newStartDate, originalStartTime);
-				editedEntry->setStartTime(editedStartTime);
-			}
-		}
-
-		else if (typeEditStart == editStartTime) {
-			time_duration newStartTime(_newStartTime);
-			date originalStartDate = _beforeEditEntry->getStartTime().date();
-			
-			if (originalStartDate.is_not_a_date()) {
-				//exception
-			}
-			else {
-				ptime editedStartTime(originalStartDate, newStartTime);
-				editedEntry->setStartTime(editedStartTime);
-			}
-		}
-
-		else if (typeEditStart == noChangeinStart) {
-
-		}
-		
-		//EndTime edit
-		if (typeEditEnd == editNullEnd) {
-			ptime editedEndTime(not_a_date_time);
-			editedEntry->setEndTime(editedEndTime);
-		}
-		else if (typeEditEnd == editEndDateTime) {
-			date newEndDate(_newEndDate);
-			time_duration newEndTime(_newEndTime);
-			ptime editedEndTime(newEndDate, newEndTime);
-			editedEntry->setEndTime(editedEndTime);
-		}
-		else if (typeEditEnd == editEndDate) {
-			date newEndDate(_newEndDate);
-			time_duration originalEndTime = _beforeEditEntry->getEndTime().time_of_day();
-			
-			if (originalEndTime.is_not_a_date_time()) {
-				ptime editedEndTime(newEndDate);
-				editedEntry->setEndTime(editedEndTime);
-			}
-			else {
-				ptime editedEndTime(newEndDate, originalEndTime);
-				editedEntry->setEndTime(editedEndTime);
-			}
-		} 
-
-		else if (typeEditEnd == editEndTime) {
-			time_duration newEndTime(_newEndTime);
-			date originalEndDate = _beforeEditEntry->getEndTime().date();
-			
-			if (originalEndDate.is_not_a_date()) {
-				//exception
-			}
-			else {
-				ptime editedEndTime(originalEndDate, newEndTime);
-				editedEntry->setEndTime(editedEndTime);
-			}
-		}
-
-		else if (typeEditEnd == noChangeinEnd) {
-
-		}
-		
+		processEditTimeEvent(data, display, editedEntry, typeEditStart, typeEditEnd);
 	} 
 
 	else if (_entryType == task) {
-		TypeOfTimeEdit typeEditStart = _checkTimeEditStart();
-		TypeOfTimeEdit typeEditEnd = _checkTimeEditEnd();
+		TypeOfTimeEdit typeEditStart = checkTimeEditStart();
+		TypeOfTimeEdit typeEditEnd = checkTimeEditEnd();
 
-		if (typeEditStart == editNullStart) {
-
-		} 
-
-		else if (typeEditStart == editStartDateTime) {
-			date newStartDate(_newStartDate);
-			time_duration newStartTime(_newStartTime);
-			ptime editedStartTime(newStartDate, newStartTime);
-			editedEntry->setStartTime(editedStartTime);
-			data->deleteFromTaskLIst(editedEntry);
-			data->addEvent(editedEntry);
-		}
-		else if (typeEditStart == editStartDate) {
-			date newStartDate(_newStartDate);
-			time_duration originalStartTime = _beforeEditEntry->getStartTime().time_of_day();
-			
-			if (originalStartTime.is_not_a_date_time()) {
-				ptime editedStartTime(newStartDate);
-				editedEntry->setStartTime(editedStartTime);
-			}
-			else {
-				ptime editedStartTime(newStartDate, originalStartTime);
-				editedEntry->setStartTime(editedStartTime);
-			}
-		}
-
-		else if (typeEditStart == editStartTime) {
-			//exception
-		}
-		else if (typeEditStart == noChangeinStart) {
-
-		}
-
-		//EndTime edit
-		if (typeEditEnd == editNullEnd) {
-			ptime editedEndTime(not_a_date_time);
-			editedEntry->setEndTime(editedEndTime);
-		}
-		else if (typeEditEnd == editEndDateTime) {
-			date newEndDate(_newEndDate);
-			time_duration newEndTime(_newEndTime);
-			ptime editedEndTime(newEndDate, newEndTime);
-			editedEntry->setEndTime(editedEndTime);
-		}
-		else if (typeEditEnd == editEndDate) {
-			date newEndDate(_newEndDate);
-			time_duration originalEndTime = _beforeEditEntry->getEndTime().time_of_day();
-			ptime editedEndTime;
-
-			if (originalEndTime.is_not_a_date_time()) {
-				ptime editedEndTime (newEndDate);
-				editedEntry->setEndTime(editedEndTime);
-			}
-			else {
-				ptime editedEndTime(newEndDate, originalEndTime);
-				editedEntry->setEndTime(editedEndTime);
-			}
-		}
-
-		else if (typeEditEnd == editEndTime) {
-			time_duration newEndTime(_newEndTime);
-			date originalEndDate = _beforeEditEntry->getEndTime().date();
-			
-			if (originalEndDate.is_not_a_date()) {
-				//throw exception;
-			}
-			else {
-				ptime editedEndTime(originalEndDate, newEndTime);
-				editedEntry->setEndTime(editedEndTime);
-			}
-		}
-		else if (typeEditEnd == noChangeinEnd) {
-
-		}
+		processEditTimeTask(data, editedEntry, typeEditStart, typeEditEnd);
 	} 
 	
-	_setEditedEntry(editedEntry);
-	_generateFeedback(editedEntry);
+	setEditedEntry(editedEntry);
+	generateFeedback(editedEntry);
 	display->updateCommandFeedback(_feedback);
-	_updateDisplay(display, data, _editedEntry);
+	updateDisplay(display, data, _editedEntry);
 	data->saveToFile();
 
 	History::pushCommand(this);
@@ -373,8 +398,9 @@ void EditCommand::undo(Storage * data, Display * display)
 		data->deleteFromTaskLIst(_editedEntry);
 	}
 
-	_generateUndoFeedBack(_beforeEditEntry);
+	generateUndoFeedBack(_beforeEditEntry);
 	display->updateCommandFeedback(_feedback);
-	_updateDisplay(display, data, _beforeEditEntry);
+	updateDisplay(display, data, _beforeEditEntry);
+	display->setLatestUpdatedEntry(_beforeEditEntry);
 	data->saveToFile();
 }

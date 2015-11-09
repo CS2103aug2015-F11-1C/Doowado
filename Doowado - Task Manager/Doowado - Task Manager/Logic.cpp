@@ -91,8 +91,7 @@ void Logic::processCommand(string userInput)
 		updateOverdueTask();
 		updateDoneEvent();
 		updateClashEvent();
-		_storage->saveToFile();
-	
+		_storage->saveToFile();	
 }
 
 void Logic::initialiseProgram()

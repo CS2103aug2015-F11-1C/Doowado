@@ -165,6 +165,7 @@
     <ClCompile Include="DeleteCommandTest.cpp" />
     <ClCompile Include="DisplayStub.cpp" />
     <ClCompile Include="HistoryStub.cpp" />
+    <ClCompile Include="LogicShowTest.cpp" />
     <ClCompile Include="LogicTest.cpp" />
     <ClCompile Include="ReversibleCommandStub.cpp" />
     <ClCompile Include="stdafx.cpp">

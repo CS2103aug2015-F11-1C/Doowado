@@ -12,23 +12,21 @@ namespace CommandTest
 		TEST_METHOD(ConstructorTest)
 		{
 			date testDate(2015,Oct,17);
-			ptime t1(testDate);
-			ptime t2;
 			
 			ShowCommand* cmd;
-			cmd = new ShowCommand(t1);
+			cmd = new ShowCommand(testDate);
 
-			Assert::AreEqual(to_simple_string(cmd->_requestedDate),to_simple_string(t1));
+			Assert::AreEqual(to_simple_string(cmd->_requestedEndDate),to_simple_string(testDate));
 		}
 
-		TEST_METHOD(ShowEventTest)
+		TEST_METHOD(ShowEventByDateTest)
 		{
 			date testDate(2015, Oct, 18);
 			ptime t1(testDate, hours(5) + minutes(30));
 			ptime t2(testDate, hours(6) + minutes(30));
 
 			ShowCommand* cmd;
-			cmd = new ShowCommand(t1);
+			cmd = new ShowCommand(testDate);
 
 			DisplayStub displayList;
 			StorageStub testStorage;

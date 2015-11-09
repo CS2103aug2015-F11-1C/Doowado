@@ -36,7 +36,7 @@ void Logic::updateClashEvent()
 	std::vector<Entry*> eventList;
 	eventList = _storage->retrieveEventList();
 
-	for (int i = 0; i < eventList.size()-1; i++) {
+	for (int i = 0; i < eventList.size(); i++) {
 		ptime eventStartTime1 = eventList[i]->getStartTime();
 		ptime eventEndTime1 = eventList[i]->getEndTime();
 

@@ -33,10 +33,10 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 	if (description.empty()) {
 		throw CmdBuilderException(EXCEPTION_NO_TITLE);
 	}
-	if (vStartDate.empty() && !vStartDate.empty()) {
+	if (vStartDate.empty() && !vStartTime.empty()) {
 		throw CmdBuilderException(EXCEPTION_TIME_NO_DATE);
 	}
-	if (vEndDate.empty() && !vEndDate.empty()) {
+	if (vEndDate.empty() && !vEndTime.empty()) {
 		throw CmdBuilderException(EXCEPTION_TIME_NO_DATE);
 	}
 
@@ -65,13 +65,23 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 		time_duration td(duration_from_string(stringEndTime));
 		entryEndTime = td;
 	}
+	else {
+		time_duration td(duration_from_string(STRING_END_TIME_INITIALISE));
+		entryEndTime = td;
+	}
 
 	ptime entryStartPtime(entryStartDate, entryStartTime);
 	ptime entryEndPtime(entryEndDate, entryEndTime);
 
-	if (entryStartPtime > entryEndPtime) {
-		throw CmdBuilderException(EXCEPTION_START_TIME_GREATER_END_TIME);
+	if (!entryStartPtime.is_not_a_date_time() && !entryEndPtime.is_not_a_date_time()) {
+		if (entryStartPtime > entryEndPtime) {
+			LOG(INFO) << "CmdBuilderException startTime > endTime";
+			LOG(INFO) << "CmdBuilderException startTime: " << entryStartPtime;
+			LOG(INFO) << "CmdBuilderException endTime: " << entryEndPtime;
+			throw CmdBuilderException(EXCEPTION_START_TIME_GREATER_END_TIME);
+		}
 	}
+
 	addCommand = new AddCommand(entryTitle, entryStartPtime, entryEndPtime);
 
 	return addCommand;
@@ -159,10 +169,10 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 		}
 	}
 
-	cout << "newStartDate: " << to_simple_string(newStartDate);
-	cout << "newStartTime: " << to_simple_string(newStartTime);
-	cout << "newEndDate: " << to_simple_string(newEndDate);
-	cout << "newEndTime: " << to_simple_string(newEndTime);
+	LOG(INFO) << "CmdBuilder newStartDate: " << to_simple_string(newStartDate);
+	LOG(INFO) << "CmdBuilder newStartTime: " << to_simple_string(newStartTime);
+	LOG(INFO) << "CmdBuilder newEndDate: " << to_simple_string(newEndDate);
+	LOG(INFO) << "CmdBuilder newEndTime: " << to_simple_string(newEndTime);
 
 	editCommand = new EditCommand(entryType, taskID, newTitle, newStartDate, newStartTime, newEndDate, newEndTime);
 	

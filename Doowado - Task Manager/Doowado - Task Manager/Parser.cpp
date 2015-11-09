@@ -938,7 +938,7 @@ ParserResult Parser::parse(string input){
 	}
 
 	catch (const out_of_range& error) {
-		LOG(INFO) << "Parser-Exception:" << error.what();
+		//LOG(INFO) << "Parser-Exception:" << error.what();
 		throw std::out_of_range(error.what());
 	}
 

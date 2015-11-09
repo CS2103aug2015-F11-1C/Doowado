@@ -117,17 +117,25 @@ void Display::deleteEntry(Entry * entryToDelete)
 
 	vector<Entry*>::iterator it = _eventList.begin();
 
-	while (*it != entryToDelete) {
+	while (it != _eventList.end()) {
+		if (*it == entryToDelete) {
+			_eventList.erase(it);
+			//LOG(INFO) << "Deleted from EventList for edit; " << (*it)->getTitle();
+			break;
+		}
 		it++;
 	}
-	_eventList.erase(it);
 
 	it = _taskList.begin();
 
-	while (*it != entryToDelete) {
+	while (it != _taskList.end()) {
+		if (*it == entryToDelete) {
+			_taskList.erase(it);
+			//LOG(INFO) << "Deleted from TaskList for edit; " << (*it)->getTitle();
+			break;
+		}
 		it++;
 	}
-	_taskList.erase(it);
 
 }
 

@@ -17,9 +17,6 @@ void EditCommand::generateFeedback(Entry * editedEntry)
 	else if (!endTime.is_not_a_date_time()) {
 		_feedback.push_back(to_simple_string(endTime));
 	}
-	else {
-
-	}
 }
 
 void EditCommand::generateUndoFeedBack(Entry * undoneEntry)

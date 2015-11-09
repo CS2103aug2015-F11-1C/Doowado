@@ -1,5 +1,7 @@
 #pragma once
 
+//@@author Johandy
+
 #include "Entry.h"
 #include <vector>
 #include <fstream>

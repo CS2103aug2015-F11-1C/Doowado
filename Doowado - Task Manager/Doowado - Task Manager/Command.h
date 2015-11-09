@@ -31,8 +31,10 @@ const std::string EXCEPTION_INVALID_MARKDONE = "Invalid input for mark done comm
 const std::string EXCEPTION_INVALID_NO_INDEX = "Invalid input. No index found";
 const std::string EXCEPTION_INVALID_EDIT = "Invalid input for edit Command! More information is reequired";
 
-const string MESSAGE_SUCCESSFUL_UNDO = "Undone";
-const string STRING_END_TIME_INITIALISE = "23:59";
+const std::string MESSAGE_SUCCESSFUL_UNDO = "Undone";
+const std::string STRING_END_TIME_INITIALISE = "23:59";
+
+const int ZERO_INDEX = 0;
 
 class Command
 {

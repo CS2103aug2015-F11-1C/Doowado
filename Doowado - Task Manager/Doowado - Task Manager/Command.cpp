@@ -38,25 +38,25 @@ std::string Command::generateDateDisplayState(ptime entryStartTime, ptime entryE
 			switch (intEndDayOfWeek)
 			{
 			case 0:
-				endDayOfWeek = "Sunday";
+				endDayOfWeek = "Sun";
 				break;
 			case 1:
-				endDayOfWeek = "Monday";
+				endDayOfWeek = "Mon";
 				break;
 			case 2:
-				endDayOfWeek = "Tuesday";
+				endDayOfWeek = "Tue";
 				break;
 			case 3:
-				endDayOfWeek = "Wednesday";
+				endDayOfWeek = "Wed";
 				break;
 			case 4:
-				endDayOfWeek = "Thursday";
+				endDayOfWeek = "Thu";
 				break;
 			case 5:
-				endDayOfWeek = "Friday";
+				endDayOfWeek = "Fri";
 				break;
 			case 6:
-				endDayOfWeek = "Saturday";
+				endDayOfWeek = "Sat";
 				break;
 			default:
 				break;
@@ -82,25 +82,25 @@ std::string Command::generateDateDisplayState(ptime entryStartTime, ptime entryE
 			switch (intStartDayOfWeek)
 			{
 			case 0:
-				startDayOfWeek = "Sunday";
+				startDayOfWeek = "Sun";
 				break;
 			case 1:
-				startDayOfWeek = "Monday";
+				startDayOfWeek = "Mon";
 				break;
 			case 2:
-				startDayOfWeek = "Tuesday";
+				startDayOfWeek = "Tue";
 				break;
 			case 3:
-				startDayOfWeek = "Wednesday";
+				startDayOfWeek = "Wed";
 				break;
 			case 4:
-				startDayOfWeek = "Thursday";
+				startDayOfWeek = "Thu";
 				break;
 			case 5:
-				startDayOfWeek = "Friday";
+				startDayOfWeek = "Fri";
 				break;
 			case 6:
-				startDayOfWeek = "Saturday";
+				startDayOfWeek = "Sat";
 				break;
 			default:
 				break;
@@ -119,25 +119,25 @@ std::string Command::generateDateDisplayState(ptime entryStartTime, ptime entryE
 			switch (intEndDayOfWeek)
 			{
 			case 0:
-				endDayOfWeek = "Sunday";
+				endDayOfWeek = "Sun";
 				break;
 			case 1:
-				endDayOfWeek = "Monday";
+				endDayOfWeek = "Mon";
 				break;
 			case 2:
-				endDayOfWeek = "Tuesday";
+				endDayOfWeek = "Tue";
 				break;
 			case 3:
-				endDayOfWeek = "Wednesday";
+				endDayOfWeek = "Wed";
 				break;
 			case 4:
-				endDayOfWeek = "Thursday";
+				endDayOfWeek = "Thu";
 				break;
 			case 5:
-				endDayOfWeek = "Friday";
+				endDayOfWeek = "Fri";
 				break;
 			case 6:
-				endDayOfWeek = "Saturday";
+				endDayOfWeek = "Sat";
 				break;
 			default:
 				break;

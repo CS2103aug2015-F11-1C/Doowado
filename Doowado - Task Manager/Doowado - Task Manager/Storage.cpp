@@ -163,6 +163,9 @@ vector <Entry*> Storage::searchTasksByTitle(vector <string> keywords) {
 void Storage::saveToFile() {
 	ofstream output;
 
+	if (_saveDir == EMPTY_STRING) {
+		_saveDir = DEFAULT_SAVE_PATH;
+	}
 	output.open(_saveDir);
 
 	if (!output.is_open()) {
@@ -221,6 +224,9 @@ void Storage::saveToFile() {
 void Storage::loadFromFile() {
 	ifstream input;
 
+	if (_saveDir == EMPTY_STRING) {
+		_saveDir = DEFAULT_SAVE_PATH;
+	}
 	input.open(_saveDir);
 
 	if (!input.is_open()) {

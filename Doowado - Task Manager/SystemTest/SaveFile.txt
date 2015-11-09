@@ -1,0 +1,141 @@
+Event
+CS2103 Demo
+20151030T110000
+20151030T120000
+Event
+CS2103 Lecture
+20151030T140000
+20151030T160000
+Event
+Halloween Party
+20151030T190000
+20151030T220000
+Event
+Late Night Movie
+20151030T230000
+20151031T010000
+Event
+German 1 Lecture
+20151102T080000
+20151102T100000
+Event
+Finance Tutorial
+20151102T150000
+20151102T160000
+Event
+CS2103 Lecture
+20151106T140000
+20151106T160000
+Event
+meeting
+20151106T170000
+20151106T190000
+Event
+FEA group meeting
+20151110T153000
+20151110T170000
+Event
+FEA presentation
+20151111T020000
+20151111T040000
+Event
+automation lab
+20151111T120000
+20151111T020000
+Event
+CS2106 Lecture
+20151113T020000
+20151113T040000
+Event
+ME3242
+20151113T090000
+20151113T110000
+Task
+Do ME3112 Tutorial 5
+20151102T120000
+Not Completed
+Overdue
+Task
+Do ME2143 Tutorial 5
+20151103T120000
+Completed
+Not Overdue
+Task
+Do ME3162 Tutorial 5
+20151103T130000
+Not Completed
+Not Overdue
+Task
+spring cleaning
+20151109T070000
+Not Completed
+Not Overdue
+Task
+CS2103 V0.5
+20151109T235900
+Not Completed
+Not Overdue
+Task
+spring cleaning
+20151110T000000
+Not Completed
+Not Overdue
+Task
+FYP consultation
+20151110T110000
+Not Completed
+Not Overdue
+Task
+rehearse FEA presentation
+20151110T170000
+Not Completed
+Not Overdue
+Task
+cs2106 tutorial
+20151111T210000
+Not Completed
+Not Overdue
+FTask
+Study for Finance Quiz
+Not Completed
+Not Overdue
+FTask
+Study for ME2142 Exam
+Not Completed
+Not Overdue
+FTask
+Study for ME3112 Exam
+Not Completed
+Not Overdue
+FTask
+Study for ME3162 Exam
+Not Completed
+Not Overdue
+FTask
+Study for FIN2004X Exam
+Not Completed
+Not Overdue
+FTask
+Study for CS2103 Exam
+Not Completed
+Not Overdue
+FTask
+Buy a Birthday Present
+Not Completed
+Not Overdue
+FTask
+Read The Great Gatsby
+Not Completed
+Not Overdue
+FTask
+Learn Swift
+Not Completed
+Not Overdue
+FTask
+Learn Web Development
+Not Completed
+Not Overdue
+FTask
+prepare FYP presentation
+Not Completed
+Not Overdue

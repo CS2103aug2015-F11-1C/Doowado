@@ -5,6 +5,7 @@
 #include "Command.h"
 #include "Parser.h"
 #include "Display.h"
+#include "easylogging++.h"
 
 static ptime currentTime(second_clock::local_time());
 
@@ -23,6 +24,13 @@ private:
 	bool isOverlapTime(ptime startTime1, ptime endTime1, ptime startTime2, ptime endTime2);
 
 public:
+
+#ifdef TESTMODE
+	Storage* getStorage() {
+		return _storage;
+	}
+#endif
+
 	Logic();
 	~Logic();
 	void processCommand(string);

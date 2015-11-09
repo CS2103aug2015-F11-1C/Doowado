@@ -1,4 +1,7 @@
 #include "Logic.h"
+#include "easylogging++.h"
+
+INITIALIZE_EASYLOGGINGPP;
 
 void Logic::updateOverdueTask()
 {
@@ -66,6 +69,14 @@ bool Logic::isOverlapTime(ptime startTime1, ptime endTime1, ptime startTime2, pt
 
 Logic::Logic()
 {
+	// Load configuration from file
+	el::Configurations conf("Log.conf");
+	// Reconfigure single logger
+	el::Loggers::reconfigureLogger("default", conf);
+	// Actually reconfigure all loggers instead
+	el::Loggers::reconfigureAllLoggers(conf);
+	// Now all the loggers will use configuration from file
+
 	_storage = new Storage();
 	_cmdBuilder = new CommandBuilder();
 	_parser = new Parser();

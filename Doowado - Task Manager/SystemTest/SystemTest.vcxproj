@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C577B683-B5CF-4D5D-88D5-10A1B39AEA48}</ProjectGuid>
+    <ProjectGuid>{A84836A6-40D4-475A-90BA-E321352E1D29}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>CommandTest</RootNamespace>
+    <RootNamespace>SystemTest</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -90,14 +90,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Program Files\boost_1_59_0;C:\Users\aspire\Desktop\CS2103-ProjectFolder\Doowado - Task Manager\Doowado - Task Manager;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\boost_1_59_0\lib32-msvc-14.0;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -105,14 +105,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\Doowado - Task Manager;C:\local\boost_1_59_0;C:\Users\A0102794\Documents\Visual Studio 2015\Projects\Doowado V0.1\Doowado - Task Manager\Doowado - Task Manager;C:\Program Files\boost_1_59_0;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\boost_1_59_0;..\Doowado - Task Manager;C:\local\boost_1_59_0;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\local\boost_1_59_0\lib64-msvc-14.0;$(VCInstallDir)UnitTest\lib;C:\Program Files\boost_1_59_0\lib64-msvc-14.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files\boost_1_59_0;C:\local\boost_1_59_0\lib64-msvc-14.0;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,35 +154,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DisplayStub.h" />
-    <ClInclude Include="HistoryStub.h" />
-    <ClInclude Include="ReversibleCommandStub.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="StorageStub.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DeleteCommandTest.cpp" />
-    <ClCompile Include="DisplayStub.cpp" />
-    <ClCompile Include="HistoryStub.cpp" />
-    <ClCompile Include="LogicShowTest.cpp" />
-    <ClCompile Include="LogicTest.cpp" />
-    <ClCompile Include="ReversibleCommandStub.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ShowCommandTest.cpp" />
-    <ClCompile Include="StorageStub.cpp" />
-    <ClCompile Include="StubTests.cpp" />
-    <ClCompile Include="UndoCommandTest.cpp" />
+    <ClCompile Include="SystemTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Doowado - Task Manager\Doowado - Task Manager.vcxproj">
       <Project>{a0d2e2cd-8ff0-4644-81b4-d205681588b9}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="NewFile.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Text>
+    <Text Include="SaveDir.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Text>
+    <Text Include="SaveFile.txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

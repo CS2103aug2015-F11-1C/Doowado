@@ -15,18 +15,17 @@
 using namespace std;
 
 //CONSTANTS
-int const DATE_TIME_KEYWORDS_SIZE = 46;
+int const DATE_TIME_KEYWORDS_SIZE = 44;
 int const MONTH_KEYWORD_START_POS = 0;
 int const MONTH_KEYWORD_END_POS = 24;
 int const DATE_KEYWORD_START_POS = 24;
-int const DDATE_KEYWORDS_END_POS = 44;
-int const DATE_NOT_FOUND = 44;
+int const DDATE_KEYWORDS_END_POS = 42;
+int const DATE_NOT_FOUND = 42;
 
 string const DATE_KEYWORDS[] = { "january", "jan", "february", "feb", "march", "mar", "april", "apr",
 "may", "may", "june", "jun", "july", "jul", "august", "aug", "september", "sep", "october", "oct",
 "november", "nov", "december", "dec", "monday", "mon", "tuesday", "tue", "wednesday", "wed", "thursday",
-"thu", "friday", "fri", "saturday", "sat", "sunday", "sun", "today", "tomorrow", "tmr", "yesterday", "yest",
-"null", "to" };
+"thu", "friday", "fri", "saturday", "sat", "sunday", "sun", "today", "tomorrow", "tmr","null", "to" };
 
 string const DATE_DELIMITER[] = { "\"", "by","at","start","end","from","ed","st","fr","on" };
 int const DATE_DELIMITER_SIZE = 10;

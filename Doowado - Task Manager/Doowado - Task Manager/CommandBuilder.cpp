@@ -108,8 +108,15 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 	else if (vEntryTypes[0] == "t") {
 		entryType = task;
 	}
-	//exception if it is not "e" or "t"
+	else {
+		throw CmdBuilderException(EXCEPTION_INVALID_ENTRY_TYPE_AT_INDEX);
+	}
+
 	std::vector<int> vTaskIDs = parserResult.getIndex();
+	if (vTaskIDs.empty()) {
+		throw CmdBuilderException(EXCEPTION_INVALID_NO_INDEX);
+	}
+
 	taskID = vTaskIDs[0] - 1;
 
 	std::vector<std::string> vNewTitles = parserResult.getDescription();
@@ -144,6 +151,7 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 			newStartTime = td;
 		}
 	}
+
 	std::vector<std::string> vNewEndDates = parserResult.getEndDate();
 	if (!vNewEndDates.empty()) {
 		std::string stringEndDate = vNewEndDates[0];
@@ -167,6 +175,10 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 			time_duration td(duration_from_string(stringEndTime));
 			newEndTime = td;
 		}
+	}
+
+	if (vNewTitles.empty() && vNewStartDates.empty() && vNewStartTimes.empty() && vNewEndDates.empty() && vNewEndTimes.empty()) {
+		throw CmdBuilderException(EXCEPTION_INVALID_EDIT);
 	}
 
 	LOG(INFO) << "CmdBuilder newStartDate: " << to_simple_string(newStartDate);

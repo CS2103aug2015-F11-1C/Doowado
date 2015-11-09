@@ -46,6 +46,7 @@ private:
 	bool isOutOfRangeIndex(EntryType entryType, Display * display);
 	void processEditTimeEvent(Storage * data, Display * display, Entry * editedEntry, TypeOfTimeEdit typeEditStart, TypeOfTimeEdit typeEditEnd);
 	void processEditTimeTask(Storage * data, Entry * editedEntry, TypeOfTimeEdit typeEditStart, TypeOfTimeEdit typeEditEnd);
+	bool isInvalidTime(Entry * editedEntry);
 
 public:
 	EditCommand(EntryType entryType,

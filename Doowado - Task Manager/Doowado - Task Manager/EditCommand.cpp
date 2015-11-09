@@ -245,7 +245,11 @@ void EditCommand::processEditTimeEvent(Storage * data, Display * display, Entry 
 	}
 
 	else if (typeEditEnd == noChangeinEnd) {
+		
+	}
 
+	if (editedEntry->getEndTime().is_not_a_date_time() && !editedEntry->getStartTime().is_not_a_date_time()) {
+		throw CommandException(EXCEPTION_EVENT_NO_END_TIME);
 	}
 
 }
@@ -327,6 +331,23 @@ void EditCommand::processEditTimeTask(Storage * data, Entry * editedEntry, TypeO
 	else if (typeEditEnd == noChangeinEnd) {
 
 	}
+	if (editedEntry->getEndTime().is_not_a_date_time() && !editedEntry->getStartTime().is_not_a_date_time()) {
+		throw CommandException(EXCEPTION_EVENT_NO_END_TIME);
+	}
+
+}
+
+bool EditCommand::isInvalidTime(Entry * editedEntry)
+{
+	ptime entryStartPtime(editedEntry->getStartTime());
+	ptime entryEndPtime(editedEntry->getEndTime());
+
+	if (!entryStartPtime.is_not_a_date_time() && !entryEndPtime.is_not_a_date_time()) {
+		if (entryStartPtime > entryEndPtime) {
+			return true;
+		}
+	}
+	return false;
 }
 
 EditCommand::EditCommand(EntryType entryType, int taskID, string newTitle, date newStartDate, time_duration newStartTime, date newEndDate, time_duration newEndTime)
@@ -371,6 +392,10 @@ void EditCommand::execute(Storage* data, Display *display)
 
 		processEditTimeTask(data, editedEntry, typeEditStart, typeEditEnd);
 	} 
+
+	if (isInvalidTime(editedEntry)) {
+		throw CommandException(EXCEPTION_START_TIME_GREATER_END_TIME);
+	}
 	
 	setEditedEntry(editedEntry);
 	generateFeedback(editedEntry);

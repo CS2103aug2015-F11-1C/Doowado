@@ -32,7 +32,6 @@ class CommandBuilder {
 		Command* createMarkDoneCommand(ParserResult&);
 		Command* createUndoCommand(ParserResult&);
 
-
 	public:
 		CommandBuilder();
 		Command* buildCommand(ParserResult &);

@@ -58,7 +58,7 @@ namespace LogicShowTest
 		//ShowOverdue tests display of overdue tasks
 			// three timed tasks on diff days are marked overdue during initialization
 			// one of these is also completed
-			// checks that the display task list comprises of these three 
+			// checks that the display task list comprises of two tasks (completed task should not be shown)
 	public:
 
 		TEST_METHOD(ShowByDate)
@@ -118,7 +118,7 @@ namespace LogicShowTest
 			ShowCommand showCmd(overdue);
 			showCmd.execute(&storage, &actualDisplay);
 
-			//validateDisplay(actualDisplay, idealDisplay);
+			validateDisplay(actualDisplay, idealDisplay);
 		}
 
 		void initializeHardcodedStorage(Storage* storage) {
@@ -219,7 +219,21 @@ namespace LogicShowTest
 		}
 
 		void generateIdealDisplayByOverdue(Display* idealDisplay) {
+			vector<string> idealCmdFeedback;
+			vector<Entry*> idealDisplayEventList;
+			vector<Entry*> idealDisplayTaskList;
+			
+			idealCmdFeedback.push_back("Showing: ");
+			idealCmdFeedback.push_back("overdue");
 
+			//event list should not be updated
+
+			idealDisplayTaskList.push_back(laterTimedTaskOnDate1);
+			idealDisplayTaskList.push_back(timedTaskOnDate4);
+
+			idealDisplay->updateCommandFeedback(idealCmdFeedback);
+			idealDisplay->updateDisplayEventList(idealDisplayEventList);
+			idealDisplay->updateDisplayTaskList(idealDisplayTaskList);
 		}
 		//methods below are exactly the same as Display validation in SystemTest
 		void validateDisplay(Display actualDisplay, Display idealDisplay) {

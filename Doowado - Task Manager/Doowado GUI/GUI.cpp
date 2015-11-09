@@ -1,5 +1,7 @@
 #include "GUI.h"
 
+//@@author A0118890X
+
 using namespace System;
 using namespace System::Windows::Forms;
 

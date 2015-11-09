@@ -1,5 +1,6 @@
 #pragma once
 
+//@@author A0118890X
 
 #include <vector>
 #include <algorithm>
@@ -439,7 +440,7 @@ namespace DoowadoGUI {
 		}
 
 	private:
-		
+		//@@author A0119531L
 		System::Void generalForm_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 			// Minimize via Ctrl + W
 			if (e->KeyData == (Keys::Control | Keys::W)) {
@@ -464,6 +465,7 @@ namespace DoowadoGUI {
 			}
 		}
 
+		//@@author A0118890X
 		System::Void generalForm_KeyPress(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
 			if (e->KeyChar == (char)13 || e->KeyChar == (char)8) {
 				this->ActiveControl = inputBox;
@@ -550,7 +552,7 @@ namespace DoowadoGUI {
 				feedbackLabel->Text = "help";
 			}
 			else if (inputBox->Text == "save") {
-				feedbackLabel->Text = "save <new save directory>";
+				feedbackLabel->Text = "save OR save <new save directory>";
 			}
 			else if (inputBox->Text == ""){
 				feedbackLabel->Text = "add / edit / show / search / delete / undo / save / help";

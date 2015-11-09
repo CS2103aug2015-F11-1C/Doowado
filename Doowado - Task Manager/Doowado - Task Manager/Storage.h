@@ -1,6 +1,6 @@
 #pragma once
 
-//@@author Johandy
+//@@author A0118890X
 
 #include "Entry.h"
 #include "StorageException.h"

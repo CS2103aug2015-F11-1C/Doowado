@@ -183,7 +183,7 @@ void Parser::setDateAndTime(string& input){
 		dateAndTime = input;
 		dateAndTime = convertStringTolowerCase(dateAndTime);
 
-		if ((dateAndTime.find_first_not_of("0123456789") != string::npos) && (isDateOrTimeKeywordValid(dateAndTime))) {
+		if ((dateAndTime.find_first_not_of("0123456789|") != string::npos) && (isDateOrTimeKeywordValid(dateAndTime))) {
 			dateAndTimeFragment = fragmentizeString(dateAndTime);
 
 			dateSetter(dateAndTimeFragment);

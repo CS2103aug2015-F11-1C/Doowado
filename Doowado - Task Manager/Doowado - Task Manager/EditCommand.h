@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.h"
 #include "CommandException.h"
+#include "easylogging++.h"
 
 const int INDEX_LOWER_LIMIT = 0;
 const string MESSAGE_SUCCESSFUL_EDIT = "Edited";

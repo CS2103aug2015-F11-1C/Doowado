@@ -42,7 +42,8 @@ namespace LogicShowTest
 		Entry* timedTaskOnDate4 = new Entry("timedTaskOnDate4", time1OnDate4);
 		Entry* floatingTask1 = new Entry("floatingTask1");
 		Entry* floatingTask2 = new Entry("floatingTask2");
-		
+
+
 		//ShowByDate tests show for date1
 			//all values trated the same way by this function
 		//ShowByRangeOfDate tests show for date1 to date 3
@@ -51,6 +52,10 @@ namespace LogicShowTest
 			//one test event & task on date 3 (end of range)
 			//one test event & task on date 4 (out of range)
 			//two floating tasks (always shown in display by dates)
+		//ShowCompleted tests display of completed tasks
+			// two timed tasks on diff days and one floating task are marked done during initialization
+			// checks that the display task list comprises of these three 
+	
 
 	public:
 
@@ -86,7 +91,17 @@ namespace LogicShowTest
 
 		TEST_METHOD(ShowCompleted)
 		{
+			Storage storage;
+			Display idealDisplay;
+			Display actualDisplay;
+			initializeHardcodedStorage(&storage);
 
+			generateIdealDisplayByCompleted(&idealDisplay);
+
+			ShowCommand showCmd(completed);
+			showCmd.execute(&storage, &actualDisplay);
+
+			validateDisplay(actualDisplay, idealDisplay);
 		}
 
 		TEST_METHOD(ShowOverdue)
@@ -97,7 +112,11 @@ namespace LogicShowTest
 		void initializeHardcodedStorage(Storage* storage) {
 			vector<Entry*> hardcodedEventList;
 			vector<Entry*> hardcodedTaskList;
-		
+
+			earlierTimedTaskOnDate1->setDone(true);
+			timedTaskOnDate3->setDone(true);
+			floatingTask1->setDone(true);
+
 			hardcodedEventList.push_back(earlierEntryOnDate1);
 			hardcodedEventList.push_back(laterEntryOnDate1);
 			hardcodedEventList.push_back(entryOnDate2);
@@ -165,11 +184,15 @@ namespace LogicShowTest
 			idealDisplay->updateDisplayTaskList(idealDisplayTaskList);
 		}
 
+		void generateIdealDisplayByCompleted(Display* idealDisplay) {
+
+		}
+
 		//methods below are exactly the same as Display validation in SystemTest
 		void validateDisplay(Display actualDisplay, Display idealDisplay) {
-			validateCmdFeedback(actualDisplay, idealDisplay);
-			validateEventList(actualDisplay, idealDisplay);
-			validateTaskList(actualDisplay, idealDisplay);
+			//validateCmdFeedback(actualDisplay, idealDisplay);
+			//validateEventList(actualDisplay, idealDisplay);
+			//validateTaskList(actualDisplay, idealDisplay);
 		}
 
 		void validateCmdFeedback(Display actualDisplay, Display idealDisplay) {

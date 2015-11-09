@@ -139,13 +139,28 @@ namespace LogicShowTest
 		}
 
 		void generateIdealDisplayByRangeOfDate(Display* idealDisplay) {
+			vector<string> idealCmdFeedback;
+			vector<Entry*> idealDisplayEventList;
+			vector<Entry*> idealDisplayTaskList;
 
+			idealCmdFeedback.push_back("Showing: ");
+			idealCmdFeedback.push_back(to_simple_string(date1));
+			idealCmdFeedback.push_back(to_simple_string(date3));
+
+			idealDisplayEventList.push_back(earlierEntryOnDate1);
+			idealDisplayEventList.push_back(laterEntryOnDate1);
+			idealDisplayEventList.push_back(entryOnDate2);
+			idealDisplayEventList.push_back(entryOnDate3);
+
+			idealDisplay->updateCommandFeedback(idealCmdFeedback);
+			idealDisplay->updateDisplayEventList(idealDisplayEventList);
+			idealDisplay->updateDisplayTaskList(idealDisplayTaskList);
 		}
 
 		//methods below are exactly the same as Display validation in SystemTest
 		void validateDisplay(Display actualDisplay, Display idealDisplay) {
-			//validateCmdFeedback(actualDisplay, idealDisplay);
-			//validateEventList(actualDisplay, idealDisplay);
+			validateCmdFeedback(actualDisplay, idealDisplay);
+			validateEventList(actualDisplay, idealDisplay);
 			//validateTaskList(actualDisplay, idealDisplay);
 		}
 

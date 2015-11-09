@@ -40,5 +40,6 @@ public:
 	void deleteEntry(EntryType, int);
 	void deleteEntry(Entry * entryToDelete);
 	void setLatestUpdatedEntry(Entry * latestEntry);
+	Entry* retrieveLastUpdatedEntry();
 };
 

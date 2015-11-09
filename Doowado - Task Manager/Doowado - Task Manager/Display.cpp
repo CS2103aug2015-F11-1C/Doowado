@@ -139,3 +139,7 @@ void Display::setLatestUpdatedEntry(Entry * latestEntry)
 {
 	_lastUpdatedEntry = latestEntry;
 }
+
+Entry * Display::retrieveLastUpdatedEntry(){
+	return _lastUpdatedEntry;
+}

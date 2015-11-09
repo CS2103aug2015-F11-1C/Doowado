@@ -5,6 +5,7 @@
 #include"Command.h"
 #include"ParserResult.h"
 #include"CmdBuilderException.h"
+#include "easylogging++.h"
 
 using namespace std;
 

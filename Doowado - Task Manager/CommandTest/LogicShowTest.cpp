@@ -178,21 +178,35 @@ namespace LogicShowTest
 			idealDisplayTaskList.push_back(floatingTask1);
 			idealDisplayTaskList.push_back(floatingTask2);
 
-
 			idealDisplay->updateCommandFeedback(idealCmdFeedback);
 			idealDisplay->updateDisplayEventList(idealDisplayEventList);
 			idealDisplay->updateDisplayTaskList(idealDisplayTaskList);
 		}
 
 		void generateIdealDisplayByCompleted(Display* idealDisplay) {
+			vector<string> idealCmdFeedback;
+			vector<Entry*> idealDisplayEventList;
+			vector<Entry*> idealDisplayTaskList;
 
+			idealCmdFeedback.push_back("Showing: ");
+			idealCmdFeedback.push_back("completed");
+
+			//event list should not be updated
+
+			idealDisplayTaskList.push_back(earlierTimedTaskOnDate1);
+			idealDisplayTaskList.push_back(timedTaskOnDate3);
+			idealDisplayTaskList.push_back(floatingTask1);
+
+			idealDisplay->updateCommandFeedback(idealCmdFeedback);
+			idealDisplay->updateDisplayEventList(idealDisplayEventList);
+			idealDisplay->updateDisplayTaskList(idealDisplayTaskList);
 		}
 
 		//methods below are exactly the same as Display validation in SystemTest
 		void validateDisplay(Display actualDisplay, Display idealDisplay) {
-			//validateCmdFeedback(actualDisplay, idealDisplay);
-			//validateEventList(actualDisplay, idealDisplay);
-			//validateTaskList(actualDisplay, idealDisplay);
+			validateCmdFeedback(actualDisplay, idealDisplay);
+			validateEventList(actualDisplay, idealDisplay);
+			validateTaskList(actualDisplay, idealDisplay);
 		}
 
 		void validateCmdFeedback(Display actualDisplay, Display idealDisplay) {

@@ -19,6 +19,8 @@ void Command::undo(Storage * data, Display * display) {
 
 }
 
+//@@author A0114137R
+
 std::string Command::generateDateDisplayState(ptime entryStartTime, ptime entryEndTime)
 {
 	std::string displayState;

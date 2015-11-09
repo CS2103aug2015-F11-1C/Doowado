@@ -2,6 +2,7 @@
 #include "easylogging++.h"
 
 INITIALIZE_EASYLOGGINGPP;
+//@@author A0114137R
 
 void Logic::updateOverdueTask()
 {
@@ -78,7 +79,7 @@ Logic::Logic()
 	el::Loggers::reconfigureAllLoggers(conf);
 	// Now all the loggers will use configuration from file
 
-	//@@author
+	//@@author A0114137R
 	_storage = new Storage();
 	_cmdBuilder = new CommandBuilder();
 	_parser = new Parser();

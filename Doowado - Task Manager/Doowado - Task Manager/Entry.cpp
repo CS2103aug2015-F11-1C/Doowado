@@ -1,5 +1,7 @@
 #include "Entry.h"
 
+//@@author A0114137R
+
 Entry::Entry() {
 	_title = "";
 }
@@ -88,6 +90,8 @@ void Entry::setOverdue(bool overdueStatus)
 {
 	_isOverdue = overdueStatus;
 }
+
+//@@author Johandy -unused
 
 void Entry::printEvent()
 {

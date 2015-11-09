@@ -1,5 +1,7 @@
 #include "SearchCommand.h"
 
+//@@author A0114137R
+
 void SearchCommand::generateFeedback()
 {
 	_feedback.push_back(MESSAGE_SUCCESSFUL_SEARCH_KEYWORDS);

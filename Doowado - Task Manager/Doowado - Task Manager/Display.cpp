@@ -24,7 +24,7 @@ void Display::updateDisplayTaskList(vector<Entry*>& updatedTaskList)
 	_taskList = updatedTaskList;
 }
 
-//@@author 
+//@@author A0114137R
 
 Entry * Display::retrieveEntry(EntryType entryType, int taskID)
 {
@@ -48,14 +48,6 @@ Entry * Display::retrieveEntry(EntryType entryType, int taskID)
 	}
 	return entryToRetrieve;
 }
-/*
-Entry * Display::retrieveTask(int taskID)
-{
-	Entry* taskToRetrieve;
-
-	return taskToRetrieve;
-}
-*/
 
 //@@author A0102794E
 void Display::checkValidFeedback(vector<string>& feedback)
@@ -79,7 +71,7 @@ vector<string>& Display::getCommandFeedback()
 }
 
 
-//@@author 
+//@@author A0114137R
 
 void Display::setEventDisplayState(string eventDisplayState)
 {

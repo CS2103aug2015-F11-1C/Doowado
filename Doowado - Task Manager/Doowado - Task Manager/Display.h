@@ -32,7 +32,7 @@ public:
 	vector<Entry*>& getTaskList();
 	vector<string>& getCommandFeedback();
 
-	//@@author 
+	//@@author A0114137R
 
 	void setEventDisplayState(string eventDisplayState);
 	void setTaskDisplayState(string taskDisplayState);

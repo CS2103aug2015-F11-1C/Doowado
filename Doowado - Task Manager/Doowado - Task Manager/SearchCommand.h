@@ -1,6 +1,8 @@
 #pragma once
 #include "Command.h"
 
+//@@author A0114137R
+
 const string MESSAGE_SUCCESSFUL_SEARCH_KEYWORDS = "Showing entries with keyword(s): ";
 
 class SearchCommand : public Command

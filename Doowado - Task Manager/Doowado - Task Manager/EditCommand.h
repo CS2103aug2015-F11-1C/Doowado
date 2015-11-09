@@ -3,10 +3,12 @@
 #include "CommandException.h"
 #include "easylogging++.h"
 
+//@@author A0114137R
+
 const int INDEX_LOWER_LIMIT = 0;
-const string MESSAGE_SUCCESSFUL_EDIT = "Edited";
-const string eventType = "e";
-const string taskType = "t";
+const std::string MESSAGE_SUCCESSFUL_EDIT = "Edited";
+const std::string eventType = "e";
+const std::string taskType = "t";
 
 //check casing
 enum TypeOfTimeEdit {	editStartDateTime,
@@ -26,7 +28,7 @@ class EditCommand : public Command
 private:
 	EntryType _entryType;
 	int _taskID;
-	string _newTitle;
+	std::string _newTitle;
 	date _newStartDate;
 	time_duration _newStartTime;
 	date _newEndDate;
@@ -51,7 +53,7 @@ private:
 public:
 	EditCommand(EntryType entryType,
 				int taskID,
-				string newTitle,
+				std::string newTitle,
 				date newStartDate,
 				time_duration newStartTime,
 				date newEndDate,

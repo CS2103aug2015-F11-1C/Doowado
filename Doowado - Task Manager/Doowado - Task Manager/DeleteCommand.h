@@ -2,6 +2,8 @@
 #include "Command.h"
 #include "CommandException.h"
 
+//@@author A0114137R
+
 const string MESSAGE_SUCCESSFUL_DELETE = "Deleted: ";
 
 class DeleteCommand: public Command {

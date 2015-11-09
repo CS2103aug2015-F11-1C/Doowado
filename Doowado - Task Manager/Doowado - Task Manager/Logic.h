@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 #include "Storage.h"
 #include "CommandBuilder.h"
 #include "Command.h"
@@ -7,9 +9,12 @@
 #include "Display.h"
 #include "easylogging++.h"
 
+//@@author 
 static ptime currentTime(second_clock::local_time());
 
 using namespace std;
+
+//@@author A0114137R
 
 class Logic
 {
@@ -24,13 +29,14 @@ private:
 	bool isOverlapTime(ptime startTime1, ptime endTime1, ptime startTime2, ptime endTime2);
 
 public:
-
+	//@@author A0102794E
 #ifdef TESTMODE
 	Storage* getStorage() {
 		return _storage;
 	}
 #endif
 
+	//@@author A0114137R
 	Logic();
 	~Logic();
 	void processCommand(string);

@@ -1,5 +1,7 @@
 #include "EditCommand.h"
 
+//@@author A0114137R
+
 void EditCommand::generateFeedback(Entry * editedEntry)
 {
 	_feedback.push_back(MESSAGE_SUCCESSFUL_EDIT);

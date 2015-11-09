@@ -1,4 +1,5 @@
 #pragma once
+//@@author A0114137R
 
 #include <string>
 #include <boost/date_time/gregorian/gregorian.hpp>
@@ -37,6 +38,8 @@ public:
 	void setDone(bool);
 	void setClash(bool);
 	void setOverdue(bool);
+
+	//@@author A0114137R
 
 	void printEvent();
 	void printTask();

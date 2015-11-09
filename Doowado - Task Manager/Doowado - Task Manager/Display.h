@@ -1,8 +1,8 @@
 #pragma once
 #include "Storage.h"
-
-
 enum entryStatus { completed, incomplete, overdue, intime };
+
+//@@author A0102794E
 
 class Display
 {
@@ -31,6 +31,8 @@ public:
 	vector<Entry*>& getEventList();
 	vector<Entry*>& getTaskList();
 	vector<string>& getCommandFeedback();
+
+	//@@author 
 
 	void setEventDisplayState(string eventDisplayState);
 	void setTaskDisplayState(string taskDisplayState);

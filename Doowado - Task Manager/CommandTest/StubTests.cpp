@@ -3,6 +3,8 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+//@@author A0102794E
+
 namespace CommandTest
 {
 	TEST_CLASS(StubTests)

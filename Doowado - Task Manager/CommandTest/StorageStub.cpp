@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "StorageStub.h"
 
+//@@author A0102794E
+
 StorageStub::StorageStub()
 {
 }

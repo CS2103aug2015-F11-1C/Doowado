@@ -3,6 +3,8 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+//@@author A0102794E
+
 namespace LogicTest
 {
 	//Tests the overall function of logic with storage, starting with an add command

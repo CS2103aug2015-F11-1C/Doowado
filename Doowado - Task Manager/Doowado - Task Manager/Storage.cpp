@@ -31,7 +31,10 @@ void removeDuplicateEvents(vector<Entry*> Result) {
 	for (it1 = Result.begin(); it1 != Result.end(); it1++) {
 		for (it2 = it1 + 1; it2 != Result.end(); it2++) {
 			if ((*it1) == (*it2)) {
-				Result.erase(it2);
+				it2 = Result.erase(it2);
+				if (it2 == Result.end()) {
+					break;
+				}
 			}
 		}
 	}
@@ -44,7 +47,10 @@ void removeDuplicateTasks(vector<Entry*> Result) {
 	for (it1 = Result.begin(); it1 != Result.end(); it1++) {
 		for (it2 = it1 + 1; it2 != Result.end(); it2++) {
 			if ((*it1) == (*it2)) {
-				Result.erase(it2);
+				it2 = Result.erase(it2);
+				if (it2 == Result.end()) {
+					break;
+				}
 			}
 		}
 	}

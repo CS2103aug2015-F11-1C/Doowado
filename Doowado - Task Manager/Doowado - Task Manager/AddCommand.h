@@ -29,5 +29,6 @@ public:
 	void updateDisplay(Display*, Storage*);
 
 	void generateUndoFeedback();
+	std::string generateDateDisplayState();
 };
 

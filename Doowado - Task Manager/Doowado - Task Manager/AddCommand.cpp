@@ -96,13 +96,16 @@ void AddCommand::updateDisplay(Display* display, Storage* data)
 		data->retrieveByDate(currentTime, relevantEventList, relevantTaskList);
 	}
 
+	std::string dateDisplayState = generateDateDisplayState();
+
 	display->updateDisplayEventList(relevantEventList);
 	display->updateDisplayTaskList(relevantTaskList);
 
 	display->updateCommandFeedback(_feedback);
 	display->setLatestUpdatedEntry(_newEntry);
 
-	
+	display->setEventDisplayState(dateDisplayState);
+	display->setTaskDisplayState(dateDisplayState);
 }
 
 void AddCommand::generateUndoFeedback()
@@ -112,3 +115,87 @@ void AddCommand::generateUndoFeedback()
 	_feedback.insert(front, "Undone");
 }
 
+std::string AddCommand::generateDateDisplayState()
+{
+	std::string displayState;
+
+	if (_entryStartTime.is_not_a_date_time()) {
+		date endDate = _entryStartTime.date();
+
+		int endDay = endDate.day();
+		int endMonth = endDate.month();
+		int endYear = endDate.year();
+		int intEndDayOfWeek = endDate.day_of_week();
+		std::string endDayOfWeek;
+
+		switch (intEndDayOfWeek)
+		{
+		case 0:
+			endDayOfWeek = "Sunday";
+			break;
+		case 1:
+			endDayOfWeek = "Monday";
+			break;
+		case 2:
+			endDayOfWeek = "Tuesday";
+			break;
+		case 3:
+			endDayOfWeek = "Wednesday";
+			break;
+		case 4:
+			endDayOfWeek = "Thursday";
+			break;
+		case 5:
+			endDayOfWeek = "Friday";
+			break;
+		case 6:
+			endDayOfWeek = "Saturday";
+			break;
+		default:
+			break;
+		}
+
+		displayState = endDayOfWeek + ", " + to_string(endDay) + "/" + to_string(endMonth) + "/" + to_string(endYear);
+	}
+	else {
+		date startDate = _entryStartTime.date();
+
+		int startDay = startDate.day();
+		int startMonth = startDate.month();
+		int startYear = startDate.year();
+		int intStartDayOfWeek = startDate.day_of_week();
+
+		std::string startDayOfWeek;
+
+		switch (intStartDayOfWeek)
+		{
+		case 0:
+			startDayOfWeek = "Sunday";
+			break;
+		case 1:
+			startDayOfWeek = "Monday";
+			break;
+		case 2:
+			startDayOfWeek = "Tuesday";
+			break;
+		case 3:
+			startDayOfWeek = "Wednesday";
+			break;
+		case 4:
+			startDayOfWeek = "Thursday";
+			break;
+		case 5:
+			startDayOfWeek = "Friday";
+			break;
+		case 6:
+			startDayOfWeek = "Saturday";
+			break;
+		default:
+			break;
+		}
+
+		displayState += startDayOfWeek + ", " + to_string(startDay) + "/" + to_string(startMonth) + "/" + to_string(startYear);
+	}
+
+	return displayState;
+}

@@ -35,8 +35,8 @@ void Parser::resetDateAndTime() {
 }
 
 string Parser::removeExtraSpacePadding(string input){
-	size_t start = input.find_first_not_of(" ");
-	size_t end = input.find_last_not_of(" ");
+	size_t start = input.find_first_not_of(SPACE);
+	size_t end = input.find_last_not_of(SPACE);
 
 	if (start != string::npos) {
 		return input.substr(start, (end - start + 1));
@@ -46,8 +46,8 @@ string Parser::removeExtraSpacePadding(string input){
 }
 
 string Parser::removeQuotations(string input){
-	size_t start = input.find_first_not_of("\"");
-	size_t end = input.find_last_not_of("\"");
+	size_t start = input.find_first_not_of(QUOTATION_MARK);
+	size_t end = input.find_last_not_of(QUOTATION_MARK);
 
 	if (start != string::npos) {
 		return input.substr(start, (end - start + 1));
@@ -58,7 +58,7 @@ string Parser::removeQuotations(string input){
 }
 
 void Parser::setCommand(string& input) {
-	size_t spacePos = input.find_first_of(" ");
+	size_t spacePos = input.find_first_of(SPACE);
 
 	if (spacePos == string::npos) {
 		_userCommand = convertStringTolowerCase(input);
@@ -78,7 +78,7 @@ void Parser::setDescription(string input){
 
 
 	if (!input.empty()) {
-		quotationPos = input.find_last_of("\"");
+		quotationPos = input.find_last_of(QUOTATION_MARK);
 		invalidDateTimeInput = input.substr(quotationPos + 1);
 
 		if (quotationPos != string::npos && !invalidDateTimeInput.empty()) {
@@ -117,7 +117,7 @@ void Parser::setDescription(string input){
 
 void Parser::setIndex(string& input){
 	input = removeQuotations(input);
-	size_t spacePos = input.find_first_of(" ");
+	size_t spacePos = input.find_first_of(SPACE);
 
 	if (!input.empty()) {
 		if (spacePos != string::npos) {
@@ -168,7 +168,7 @@ void Parser::setDateAndTime(string& input){
 
 	if (delimiterPos != string::npos) {
 		dateAndTime = input.substr(delimiterPos);
-		spacePos = dateAndTime.find_first_of(" ");
+		spacePos = dateAndTime.find_first_of(SPACE);
 		dateAndTime = dateAndTime.substr(spacePos + 1);
 
 		dateAndTime = convertStringTolowerCase(dateAndTime);
@@ -181,11 +181,11 @@ void Parser::setDateAndTime(string& input){
 		input = input.substr(0, delimiterPos);
 		input = removeExtraSpacePadding(input);
 
-	}else if (input.find_first_of(" ") == string::npos) {
+	}else if (input.find_first_of(SPACE) == string::npos) {
 		dateAndTime = input;
 		dateAndTime = convertStringTolowerCase(dateAndTime);
 
-		if ((dateAndTime.find_first_not_of("0123456789|") != string::npos) && (isDateOrTimeKeywordValid(dateAndTime))) {
+		if ((dateAndTime.find_first_not_of(NUMBER_AND_MULTIPLE_DELIMITER) != string::npos) && (isDateOrTimeKeywordValid(dateAndTime))) {
 			dateAndTimeFragment = fragmentizeString(dateAndTime);
 
 			dateSetter(dateAndTimeFragment);
@@ -774,7 +774,7 @@ size_t Parser::findDateDelimiterPos(string input) {
 		for (int i = 0; i < DATE_DELIMITER_SIZE; i++) {
 			foundDelimiter = temp.rfind(DATE_DELIMITER[i]);
 			if (foundDelimiter != string::npos) {
-				if ((foundDelimiter == 0) && (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i])) {
+				if ((foundDelimiter == 0) && (temp.substr(foundDelimiter, temp.find_first_of(SPACE, foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i])) {
 					occurredInMiddleOfAWord = string::npos;
 					delimiter = DATE_DELIMITER[i];
 					finalDelimiter = foundDelimiter;
@@ -783,7 +783,7 @@ size_t Parser::findDateDelimiterPos(string input) {
 						occurredInMiddleOfAWord = string::npos;
 						delimiter = DATE_DELIMITER[i];
 						finalDelimiter = foundDelimiter;
-					}else if ((temp.substr(foundDelimiter - 1, 1) == " ") && (temp.substr(foundDelimiter, temp.find_first_of(" ", foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i])) {
+					}else if ((temp.substr(foundDelimiter - 1, 1) == SPACE) && (temp.substr(foundDelimiter, temp.find_first_of(SPACE, foundDelimiter) - foundDelimiter) == DATE_DELIMITER[i])) {
 						occurredInMiddleOfAWord = string::npos;
 						delimiter = DATE_DELIMITER[i];
 						finalDelimiter = foundDelimiter;
@@ -826,7 +826,7 @@ bool Parser::isDateDelimiterValid(string input, size_t pos){
 	bool isValid = true;
 	
 	temp = input.substr(pos);
-	spacePos = temp.find_first_of(" ");
+	spacePos = temp.find_first_of(SPACE);
 	if (spacePos == string::npos) {
 		return false;
 	}else {

@@ -33,6 +33,9 @@ string const DATE_SPLITER = "./";
 string const MULTIPLE_DESCRIPTION_KEYWORDS_DELIMITER = "|";
 string const START_END_DATE_DELIMITER = "to";
 string const START_END_TIME_DELIMITER = "to";
+string const SPACE = " ";
+string const QUOTATION_MARK = "\"";
+string const NUMBER_AND_MULTIPLE_DELIMITER = "0123456789|";
 
 string const ERROR_EMPTY_INPUT = "Empty input";
 string const ERROR_INVALID_DATE_TIME_INPUT = "Invalid date or time input";

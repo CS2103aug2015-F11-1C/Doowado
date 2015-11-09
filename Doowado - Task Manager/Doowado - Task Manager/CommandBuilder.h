@@ -1,3 +1,5 @@
+//@@author A0114137R
+
 #pragma once
 #include<vector>
 #include<assert.h>
@@ -31,6 +33,8 @@ class CommandBuilder {
 		Command* createSaveCommand(ParserResult&);
 		Command* createMarkDoneCommand(ParserResult&);
 		Command* createUndoCommand(ParserResult&);
+
+		int rebaseToZero(int displayIndex);
 
 	public:
 		CommandBuilder();

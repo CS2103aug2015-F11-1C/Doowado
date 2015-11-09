@@ -2,6 +2,8 @@
 #include <exception>
 #include <string>
 
+//@@author A0114137R
+
 class CmdBuilderException
 {
 private:

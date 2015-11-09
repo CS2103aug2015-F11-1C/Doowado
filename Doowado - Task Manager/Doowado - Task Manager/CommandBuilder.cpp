@@ -42,28 +42,28 @@ Command * CommandBuilder::createAddCommand(ParserResult& parserResult)
 		throw CmdBuilderException(EXCEPTION_TIME_NO_DATE);
 	}
 
-	entryTitle = description[0];
+	entryTitle = description[ZERO_INDEX];
 	
 	if (!vStartDate.empty()) {
-		stringStartDate = vStartDate[0];
+		stringStartDate = vStartDate[ZERO_INDEX];
 		date d(from_undelimited_string(stringStartDate));
 		entryStartDate = d;
 	}
 
 	if (!vStartTime.empty()) {
-		stringStartTime = vStartTime[0];
+		stringStartTime = vStartTime[ZERO_INDEX];
 		time_duration td(duration_from_string(stringStartTime));
 		entryStartTime = td;
 	}
 
 	if (!vEndDate.empty()) {
-		stringEndDate = vEndDate[0];
+		stringEndDate = vEndDate[ZERO_INDEX];
 		date d(from_undelimited_string(stringEndDate));
 		entryEndDate = d;
 	}
 
 	if (!vEndTime.empty()) {
-		stringEndTime = vEndTime[0];
+		stringEndTime = vEndTime[ZERO_INDEX];
 		time_duration td(duration_from_string(stringEndTime));
 		entryEndTime = td;
 	}
@@ -104,10 +104,10 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 	 
 	std::vector<std::string> vEntryTypes = parserResult.getEntryType();
 	
-	if (vEntryTypes[0] == "e") {
+	if (vEntryTypes[ZERO_INDEX] == "e") {
 		entryType = event;
 	}
-	else if (vEntryTypes[0] == "t") {
+	else if (vEntryTypes[ZERO_INDEX] == "t") {
 		entryType = task;
 	}
 	else {
@@ -119,18 +119,18 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 		throw CmdBuilderException(EXCEPTION_INVALID_NO_INDEX);
 	}
 
-	taskID = vTaskIDs[0] - 1;
+	taskID = vTaskIDs[ZERO_INDEX] - 1;
 
 	std::vector<std::string> vNewTitles = parserResult.getDescription();
 	
 	if(!vNewTitles.empty()) {
-		newTitle = vNewTitles[0];
+		newTitle = vNewTitles[ZERO_INDEX];
 	}
 	
 	std::vector<std::string> vNewStartDates = parserResult.getStartDate();
 	
 	if (!vNewStartDates.empty()) {
-		std::string stringStartDate = vNewStartDates[0];
+		std::string stringStartDate = vNewStartDates[ZERO_INDEX];
 		if (stringStartDate == "null") {
 			date d(neg_infin);
 			newStartDate = d;
@@ -143,7 +143,7 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 
 	std::vector<std::string> vNewStartTimes = parserResult.getStartTime();
 	if (!vNewStartTimes.empty()) {
-		std::string stringStartTime = vNewStartTimes[0];
+		std::string stringStartTime = vNewStartTimes[ZERO_INDEX];
 		if (stringStartTime == "null") {
 			time_duration td(neg_infin);
 			newStartTime = td;
@@ -156,7 +156,7 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 
 	std::vector<std::string> vNewEndDates = parserResult.getEndDate();
 	if (!vNewEndDates.empty()) {
-		std::string stringEndDate = vNewEndDates[0];
+		std::string stringEndDate = vNewEndDates[ZERO_INDEX];
 		if (stringEndDate == "null") {
 			date d(neg_infin);
 			newEndDate = d;
@@ -168,7 +168,7 @@ Command * CommandBuilder::createEditCommand(ParserResult &parserResult)
 	}
 	std::vector<std::string> vNewEndTimes = parserResult.getEndTime();
 	if (!vNewEndTimes.empty()) {
-		std::string stringEndTime = vNewEndTimes[0];
+		std::string stringEndTime = vNewEndTimes[ZERO_INDEX];
 		if (stringEndTime == "null") {
 			time_duration td(neg_infin);
 			newEndTime = td;
@@ -206,11 +206,11 @@ Command * CommandBuilder::createDeleteCommand(ParserResult& parserResult)
 
 	EntryType entryType;
 
-	if (vEntryTypes[0] == "e") {
+	if (vEntryTypes[ZERO_INDEX] == "e") {
 		entryType = event;
 	}
 
-	else if (vEntryTypes[0] == "t") {
+	else if (vEntryTypes[ZERO_INDEX] == "t") {
 		entryType = task;
 	}
 	
@@ -218,9 +218,9 @@ Command * CommandBuilder::createDeleteCommand(ParserResult& parserResult)
 		throw CmdBuilderException(EXCEPTION_INVALID_ENTRY_TYPE_AT_INDEX);
 	}
 
-	int displayIndex = vIndices[0];
+	int displayIndex = vIndices[ZERO_INDEX];
 
-	int taskID = displayIndex - 1;
+	int taskID = rebaseToZero(displayIndex);
 
 	deleteCommand = new DeleteCommand(entryType, taskID);
 	return deleteCommand;
@@ -273,7 +273,7 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 	
 
 	if (showType == showByStatus) {
-		stringEntryStatus = vEntryStatus[0];
+		stringEntryStatus = vEntryStatus[ZERO_INDEX];
 
 		if (stringEntryStatus == ENTRY_STATUS_COMPLETED) {
 			showCommand = new ShowCommand(completed);
@@ -293,7 +293,7 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 	}
 	
 	else if (showType == showByDate) {
-		stringEndDate = vEndDateRequirement[0];
+		stringEndDate = vEndDateRequirement[ZERO_INDEX]];
 		date endDate(from_undelimited_string(stringEndDate));
 		if (endDate.is_not_a_date()) {
 			throw CmdBuilderException(EXCEPTION_INVALID_TIME);
@@ -302,8 +302,8 @@ Command * CommandBuilder::createShowCommand(ParserResult& parserResult)
 	}
 
 	else if (showType == showByRangeOfDate) {
-		stringStartDate = vStartDateRequirement[0];
-		stringEndDate = vEndDateRequirement[0];
+		stringStartDate = vStartDateRequirement[ZERO_INDEX];
+		stringEndDate = vEndDateRequirement[ZERO_INDEX];
 		date startDate(from_undelimited_string(stringStartDate));
 		date endDate(from_undelimited_string(stringEndDate));
 		
@@ -325,7 +325,7 @@ Command * CommandBuilder::createSaveCommand(ParserResult& parserResult)
 	if (vSaveDirs.empty()) {
 		throw CmdBuilderException(EXCEPTION_INVALID_SAVE);
 	}
-	std::string saveDir = vSaveDirs[0];
+	std::string saveDir = vSaveDirs[ZERO_INDEX];
 	saveCommand = new SaveCommand(saveDir);
 
 	return saveCommand;
@@ -343,19 +343,19 @@ Command * CommandBuilder::createMarkDoneCommand(ParserResult &parserResult)
 	}
 	EntryType entryType;
 
-	if (vEntryTypes[0] == "e") {
+	if (vEntryTypes[ZERO_INDEX] == "e") {
 		entryType = event;
 	}
 
-	else if (vEntryTypes[0] == "t") {
+	else if (vEntryTypes[ZERO_INDEX] == "t") {
 		entryType = task;
 	}
 	else {
 		throw CmdBuilderException(EXCEPTION_INVALID_ENTRY_TYPE_AT_INDEX);
 	}
 
-	int displayIndex = vIndices[0];
-	int taskID = displayIndex - 1;
+	int displayIndex = vIndices[ZERO_INDEX];
+	int taskID = rebaseToZero(displayIndex);
 
 	markDoneCommand = new MarkDoneCommand(entryType, taskID);
 	return markDoneCommand;
@@ -366,6 +366,12 @@ Command * CommandBuilder::createUndoCommand(ParserResult & parserResult)
 	Command * undoCommand;
 	undoCommand = new UndoCommand();
 	return undoCommand;
+}
+
+int CommandBuilder::rebaseToZero(int displayIndex)
+{
+	int rebasedInt = displayIndex - 1;
+	return rebasedInt;
 }
 
 CommandBuilder::CommandBuilder() {

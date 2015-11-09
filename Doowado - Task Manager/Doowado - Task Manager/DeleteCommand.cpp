@@ -1,6 +1,6 @@
 #include "DeleteCommand.h"
 
-
+//@@author A0114137R
 void DeleteCommand::generateFeedback()
 {
 	_feedback.push_back(MESSAGE_SUCCESSFUL_DELETE);

@@ -1,9 +1,17 @@
 #include "Display.h"
 #include "Assert.h"
+#include "easylogging++.h"
 
+INITIALIZE_EASYLOGGINGPP;
 
-Display::Display()
-{
+Display::Display(void){
+	// Load configuration from file
+	el::Configurations conf("Log.conf");
+	// Reconfigure single logger
+	el::Loggers::reconfigureLogger("default", conf);
+	// Actually reconfigure all loggers instead
+	el::Loggers::reconfigureAllLoggers(conf);
+	// Now all the loggers will use configuration from file
 }
 
 
@@ -113,23 +121,18 @@ void Display::deleteEntry(Entry * entryToDelete)
 
 	vector<Entry*>::iterator it = _eventList.begin();
 
-	while (it != _eventList.end()) {
-		if (*it == entryToDelete) {
-			_eventList.erase(it);
-			break;
-		}
+	while (*it != entryToDelete) {
 		it++;
 	}
+	_eventList.erase(it);
 
 	it = _taskList.begin();
 
-	while (it != _taskList.end()) {
-		if (*it == entryToDelete) {
-			_taskList.erase(it);
-			break;
-		}
+	while (*it != entryToDelete) {
 		it++;
 	}
+	_taskList.erase(it);
+
 }
 
 void Display::setLatestUpdatedEntry(Entry * latestEntry)

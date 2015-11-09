@@ -487,14 +487,10 @@ int Parser::convertStringWeekdayToInt(string input){
 	case 40:
 		dateInNumber = 9;
 		break;
-//	case 41:
-//	case 42:
-//		dateInNumber = 10;
-//		break;
-	case 43:
+	case 41:
 		dateInNumber = 11;
 		break;
-	case 44:
+	case 42:
 		dateInNumber = -1;
 		break;
 	}
@@ -646,21 +642,6 @@ void Parser::timeSetter(vector<string>& input){
 				break;
 			}
 		}
-/*
-		if (foundStartTime && !foundEndTime) {
-			endTime = startTime;
-			_endTime.push_back(endTime);
-
-			throw std::out_of_range(ERROR_END_TIME_IS_INVALID);
-		}
-
-		if (!foundStartTime && foundEndTime) {
-			startTime = endTime;
-			_startTime.push_back(startTime);
-
-			throw std::out_of_range(ERROR_START_TIME_IS_INVALID);
-		}
-*/
 
 		for (int z = 0; z < markTimePos.size(); z++) {
 			input.erase(input.begin() + (markTimePos[z] - z));

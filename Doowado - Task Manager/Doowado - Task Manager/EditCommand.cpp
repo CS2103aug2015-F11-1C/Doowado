@@ -54,22 +54,26 @@ void EditCommand::updateDisplay(Display * display, Storage * data, Entry * edite
 	}
 
 	else if (editedEntry == _beforeEditEntry) {			//undo
-//		if (!_editedEntry->getEndTime().is_not_a_date_time()) {
 			display->deleteEntry(_editedEntry);
 			relevantTaskList = display->getTaskList();
 			relevantTaskList.push_back(editedEntry);
 			display->updateDisplayTaskList(relevantTaskList);
-//		}
 	}
 
 	else if (editedEntry == _editedEntry) {
-//		if (!_beforeEditEntry->getEndTime().is_not_a_date_time()) {
 			display->deleteEntry(editedEntry);
 			relevantTaskList = display->getTaskList();
 			relevantTaskList.push_back(editedEntry);
 			display->updateDisplayTaskList(relevantTaskList);
-//		}
 	}
+
+	if (!startTime.is_not_a_date_time() || !endTime.is_not_a_date_time()) {
+		std::string displayState = generateDateDisplayState(startTime, endTime);
+		display->setEventDisplayState(displayState);
+		display->setTaskDisplayState(displayState);
+	}
+
+	display->setLatestUpdatedEntry(editedEntry);
 }
 
 void EditCommand::setBeforeEditEntry(Entry * beforeEditEntry)
@@ -432,6 +436,5 @@ void EditCommand::undo(Storage * data, Display * display)
 	generateUndoFeedBack(_beforeEditEntry);
 	display->updateCommandFeedback(_feedback);
 	updateDisplay(display, data, _beforeEditEntry);
-	display->setLatestUpdatedEntry(_beforeEditEntry);
 	data->saveToFile();
 }

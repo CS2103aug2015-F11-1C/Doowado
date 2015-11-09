@@ -42,5 +42,7 @@ public:
 
 	virtual void execute(Storage* data, Display* display);
 	virtual void undo(Storage* data, Display* display);
+
+	std::string generateDateDisplayState(ptime entryStartTime, ptime entryEndTime);
 };
 

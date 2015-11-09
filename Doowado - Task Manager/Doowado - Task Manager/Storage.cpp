@@ -377,7 +377,7 @@ void Storage::retrieveByDate(ptime timeIndicator1, ptime timeIndicator2, vector<
 	taskResult.clear();
 
 	for (int i = 0; i < _eventList.size(); i++) {
-		if (_eventList[i]->getEndTime().date() >= timeIndicator1.date() || _eventList[i]->getStartTime().date() >= timeIndicator2.date()) {
+		if ((_eventList[i]->getEndTime().date() >= timeIndicator1.date() && _eventList[i]->getEndTime().date() <= timeIndicator2.date()) || (_eventList[i]->getStartTime().date() <= timeIndicator2.date() && _eventList[i]->getStartTime().date() >= timeIndicator1.date())) {
 			eventResult.push_back(_eventList[i]);
 		}
 	}

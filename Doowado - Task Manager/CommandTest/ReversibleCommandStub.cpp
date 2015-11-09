@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ReversibleCommandStub.h"
 
+//@@author A0102794E
 
 ReversibleCommandStub::ReversibleCommandStub()
 {

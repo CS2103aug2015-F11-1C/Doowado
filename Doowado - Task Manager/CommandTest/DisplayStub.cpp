@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "DisplayStub.h"
 
+//@@author A0102794E
 
 DisplayStub::DisplayStub()
 {

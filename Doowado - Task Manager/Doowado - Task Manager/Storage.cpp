@@ -380,9 +380,12 @@ void Storage::retrieveByDate(ptime timeIndicator1, ptime timeIndicator2, vector<
 		if ((_eventList[i]->getEndTime().date() >= timeIndicator1.date() && _eventList[i]->getEndTime().date() <= timeIndicator2.date()) || (_eventList[i]->getStartTime().date() <= timeIndicator2.date() && _eventList[i]->getStartTime().date() >= timeIndicator1.date())) {
 			eventResult.push_back(_eventList[i]);
 		}
+		else if ((_eventList[i]->getEndTime().date() <= timeIndicator1.date() && _eventList[i]->getEndTime().date() >= timeIndicator2.date()) || (_eventList[i]->getStartTime().date() >= timeIndicator2.date() && _eventList[i]->getStartTime().date() <= timeIndicator1.date())) {
+			eventResult.push_back(_eventList[i]);
+		}
 	}
 	for (int i = 0; i < _taskList.size(); i++) {
-		if (_taskList[i]->getEndTime().date() >= timeIndicator1.date() && _taskList[i]->getEndTime().date() <= timeIndicator2.date()) {
+		if ((_taskList[i]->getEndTime().date() >= timeIndicator1.date() && _taskList[i]->getEndTime().date() <= timeIndicator2.date()) || _taskList[i]->getEndTime().is_not_a_date_time()) {
 			taskResult.push_back(_taskList[i]);
 		}
 	}

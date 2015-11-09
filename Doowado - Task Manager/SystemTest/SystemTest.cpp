@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
+//@@author A0102794E
 namespace SystemTest
 {		
 	//Test the execution of an add command from user input string to display

@@ -1,5 +1,8 @@
 #pragma once
 #include "Storage.h"
+
+//@@author A0102794E
+
 class StorageStub: public Storage
 {
 public:

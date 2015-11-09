@@ -1,5 +1,7 @@
 #include "History.h"
 
+//@@author A0102794E
+
 stack<Command*> History::_commandStack;
 
 History::History()

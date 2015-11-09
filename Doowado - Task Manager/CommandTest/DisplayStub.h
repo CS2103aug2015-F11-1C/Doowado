@@ -1,6 +1,8 @@
 #pragma once
 #include "Display.h"
 
+//@@author A0102794E
+
 class DisplayStub: public Display
 {
 public:

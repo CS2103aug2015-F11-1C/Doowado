@@ -1,6 +1,8 @@
 #pragma once
 #include "Command.h"
 
+//@@author A0102794E
+
 class AddCommand: public Command
 {
 private:
@@ -29,5 +31,6 @@ public:
 	void updateDisplay(Display*, Storage*);
 
 	void generateUndoFeedback();
+	std::string generateDateDisplayState();
 };
 

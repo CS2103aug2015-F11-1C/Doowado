@@ -1,3 +1,4 @@
+//@@author A0114519J
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
@@ -259,6 +260,51 @@ namespace ParserTest{
 
 			Assert::AreEqual(output.getUserCommand(), expectedCommand);
 			Assert::AreEqual(output.getEndDate()[0], expectedEndDate);
+		}
+
+		TEST_METHOD(parseTest13) {
+			Parser parse;
+			ParserResult output;
+			string input = "search 11|22";
+			string expectedCommand = "search";
+			string expectedDescription1 = "11";
+			string expectedDescription2 = "22";
+
+			output = parse.parse(input);
+
+			Assert::AreEqual(output.getUserCommand(), expectedCommand);
+			Assert::AreEqual(output.getDescription()[0], expectedDescription1);
+			Assert::AreEqual(output.getDescription()[1], expectedDescription2);
+		}
+
+		TEST_METHOD(parseTest14) {
+			Parser parse;
+			ParserResult output;
+			string input = "search 11 ||22";
+			string expectedCommand = "search";
+			string expectedDescription1 = "11";
+			string expectedDescription2 = "22";
+
+			output = parse.parse(input);
+
+			Assert::AreEqual(output.getUserCommand(), expectedCommand);
+			Assert::AreEqual(output.getDescription()[0], expectedDescription1);
+			Assert::AreEqual(output.getDescription()[1], expectedDescription2);
+		}
+
+		TEST_METHOD(parseTest15) {
+			Parser parse;
+			ParserResult output;
+			string input = "search i|want";
+			string expectedCommand = "search";
+			string expectedDescription1 = "i";
+			string expectedDescription2 = "want";
+
+			output = parse.parse(input);
+
+			Assert::AreEqual(output.getUserCommand(), expectedCommand);
+			Assert::AreEqual(output.getDescription()[0], expectedDescription1);
+			Assert::AreEqual(output.getDescription()[1], expectedDescription2);
 		}
 
 		TEST_METHOD(removeExtraSpacePadding) {

@@ -69,6 +69,7 @@ bool Logic::isOverlapTime(ptime startTime1, ptime endTime1, ptime startTime2, pt
 
 Logic::Logic()
 {
+	//@@author A0114519J
 	// Load configuration from file
 	el::Configurations conf("Log.conf");
 	// Reconfigure single logger
@@ -77,6 +78,7 @@ Logic::Logic()
 	el::Loggers::reconfigureAllLoggers(conf);
 	// Now all the loggers will use configuration from file
 
+	//@@author
 	_storage = new Storage();
 	_cmdBuilder = new CommandBuilder();
 	_parser = new Parser();

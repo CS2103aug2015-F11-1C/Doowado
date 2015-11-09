@@ -8,6 +8,7 @@
 #include "Display.h"
 #include <assert.h>
 #include "History.h"
+#include "easylogging++.h"
 
 using namespace std;
 using namespace boost::gregorian;

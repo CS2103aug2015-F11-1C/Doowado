@@ -25,10 +25,9 @@ public:
 	showType _showType;
 	std::vector<std::string> _feedback;
 
-	std::string _generateDateDisplayState();
-	std::string _generateStatusDisplayState();
-	void _generateDateFeedback();
-	void _generateStatusFeedback();
+	std::string generateStatusDisplayState();
+	void generateDateFeedback();
+	void generateStatusFeedback();
 
 
 public:

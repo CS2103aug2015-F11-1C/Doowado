@@ -1,86 +1,6 @@
 #include "ShowCommand.h"
 
-std::string ShowCommand::_generateDateDisplayState()
-{ 
-	std::string displayState;
-
-	int endDay = _requestedEndDate.day();
-	int endMonth = _requestedEndDate.month();
-	int endYear = _requestedEndDate.year();
-	int intEndDayOfWeek = _requestedEndDate.day_of_week();
-	std::string endDayOfWeek;
-	
-	switch (intEndDayOfWeek)
-	{
-		case 0:
-			endDayOfWeek = "Sunday";
-			break;
-		case 1:
-			endDayOfWeek = "Monday";
-			break;
-		case 2:
-			endDayOfWeek = "Tuesday";
-			break;
-		case 3:
-			endDayOfWeek = "Wednesday";
-			break;
-		case 4:
-			endDayOfWeek = "Thursday";
-			break;
-		case 5:
-			endDayOfWeek = "Friday";
-			break;
-		case 6:
-			endDayOfWeek = "Saturday";
-			break;
-		default:
-			break;
-	}
-
-	displayState = endDayOfWeek + ", " + to_string(endDay) + "/" + to_string(endMonth) + "/" + to_string(endYear);
-
-	if (!_requestedStartDate.is_not_a_date()) {
-		int startDay = _requestedStartDate.day();
-		int startMonth = _requestedStartDate.month();
-		int startYear = _requestedStartDate.year();
-		int intStartDayOfWeek = _requestedStartDate.day_of_week();
-		
-		std::string startDayOfWeek;
-		
-		switch (intStartDayOfWeek)
-		{
-		case 0:
-			startDayOfWeek = "Sunday";
-			break;
-		case 1:
-			startDayOfWeek = "Monday";
-			break;
-		case 2:
-			startDayOfWeek = "Tuesday";
-			break;
-		case 3:
-			startDayOfWeek = "Wednesday";
-			break;
-		case 4:
-			startDayOfWeek = "Thursday";
-			break;
-		case 5:
-			startDayOfWeek = "Friday";
-			break;
-		case 6:
-			startDayOfWeek = "Saturday";
-			break;
-		default:
-			break;
-		}
-
-		displayState += " - " + startDayOfWeek + ", " + to_string(startDay) + "/" + to_string(startMonth) + "/" + to_string(startYear);
-	}
-	
-	return displayState;
-}
-
-std::string ShowCommand::_generateStatusDisplayState()
+std::string ShowCommand::generateStatusDisplayState()
 {
 	std::string taskDisplayState;
 
@@ -101,7 +21,7 @@ std::string ShowCommand::_generateStatusDisplayState()
 
 }
 
-void ShowCommand::_generateDateFeedback()
+void ShowCommand::generateDateFeedback()
 {
 	_feedback.push_back(MESSAGE_SUCCESSFUL_SHOW);
 	if (!_requestedStartDate.is_not_a_date()) {
@@ -110,7 +30,7 @@ void ShowCommand::_generateDateFeedback()
 	_feedback.push_back(to_simple_string(_requestedEndDate));
 }
 
-void ShowCommand::_generateStatusFeedback()
+void ShowCommand::generateStatusFeedback()
 {
 	_feedback.push_back(MESSAGE_SUCCESSFUL_SHOW);
 
@@ -157,13 +77,14 @@ void ShowCommand::execute(Storage * data, Display * display)
 	std::string displayTaskState;
 
 	if (_showType == showByDate) {
+		ptime ptimeStartDate;
 		ptime ptimeEndDate(_requestedEndDate);
 		data->retrieveByDate(ptimeEndDate, _requestedEventList, _requestedTaskList);
 		display->updateDisplayEventList(_requestedEventList);
 		display->updateDisplayTaskList(_requestedTaskList);
-		_generateDateFeedback();
-		displayEventState = _generateDateDisplayState();
-		displayTaskState = _generateDateDisplayState();
+		generateDateFeedback();
+		displayEventState = generateDateDisplayState(ptimeStartDate, ptimeEndDate);
+		displayTaskState = generateDateDisplayState(ptimeStartDate, ptimeEndDate);
 	}
 	else if (_showType == showByRangeOfDate) {
 		ptime ptimeStartDate(_requestedStartDate);
@@ -171,9 +92,9 @@ void ShowCommand::execute(Storage * data, Display * display)
 		data->retrieveByDate(ptimeStartDate, ptimeEndDate, _requestedEventList, _requestedTaskList);
 		display->updateDisplayEventList(_requestedEventList);
 		display->updateDisplayTaskList(_requestedTaskList);
-		_generateDateFeedback();
-		displayEventState = _generateDateDisplayState();
-		displayTaskState = _generateDateDisplayState();
+		generateDateFeedback();
+		displayEventState = generateDateDisplayState(ptimeStartDate, ptimeEndDate);
+		displayTaskState = generateDateDisplayState(ptimeStartDate, ptimeEndDate);
 	}
 	else if (_showType == showByStatus) {
 		if (_entryStatus == completed) {
@@ -188,12 +109,13 @@ void ShowCommand::execute(Storage * data, Display * display)
 		else if (_entryStatus == intime) {
 			_requestedTaskList = data->retrieveTaskByOverdue(false);
 		}
-		_generateStatusFeedback();
-		displayTaskState = _generateStatusDisplayState();
+		generateStatusFeedback();
+		displayTaskState = generateStatusDisplayState();
 		display->updateDisplayTaskList(_requestedTaskList);
 	}
 
 	display->updateCommandFeedback(_feedback);
 	display->setEventDisplayState(displayEventState);
 	display->setTaskDisplayState(displayTaskState);
+	display->setLatestUpdatedEntry(NULL);
 }
